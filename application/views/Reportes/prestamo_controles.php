@@ -18,7 +18,7 @@ $tmpl = array(
     'table_close' => '</table>'
 );
 $this->table->set_template($tmpl);
-$this->table->set_heading('Fecha', 'login del<br>encargado', 'Nombre de <br>encargado', 'Actividad', 'Hora<br> Inicio','Hora<br> Fin','Sal&oacute;n','Estado','Observaciones');
+$this->table->set_heading('Fecha', 'Login<br>Usuario', 'Nombre del <br>usuario', 'Actividad', 'Hora<br> Inicio','Hora<br> Fin','Sal&oacute;n','Entrega','Recibe','Estado','Observaciones');
 echo $this->table->generate($datos_controles);
 if ($datos_controles->num_rows() == 0) {
     echo '<h3 class=" round_div"><img src="./images/warning.png" alt=" ">&nbsp;No se encontraron resultados</h3>';

@@ -340,6 +340,7 @@
             ||hora_cmp=='21:00:00'||hora_cmp=='22:00:00'){
             //redirect_to('reservaciones_temporales?');//agrego ? para evitar que la pagina se cachee
             window.location.reload();
+            redirect_to('reservaciones_temporales?');//agrego ? para evitar que la pagina se cachee
         }else{}
         window.setTimeout("actualiza_pag()",1000);
     }
@@ -424,6 +425,8 @@
     function asigna_equipo(ns,o,d){
         mostrar_hora($("#hora_inicio"));
         var edo=d.attr("edo");
+        $('#xnombre').attr('checked', true);$('#xmatricula').attr('checked', false);
+        $('#radiobusqueda').buttonset();
         //$("#importe").val(costoxhora);
         if(edo=='L'||edo=='O'||edo=='C'){         
             if(edo=='L'||edo=='C'){
@@ -646,12 +649,10 @@
         
         }else{
             mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png','No se puede asignar el equipo.','No se puede asignar el equipo ya que se encuentra en mantenimiento o descompuesto.');                              
-        }
-
+        }//resetear elementos del formulario
     }//fin asigna_equipo
 
     $(function() {
-    
         //calcular campos al dar clic en lo botones del spiner
         $('#hrhide .ui-spinner-down,#hrhide .ui-spinner-up').live('click',function(){
             var va=$('#horas');
@@ -663,8 +664,12 @@
         $("#b_numser_rt").button().click(function(){});
         $("#b_usuario_rt").button().click(function(){});
         
-        $("#xmatricula").button().click(function(){});
-        $("#xnombre").button().click(function(){});
+        $("#xmatricula").button().click(function(){
+            cargausuariosxmatricula();
+        });
+        $("#xnombre").button().click(function(){
+            cargausuarios();
+        });
         $("#radiobusqueda").buttonset();
         /** al pasar el mouse sobre cada td de la tabla agrega la clase ui-state-active de jqueryui*/
         $('.over tbody td').hover(

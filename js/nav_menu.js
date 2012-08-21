@@ -23,11 +23,7 @@ $(function() {
 
     $('#nav_rt').mousedown(function(event) {
         habre_link_clicks(event,'reservaciones_temporales');
-<<<<<<< HEAD
     });
-=======
-        });
->>>>>>> 2adbe261e977a5fc72c534e0b5b29062f1b1c1d3
         
     $("#nav_rf").mousedown(function(event) {
         redirect_to('Reservaciones_fijas');
@@ -36,14 +32,10 @@ $(function() {
         
     $("#nav_ue").mousedown(function(event) {
         habre_link_clicks(event,'ubicacion_equipos');
-<<<<<<< HEAD
     });
         
     $("#nav_us" ).mousedown(function(event) {
         habre_link_clicks(event,'usuarios');
-    });
-    $("#nav_ut" ).mousedown(function(event) {
-        habre_link_clicks(event,'tipos_usuario');
     });
         
     $("#nav_eq" ).mousedown(function(event) {
@@ -79,55 +71,6 @@ $(function() {
     $("#nav_sc").mousedown(function(event) {
         habre_link_clicks(event,'configura_sistema');
     });
-=======
-    }
-    );
-        
-    $("#nav_us" ).mousedown(function(event) {
-        habre_link_clicks(event,'usuarios');
-    }
-    );
-        
-    $("#nav_eq" ).mousedown(function(event) {
-        habre_link_clicks(event,'equipos');
-    }
-    );
-        
-    $("#nav_ac" ).mousedown(function(event) {
-        habre_link_clicks(event,'actividades');
-    }
-    );
-        
-    $("#nav_sw").mousedown(function(event) {
-        habre_link_clicks(event,'software');
-    }
-    );
-    $("#nav_es").mousedown(function(event) {
-        habre_link_clicks(event,'equipo_software');
-    }
-    );
-    $("#nav_as").mousedown(function(event) {
-        habre_link_clicks(event,'reservaciones_salas');
-    }
-    );
-        
-    $("#nav_rg").mousedown(function(event) {
-        habre_link_clicks(event,'reportes');
-    }
-    );
-    $("#nav_rp").mousedown(function(event) {
-        habre_link_clicks(event,'reportes_per');
-    }
-    );
-    $("#nav_su").mousedown(function(event) {
-        habre_link_clicks(event,'usuarios_sistema');
-    }
-    );
-    $("#nav_sc").mousedown(function(event) {
-        habre_link_clicks(event,'configura_sistema');
-    }
-    );
->>>>>>> 2adbe261e977a5fc72c534e0b5b29062f1b1c1d3
     $("#refresh").click(function(){
         window.location.reload();
     });

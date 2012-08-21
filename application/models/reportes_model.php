@@ -350,7 +350,8 @@ CASE actividades.TipoActividad
     }
 
     function datos_prestamo_controles($fecha_inicio, $fecha_fin, $encargado, $edo, $act, $salon){
-        $this->db->select('fecha, encargado, encargadoNombreAux,actividad,horaInicio,horaFin,salon, CASE entregado WHEN \'1\' THEN \'Entregado\' WHEN \'0\' THEN \'No Entregado\' END AS estado,observaciones',FALSE);
+        $this->db->select('fecha, usuariocc, usuarioNombreAux,actividad,horaInicio,horaFin,salon, 
+            usuarioSistemaPresta,usuarioSistemaEntrega,CASE entregado WHEN \'1\' THEN \'Entregado\' WHEN \'0\' THEN \'No Entregado\' END AS estado,observaciones',FALSE);
         if (($fecha_fin != '') && ($fecha_inicio != '')) {
             $where = "fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'";
             $this->db->where($where);
