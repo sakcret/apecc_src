@@ -37,13 +37,13 @@
 */
 
 $config['fecha_periodo_inicio']='2012-01-01';
-$config['fecha_periodo_fin']='2012-10-30';
+$config['fecha_periodo_fin']='2013-12-30';
 $config['actualizacion_cache']=FALSE;
 $config['costoxhora']=1.5;
 $config['respaldos_db']=TRUE;
 $config['formato_respaldo_db']="csv";
 $config['ver_detalles_actdb']=TRUE;
-$config['ver_menu_lt']=FALSE;
+$config['ver_menu_lt']=TRUE;
 
 /*
  * -------------------------------------------------------------------

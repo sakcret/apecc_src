@@ -286,6 +286,16 @@ class Usuarios extends CI_Controller {
         echo $u;
     }
 
+    function testunit() {
+        $this->load->library('unit_test');
+        $this->load->model('usuarios_model');
+        //$this->unit->run($this->usuarios_model->agrega_usuario('rlj8000', 'S0702030405', 'Antonio', 'lopez', 'lopez', 1, 320,'2012-12-04', '2012-12-04', 34, 0), true, 'Agregar un usuario');
+        //$this->unit->run($this->usuarios_model->modifica_usuario('aal1182', 'S0702030405', 'Liliana Berenice', 'lopez', 'lopez', 0, 0), true, 'Modificar un usuario');
+       // $this->unit->run($this->usuarios_model->elimina_usuario('zvw2139'), true, 'Eliminar un usuario');
+        $this->unit->run($this->getUsuario(), '{"lo":"jgk2133","ma":null,"no":"karen del carmen","ap":"juarez","am":"garcia","nc":"2133","tu":"1","st":"0"}', 'Obtener datos de un usuario');
+        echo $this->unit->report();
+    }
+
 }
 
 ?>

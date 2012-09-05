@@ -95,7 +95,7 @@ class Reservaciones_fijas extends CI_Controller {
         $idsala = $this->input->Post('id_sala');
         $p = @$_REQUEST['p'];
         list($act_id, $row, $col) = explode('_', $p);
-        list($act_id, $sala) = explode('%', $act_id);
+        list($act_id) = explode('%', $act_id);
         $this->load->model('reservaciones_fijas_model');
         if (is_numeric($row) && is_numeric($col) && is_numeric((int) $idsala)) {
              $sepudo= $this->reservaciones_fijas_model->eliminahorario((int) $act_id, $row, $col, (int) $idsala);

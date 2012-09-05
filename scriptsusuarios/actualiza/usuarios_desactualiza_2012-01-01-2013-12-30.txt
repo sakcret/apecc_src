@@ -1,0 +1,1 @@
+smbpasswd -d aay1985

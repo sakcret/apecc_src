@@ -24,6 +24,10 @@ $(function() {
     $('#nav_rt').mousedown(function(event) {
         habre_link_clicks(event,'reservaciones_temporales');
     });
+    
+    $('#nav_ut').mousedown(function(event) {
+        habre_link_clicks(event,'tipos_usuario');
+    });
         
     $("#nav_rf").mousedown(function(event) {
         redirect_to('Reservaciones_fijas');

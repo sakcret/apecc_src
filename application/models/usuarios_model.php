@@ -8,7 +8,7 @@ class Usuarios_model extends CI_Model {
     }
 
     function getUsuario($login) {
-        $query = $this->db->where('login', $login);
+        $this->db->where('login', $login);
         $query = $this->db->get('usuarios');
         return $query;
     }
