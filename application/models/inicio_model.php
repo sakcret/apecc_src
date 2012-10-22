@@ -66,8 +66,15 @@ CASE actividades.TipoActividad
         $where_periodo = 'FechaFin BETWEEN \'' . $this->config->item('fecha_periodo_inicio') . '\' and \'' . $this->config->item('fecha_periodo_fin') . '\'';
         $this->db->where($where_periodo);
         $this->db->where('Dia', date('N'));
-        return $this->db->get();
+         return $this->db->get();
+         //die($this->db->last_query());
     }
+    /*SELECT actividades.Actividad AS actividad, CASE actividades.TipoActividad WHEN '1' THEN 'Curso' WHEN '0' THEN 'Clase' END AS tipoact, CONCAT(academicos.Nombre, ' ', academicos.ApellidoPaterno, ' ', academicos.ApellidoMaterno) AS encargado, CASE Hora WHEN '1' THEN '07:00' WHEN '2' THEN '08:00' WHEN '3' THEN '09:00' WHEN '4' THEN '10:00' WHEN '5' THEN '11:00' WHEN '6' THEN '12:00' WHEN '7' THEN '13:00' WHEN '8' THEN '14:00' WHEN '9' THEN '15:00' WHEN '10' THEN '16:00' WHEN '11' THEN '17:00' WHEN '12' THEN '18:00' WHEN '13' THEN '19:00' WHEN '14' THEN '20:00' WHEN '15' THEN '21:00' WHEN '16' THEN '22:00' END AS horainicio, CASE Hora WHEN '1' THEN '08:00' WHEN '2' THEN '09:00' WHEN '3' THEN '10:00' WHEN '4' THEN '11:00' WHEN '5' THEN '12:00' WHEN '6' THEN '13:00' WHEN '7' THEN '14:00' WHEN '8' THEN '15:00' WHEN '9' THEN '16:00' WHEN '10' THEN '17:00' WHEN '11' THEN '18:00' WHEN '12' THEN '19:00' WHEN '13' THEN '20:00' WHEN '14' THEN '21:00' WHEN '15' THEN '22:00' WHEN '16' THEN '23:00' END AS horafin, salas.Sala AS sala, concat ('B', actividad_academico.Bloque, '/S', actividad_academico.Seccion) AS bloqueseccion, actividades.FechaInicio AS inicio, actividades.FechaFin AS fin FROM (`reservacionesfijas`) LEFT JOIN `salas` ON `salas`.`idSala`= `reservacionesfijas`.`Sala` LEFT JOIN `actividad_academico` ON `actividad_academico`.`IdActividadAcademico`= `reservacionesfijas`.`IdActividadAcademico` LEFT JOIN `academicos` ON `academicos`.`NumeroPersonal`=`actividad_academico`.`NumeroPersonal` LEFT JOIN `actividades` ON `actividades`.`idActividad`=`actividad_academico`.`IdActividad` WHERE `FechaFin` BETWEEN '2012-01-01' AND '2013-12-30' AND `Dia` = '3'
+UNION SELECT NombreActividad AS actividad,'Reservacion de Sala'AS tipoact, concat(academicos.`Nombre`,' ',academicos.`ApellidoPaterno`,' ',academicos.`ApellidoMaterno`) AS encargado,
+HoraInicio,HoraFin,Sala,'No Aplica' AS bs,reservacionessalas.FechaInicio,reservacionessalas.FechaFin
+FROM `reservacionessalas`
+LEFT JOIN academicos ON academicos.`NumeroPersonal`=reservacionessalas.`NumeroPersonal`
+LEFT JOIN salas ON salas.`idSala`=reservacionessalas.`idSala`*/
 
 }
 

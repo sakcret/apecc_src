@@ -155,47 +155,32 @@
                 <thead>
                     <tr>
                         <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
+                        <th width="80%">Texto a buscar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
                         <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                     </tr>
                     <tr id="filter_col1">
                         <td align="left">Login</td>
                         <td align="center"><input type="text"     name="col1_filter" id="col1_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col1_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col1_smart" checked></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Matricula</td>
                         <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
-                    </tr>
                     <tr id="filter_col3">
-                        <td align="left">Nombre</td>
+                        <td align="left">Nombre del usuario</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
                         <td align="left">Tipo de usuario</td>
                         <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
                     </tr>
                     <tr id="filter_col5">
                         <td align="left">Fecha de creaci&oacute;n</td>
                         <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
                     </tr>
                 </tbody>
             </table>
@@ -277,23 +262,13 @@
             obj.val(respuesta);
         }
     }
-    /*Funcion para aplicar filtro global en el datatable usuarios*/
+  /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtusuarios').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtusuarios').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable usuarios*/
-    function fnFilterColumn ( i ){
-        $('#dtusuarios').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtusuarios').dataTable().fnFilter( obj.val(),i, false, true);
     }
     
     /*funcion que actualiza el eestatus de un usuario tomando como referencia el atributo cambia_edo de la imagen
@@ -414,11 +389,11 @@
                     var esMaestro='no';
                     allFields.removeClass( "ui-state-error" );
                     bValid = bValid && verificaLongitud(nombre,"Nombre",1,20,tips);
-                    bValid = bValid && validaCampoExpReg(nombre,/^[A-Za-z\s áéíóúñÁÉÍÓÚÑ]*$/,"Por favor ingresa un 'Nombre' válido.",tips );
+                    bValid = bValid && validaCampoExpReg(nombre,/^[A-Za-z\s áéíóúñÁÉÍÓÚñÑ]*$/,"Por favor ingresa un 'Nombre' válido.",tips );
                     bValid = bValid && verificaLongitud(apaterno,"Apellido Paterno",1,15,tips);
-                    bValid = bValid && validaCampoExpReg(apaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚÑ]*$/,"Por favor ingresa un 'Apellido Paterno' válido." ,tips);
+                    bValid = bValid && validaCampoExpReg(apaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚñÑ]*$/,"Por favor ingresa un 'Apellido Paterno' válido." ,tips);
                     bValid = bValid && verificaLongitud(amaterno,"Apellido Materno",1,15,tips);
-                    bValid = bValid && validaCampoExpReg(amaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚÑ]*$/,"Por favor ingresa un 'Apellido Materno' válido.",tips );
+                    bValid = bValid && validaCampoExpReg(amaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚñÑ]*$/,"Por favor ingresa un 'Apellido Materno' válido.",tips );
                     if(matesobligam) {
                         esMaestro='no';
                         bValid = bValid && campoVacio(matricula,"Matricula",tips);
@@ -486,30 +461,14 @@
             }
         });
         
-        /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col1_filter").keyup( function() { fnFilterColumn( 0 ); } );
-        $("#col1_regex").click(  function() { fnFilterColumn( 0 ); } );
-        $("#col1_smart").click(  function() { fnFilterColumn( 0 ); } );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
+          //desasignar el evento keyup al filtro global del datatables y asignarle el cambio al text con typewach
+        //$('#dtusuarios_filter .buscar_dt').unbind('keyup');
+          /*Aplicar filtro al datatables (busqueda avanzada)*/
+         $("#global_filter").typeWatch( { callback:function(){ fnFilterGlobal()},wait:750,highlight:true,captureLength:0} );    
+        $("#col1_filter").typeWatch( {callback:function(){ fnFilterColumn( 0, $("#col1_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); }, wait:750,highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); },wait:750,highlight:true,captureLength:0} ); 
                           
         /*ocultar y mostrar las ociones de filtro del datatable usuarios(busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -545,7 +504,16 @@
          * tipo de paginacion ademas de ciertos parametros que hacen que se procesen
          * los datos del datatable de manera asincrona con el servidor*/
         dt_usuarios=$('#dtusuarios').dataTable( {
-            "bJQueryUI": true,              
+            "bJQueryUI": true, 
+            "aoColumns": [ 
+                /*0-. login*/null,
+                /*1 matricula*/null,
+                /*2 Nombre completo*/null,                
+                /*3 tipo de usuario*/null,
+                /*5 fechacrea*/{"bVisible":    false },
+                /*5 fechaexp*/{"bVisible":    false },
+                /*4 estatus*/null,
+                /*5 opc*/{"bSortable": false}],
             "oLanguage":{
                 "sProcessing":   "<div class=\"ui-widget-header boxshadowround\"><strong>Procesando...</strong><img src='./images/load.gif'./></div>",
                 "sLengthMenu":   "Mostrar _MENU_ registros",
@@ -564,11 +532,7 @@
                 }
             },
             "aLengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "Todos"]],
-            "sPaginationType": "full_numbers",            
-            "oTableTools": {
-                "sSwfPath": "swf/copy_cvs_xls_pdf.swf"
-            },
-            
+            "sPaginationType": "full_numbers",   
             "bProcessing": true,
             "bServerSide": true,
             "sAjaxSource": "index.php/usuarios/datosUsuarios",
@@ -582,19 +546,6 @@
                 } );
             }
         } );
-        
-        verOcultarColDT(4,dt_usuarios);
-        verOcultarColDT(5,dt_usuarios);
-       
-     
-        /* Al dar clicen el boton con id delete borra la fila seleccionada
-    $('#delete').click( function() {
-        var anSelected = fnGetSelected( oTable );
-        oTable.fnDeleteRow( anSelected[0] );
-    } );*/
-        
-         
-       
         
         /*funcion que obtiene el numero maximo de credencial asignado, para calcular
          *el login y numero de credencial para un nuevo usuario esto a travez de una 
@@ -637,24 +588,12 @@
         .add( apaterno).add( amaterno).add( ncred).add( fechaexpira).add( foto).add( pass),
         tips = $( ".form_tips" );
         
-        nombre.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });
-        apaterno.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });
-        amaterno.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });
-        matricula.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });
-        fechaexpira.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });   
-        tipou.blur(function(){           
-            login.val(calcLogin(nombre,apaterno,amaterno));              
-        });
+        nombre.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno)); });
+        apaterno.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno)); });
+        amaterno.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno)); });
+        matricula.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno)); });
+        fechaexpira.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno));  });   
+        tipou.blur(function(){ login.val(calcLogin(nombre,apaterno,amaterno)); });
 	
         $( "#f_agregar_usuario" ).dialog({
             autoOpen: false,
@@ -736,23 +675,20 @@
         
         //Asigna accion al boton para actualizar datatables
         $("#btn_actualiza").button().click(function(){ 
-            dt_usuarios.fnDraw();
-            //location.reload(true);               
+            dt_usuarios.fnDraw();           
         });
-        
         $('#btn_modificar').button().click(function() {
             if((row_select!=0)&&(row_select!='')){
                 modifica_usuario(row_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un usuario  ! ','./images/msg/warning.png','Selecciona un usuario por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un usuario  ! ','./images/msg/warning.png','Selecciona un usuario.','');
             }
         } );
-
         $('#btn_eliminar').button().click(function() {
             if((row_select!=0)&&(row_select!='')){
                 elimina_usuario(row_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un usuario  ! ','./images/msg/warning.png','Selecciona un usuario por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un usuario  ! ','./images/msg/warning.png','Selecciona un usuario.','');
             }
         } );
     });

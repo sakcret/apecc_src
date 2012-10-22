@@ -6,15 +6,15 @@ if (!defined('BASEPATH'))
 class Reservaciones_salas extends CI_Controller {
 
     public function index() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         $permisos_us = $this->session->userdata('puedo');
         if (!$login) {
             redirect('acceso/acceso_denegado');
         }
         //si el usuario no tiene ningún permiso asignado
-        if($permisos_us==''){
-             redirect('acceso/acceso_home/inicio');
+        if ($permisos_us == '') {
+            redirect('acceso/acceso_home/inicio');
         }
         $this->load->library('utl_apecc');
         //obtener el arreglo con los permisos para el usuario del sistema
@@ -27,11 +27,11 @@ class Reservaciones_salas extends CI_Controller {
             //si en el arreglo de permisos esta la clave de usuarios
             if (array_key_exists($rec, $ptemp)) {
                 $permisos = $this->utl_apecc->getCSS_prm($ptemp[$rec], $prm_array);
-            }else{
+            } else {
                 redirect('acceso/acceso_home/inicio');
             }
         } else {
-            $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array);//si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
+            $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array); //si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
         }
         $contenido['permisos'] = $permisos;
         $this->load->model('reservaciones_salas_model');
@@ -45,7 +45,7 @@ class Reservaciones_salas extends CI_Controller {
 
     function datosReservSalas() {
         $sIndexColumn = "IdReservSala";
-        $aColumns = array($sIndexColumn, 'Sala', 'NombreActividad', 'encargado', 'FechaInicio', 'FechaFin', 'HoraInicio', 'HoraFin','Estado');
+        $aColumns = array($sIndexColumn, 'Sala', 'NombreActividad', 'encargado', 'FechaInicio', 'FechaFin', 'HoraInicio', 'HoraFin', 'Estado');
         $sTable = "datos_reservsalas";
         $sLimit = "";
         if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -114,7 +114,7 @@ class Reservaciones_salas extends CI_Controller {
                         if ($aRow[$aColumns[$i]] == 'A') {
                             $row[] = '<img src="images/status_actualizado.png" cambia_edo="I" class="opc" title="Cambiar estado" alt="Activa" onclick="cambia_estado($(this),\'' . $id . '\')"/>';
                         } else {
-                             $row[] = '<img src="images/status_no_actualizado.png" cambia_edo="A"  class="opc" title="Cambiar estado" alt="Activa" onclick="cambia_estado($(this),\'' . $id . '\')"/>';
+                            $row[] = '<img src="images/status_no_actualizado.png" cambia_edo="A"  class="opc" title="Cambiar estado" alt="Activa" onclick="cambia_estado($(this),\'' . $id . '\')"/>';
                         }
                     } else {
                         $row[] = $aRow[$aColumns[$i]];
@@ -166,10 +166,10 @@ class Reservaciones_salas extends CI_Controller {
             echo 'Error al actualizar la reservaci&oacute;n de la sala.';
         }
     }
-    
+
     function actualizaEstadoRS() {
         $this->load->model('reservaciones_salas_model');
-        $id= $this->input->Post("id");
+        $id = $this->input->Post("id");
         $st = $this->input->Post("st");
         $sepudo = $this->reservaciones_salas_model->actualiza_estado($id, $st);
         if ($sepudo)
@@ -208,11 +208,32 @@ class Reservaciones_salas extends CI_Controller {
         foreach ($rows->result() as $row) {
             $jsondata['no'] = $row->NombreActividad;
             $jsondata['hi'] = $row->HoraInicio;
-            $jsondata['hf'] =  $row->HoraFin;
-            $jsondata['fi'] = $this->utl_apecc-> getdate_SQL($row->FechaInicio);
-            $jsondata['ff'] = $this->utl_apecc-> getdate_SQL($row->FechaFin);
+            $jsondata['hf'] = $row->HoraFin;
+            $jsondata['fi'] = $this->utl_apecc->getdate_SQL($row->FechaInicio);
+            $jsondata['ff'] = $this->utl_apecc->getdate_SQL($row->FechaFin);
             $jsondata['sa'] = $row->idSala;
             $jsondata['ec'] = $row->NumeroPersonal;
+        }
+        echo json_encode($jsondata);
+    }
+
+    function validaReservSala() {
+        $this->load->model("reservaciones_salas_model");
+        $this->load->library("utl_apecc");
+        $horai= $this->input->Post('horai');
+        $horaf= $this->input->Post('horaf');
+        $sala= $this->input->Post('sala');
+        $result = $this->reservaciones_salas_model->validaReservSala($sala, $this->utl_apecc->gethora($horai),$this->utl_apecc->gethora($horaf));
+        $jsondata = false;
+        $index = 0;
+        if ($result->num_rows()) {
+            foreach ($result->result() as $d) {
+                $jsondata[$index]['hi'] = $d->horainicio;
+                $jsondata[$index]['hf'] = $d->horafin;
+                $jsondata[$index]['ac'] = $d->actividad;
+                $jsondata[$index]['di'] = $d->dia;
+                $index++;
+            }
         }
         echo json_encode($jsondata);
     }

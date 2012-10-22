@@ -1,1 +1,1 @@
-smbpasswd -d aay1985
+smbpasswd -d rmr1838

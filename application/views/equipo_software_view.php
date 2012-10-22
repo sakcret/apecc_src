@@ -43,6 +43,22 @@
                 </tr>
             </table>
         </div>
+        <div class="row">
+            <div class="threecol">
+                <input type="text" name="busqueda_equ" id="busqueda_equ" class="text">
+            </div>
+            <div class="twocol">
+                <button id="btn_busuqeda_eq" style=" margin-left: 5px;"><img src="./images/pc_edos/pc.ico"/>&nbsp;Buscar equipo</button>
+            </div>
+            <div class="threecol">
+                <button id="btn_clear_eq"><img src="./images/clear.png"/>&nbsp;Limpiar busqueda</button>
+            </div>
+            <div class="fourcol last">
+                <img width="19" src="./images/pc_edos/pc_sos.png"/>&nbsp;Sistemas operativos&nbsp;
+                    <img width="19" src="./images/pc_edos/pc_sw.png"/>&nbsp;Software&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img width="19" src="./images/pc_edos/pc_dt.png"/>&nbsp;Caracter&iacute;sticas
+            </div>
+        </div>
         <?php
 
         function getv_key($s, $array) {
@@ -77,12 +93,12 @@
         $porcentaje = (100 / $numreg) - 0.5;
         echo ' <div id="tabs">' . PHP_EOL . '<ul>' . PHP_EOL;
         for ($is = 0; $is < $numreg; $is++) {
-            echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%"  href="#tabs-' . $s[$is]["idSala"] . '">&nbsp;&nbsp;Sala ' . $s[$is]["Sala"] . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>' . PHP_EOL;
+           echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%"  id="tabf_' . $s[$is]["idSala"] . '" onclick="sala_actual(' . $s[$is]["idSala"] . ')" href="#tabs-' . $s[$is]["idSala"] . '">Sala ' . $s[$is]["Sala"] . '</a></li>' . PHP_EOL;
         }
         echo '</ul>' . PHP_EOL;
         for ($i = 0; $i < $numreg; $i++) {
             $tmp_sal = $s[$i]["idSala"];
-            $num_eq=0;
+            $num_eq = 0;
             ?>
 
             <div id="tabs-<?php echo $s[$i]["idSala"]; ?>">
@@ -122,7 +138,7 @@
                                             (array_key_exists(4, $valores)) ? $estado = $valores[4] : $estado = '';
 
                                             echo '<td width="130" height="120" class="ui-state-focus">';
-                                            if ($estado != ''&&$numeroSerie != '') {
+                                            if ($estado != '' && $numeroSerie != '') {
                                                 echo '<div align="center" class="label_numser">' . $numeroSerie . '</div>
                                                 <div style="margin-top:0px  !important;" align="center" onclick="asigna_sw(\'' . $numeroSerie . '\',\'' . $estado . '\')" id="' . $numeroSerie . '" edo="' . $estado . '">' .
                                                 '<img style="width: 100px !important;" id="' . $numeroSerie . '_img" src="./images/pc_edos/pc_' . $estado . '.png"/></div>
@@ -154,7 +170,7 @@
                                 </tbody>
                             </table>
                             <div style=" " class="ui-grid-footer ui-widget-header ui-corner-bottom ui-helper-clearfix">
-                                Has seleccionado el equipo localizado en: <span id="<?php echo $s[$i]["idSala"]; ?>info">--------</span>&nbsp;<span class="total-eq"><?php echo $num_eq;?> Equipos</span>
+                                Has seleccionado el equipo localizado en: <span id="<?php echo $s[$i]["idSala"]; ?>info">--------</span>&nbsp;<span class="total-eq"><?php echo $num_eq; ?> Equipos</span>
                             </div>
                         </div> <!--fin del grid-->
                     </center>
@@ -174,29 +190,39 @@
     };
     function asigna_sw(ns,edo){
         $('#dialog_asigna_sw').addClass('prm_w');
-       // if(edo=='L'){ por propuesta del clinte se evita esta validacion para asignar software independientemente del estado del
-            $('#num_serie').val(ns);
-            try{
-                sistemas_operativos(ns);
-                $(function() {
-                    $('.check').checkbox();
-                    $( "#accordion" ).accordion({icons: icons,autoHeight: false,navigation: true});
-                });
-                software_equipo(ns);
-                $(function() {
-                    $('.check').checkbox();
-                    $( "#accordion" ).accordion({icons: icons,autoHeight: false,
-            navigation: true});
-                });
-            }catch(e){}
-            $("#dialog:ui-dialog").dialog( "destroy" );
-            $("#dialog_asigna_sw").dialog("open");
+        // if(edo=='L'){ por propuesta del clinte se evita esta validacion para asignar software independientemente del estado del
+        $('#num_serie').val(ns);
+        try{
+            sistemas_operativos(ns);
+            $(function() {
+                $('.check').checkbox();
+                $( "#accordion" ).accordion({icons: icons,autoHeight: false,navigation: true});
+            });
+            software_equipo(ns);
+            $(function() {
+                $('.check').checkbox();
+                $( "#accordion" ).accordion({icons: icons,autoHeight: false,
+                    navigation: true});
+            });
+        }catch(e){}
+        $("#dialog:ui-dialog").dialog( "destroy" );
+        $("#dialog_asigna_sw").dialog("open");
         /*}else{
             mensaje($( "#mensaje" ),'Asignaci&oacute;n  de Software','./images/msg/warning.png','<b>No se puede asignar software al equipo</b> <hr class="boxshadowround"/>','No se puede asignar software al equipo <b>'+ns+'</b>, ya que se encuentra <b>'+getStringEdo(edo)+'</b>.');
         }*/
     }
     
     $(function() {
+        $('#btn_busuqeda_eq').live('click',function(){
+             $('#busqueda_equ').val($('#busqueda_equ').val().toUpperCase());
+            $('div').removeClass('ui-state-highlight');var ns=$('#busqueda_equ').val();$('#'+ns).addClass('ui-state-highlight');
+            var respuesta=ajax_peticion_json("index.php/ubicacion_equipos/findEquipo/"+ns,'');
+            if(respuesta!=false&&respuesta!=null){
+                if(respuesta.sala!=''&&respuesta.sala!=null&&respuesta.sala!='null'){$('#tabf_'+respuesta.sala).click();}else{mensaje($( "#mensaje" ),'Equipo en almac&eacute;n ','./images/msg/info.png','El equipo <b>'+ns+'</b>Se encuentra en almac&eacute;n. <hr class="boxshadowround"> Puede asignarlo a una sala buscandolo en la tabla de almac&eacute;n situada en la parte izquierda de esta p&aacute;gina.','',500,false); }
+            }else{notificacion_tip("./images/msg/no.png","No se encontro el equipo","No se pudo localizar el equipo <b>"+ns+'</b>.');}
+        });
+        $('#btn_clear_eq').live('click',function(){ $('div').removeClass('ui-state-highlight');$('#busqueda_equ').val(''); });
+        
         $("#dialog_asigna_sw").dialog({
             autoOpen: false,
             resizable: true,

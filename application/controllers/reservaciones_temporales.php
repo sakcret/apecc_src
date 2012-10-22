@@ -138,6 +138,7 @@ class Reservaciones_temporales extends CI_Controller {
         }
         echo $u;
     }
+    
     //funcion que devuelve los usuarios en forma de <option></option> para el combo de usuarios filtrados
     //por el tipo de usuario seleccionado ademas de seleccionar solo aquellos donde el campo actualiza=1
     function usuarios_matricula() {

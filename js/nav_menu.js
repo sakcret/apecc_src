@@ -30,7 +30,7 @@ $(function() {
     });
         
     $("#nav_rf").mousedown(function(event) {
-        redirect_to('Reservaciones_fijas');
+        redirect_to('reservaciones_fijas');
     }
     );
         
@@ -121,7 +121,7 @@ $(function() {
     $('#nav_ad').click(function(){
         mensaje($( "#mensaje" ),'Acerca de APECC','./images/BANNER_APECC.png"'
             ,''
-            ,'<br><br><br><b>APECC v1.0<br>Licenciado bajo GPL v2</b><br><hr class="boxshadowround"><center>UNIVERSIDAD VERACRUZANA<br>'+
+            ,'<br><br><br><b>APECC v1.3<br>Licenciado bajo GPL v2</b><br><hr class="boxshadowround"><center>UNIVERSIDAD VERACRUZANA<br>'+
             'Facultad de Estad&iacute;stica e Inform&aacute;tica<br>Jos&eacute; Adrian Ruiz Carmona<br>sakcret@gmail.com<br></center>'+
             '<hr class="boxshadowround"><span style="font-size: 10px !important;">Proyecto Desarrollado a cargo de:<br> &nbsp;&nbsp;&nbsp;- MCC Fredy Castañeda Sánchez<br>&nbsp;&nbsp;&nbsp;- LI Martha Elizabet Domínguez Bárcenas<br>Idea original: Issac Salazar Herrera</span>',400,false);
     });

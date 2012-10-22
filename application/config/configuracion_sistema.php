@@ -39,11 +39,11 @@
 $config['fecha_periodo_inicio']='2012-01-01';
 $config['fecha_periodo_fin']='2013-12-30';
 $config['actualizacion_cache']=FALSE;
-$config['costoxhora']=1.5;
+$config['costoxhora']=1.0;
 $config['respaldos_db']=TRUE;
 $config['formato_respaldo_db']="csv";
 $config['ver_detalles_actdb']=TRUE;
-$config['ver_menu_lt']=TRUE;
+$config['ver_menu_lt']=FALSE;
 
 /*
  * -------------------------------------------------------------------
@@ -53,8 +53,8 @@ $config['ver_menu_lt']=TRUE;
 $config['sis_encargados_cc']	=  array("Jefe del Centro de Computo: LI Martha Elizabet Domínguez Bárcenas","MCC Fredy Castañeda Sánchez"); 
 $config['sis_desarralladores']	=   array("Desarrollador: José Adrian Ruiz Carmona","Idea original: Issac Salazar Herrera"); 
 $config['sis_mantenimiento']	=   array("",""); 
-$config['sis_contacto']	=   array("Correo: sakcret_arte8@hotmail.com"); 
-$config['sis_version']	=   "1.0"; 
+$config['sis_contacto']	=   array("Correo1: sakcret_arte8@hotmail.com "); 
+$config['sis_version']	=   "1.3"; 
 /*
 | -------------------------------------------------------------------
 | PERMISOS DEL SISTEMA
@@ -104,11 +104,11 @@ $config['clvp_proyectores']='prc';
  */
 $config['roles']=array( 
     'A'=>array('rol'=>'Administador','clave'=>'A','permisos'=>'usu>t|ust>t|act>t|eqs>t|equ>t|eqb>t|rpg>t|rpp>t|rep>t|rsf>t|rss>t|rst>t|swr>t|uqs>t|siu>t|sic>t|prc>t'),
-    'C'=>array('rol'=>'Encargado del Centro de Computo','clave'=>'C','permisos'=>'usu>t|act>t|eqs>t|equ>t|eqb>t|rpg>t|rpp>t|rep>t|rsf>t|rss>t|rst>t|swr>t|uqs>t'),
-    'S'=>array('rol'=>'Servicio Social','clave'=>'S','permisos'=>'usu>ac|act>v|esw>t|equ>t|rep>t|rsf>t|rss>t|rst>t|swr>abc|ueq>t'),
-    'M'=>array('rol'=>'Academico','clave'=>'M','permisos'=>'usu>v|act>v|eqs>t|equ>v|eqb>t|rpg>t|rpp>t|rep>t|rsf>t|rss>t|rst>t|swr>t|uqs>t'),
-    'I'=>array('rol'=>'Invitado','clave'=>'I','permisos'=>'usu>v|act>v|eqs>v|equ>v|eqb>v|rpg>v|rpp>v|rep>v|rsf>v|rss>v|rsv>v|swr>v|uqs>v'),
-    'L'=>array('rol'=>'Solo Lectura','clave'=>'L','permisos'=> 'usu>v|act>v|eqs>v|equ>v|eqb>v|rpg>v|rpp>v|rep>v|rsf>v|rss>v|rsv>v|swr>v|uqs>v')
+    'C'=>array('rol'=>'Auxiliar Técnico','clave'=>'C','permisos'=>'usu>t|ust>t|act>t|eqs>t|equ>t|eqb>t|rsf>t|rss>t|rst>t|swr>t|uqs>t|prc>t'),
+    'S'=>array('rol'=>'Servicio Social','clave'=>'S','permisos'=>'rst>t|eqb>t|swr>t|usu>a'),
+    'T'=>array('rol'=>'Técnico Académico','clave'=>'T','permisos'=>'usu>c')
+   // 'M'=>array('rol'=>'Academico','clave'=>'M','permisos'=>'usu>v|act>v|eqs>t|equ>v|eqb>t|rpg>t|rpp>t|rep>t|rsf>t|rss>t|rst>t|swr>t|uqs>t')
+    //'I'=>array('rol'=>'Invitado','clave'=>'I','permisos'=>'usu>v|act>v|eqs>v|equ>v|eqb>v|rpg>v|rpp>v|rep>v|rsf>v|rss>v|rsv>v|swr>v|uqs>v')
     );
 
 $config['ruta_script']='/var/www/credencial/usuarios/';

@@ -20,7 +20,7 @@ class Actualiza_estado_db_model extends CI_Model {
         $this->db->join("actividades", "actividad_academico.IdActividad=actividades.idActividad","LEFT");
         $this->db->join("academicos", "academicos.NumeroPersonal=actividad_academico.NumeroPersonal","LEFT");
         $this->db->where("Dia", $dia);
-        $this->db->where("Hora", $hora);
+        $this->db->where("Hora", $hora);  
         $datos = $this->db->get();
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -113,9 +113,17 @@ join academicos on reservacionessalas.NumeroPersonal=academicos.NumeroPersonal
 where Estado=\'A\' '.$wheredate);
     }
 
-    function terminaRF($sala) {
+    function terminaRF($sala) { 
         $datos = array('Estado' => 'T');
         $this->db->trans_begin();
+        $this->db->select('NumeroSerie as numserie');
+        $this->db->from('reservacionesmomentaneas');
+        $this->db->where('Estado', 'A');
+        $this->db->where('SalaAux', $sala);
+        $this->db->where('TipoActividadAux',1);
+        $this->db->or_where('TipoActividadAux',0);
+        $equipos=$this->db->get();
+        
         $this->db->where('Estado', 'A');
         $this->db->where('SalaAux', $sala);
         $this->db->where('TipoActividadAux',1);
@@ -126,7 +134,7 @@ where Estado=\'A\' '.$wheredate);
             $result = FALSE;
         } else {
             $this->db->trans_commit();
-            $result = TRUE;
+            $result = $equipos;
         }
         return $result;
     }

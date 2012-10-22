@@ -1,4 +1,33 @@
 <script>
+    function borra_contenido(ruta){
+        $("#mensajeborra").html('<p><span style="float:left; margin:0 7px 0px 0;"><img src="./images/msg/info.png"/></span>'+
+            '</p><p style="font-size: 13px;"><strong>Importante !</strong> <br>SE ELIMINAR&Aacute;N LOS TODOS ARCHIVOS DE '+ruta);
+            
+        $("#dialog:ui-dialog").dialog( "destroy" );
+        $("#mensajeborra").dialog({
+            autoOpen: false,
+            width:550,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "He leido las consideraciones deseo borrar los archivos": function() {
+                    var urll="index.php/configura_sistema/borraArchivos";
+                    var respuesta = ajax_peticion(urll,'url='+ruta);
+                    if (respuesta=='ok'){
+                        notificacion_tip("./images/msg/ok.png","Eliminar archivos","Se han eliminado los archivos de "+ruta);
+                    }else{
+                        mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la pagina e intenta de nuevo..');
+                    }
+                    $( this ).dialog( "close" );
+                },
+                Cancelar: function() {
+                    $( this ).dialog( "close" );
+                }
+            },close:function(){
+                $("#mensaje").html();
+            }
+        }).dialog("open"); 
+    }
     $(function() {
         $( "#tabs" ).tabs();
         $( "#bt_reset" ).button();
@@ -35,7 +64,6 @@
                         "He leido las consideraciones deseo continuar": function() {
                             var datos =$('#form_cambia_periodo').serialize();
                             var urll="index.php/configura_sistema/cambiaPeriodo";
-                            alert(datos);
                             var respuesta = ajax_peticion(urll,datos);
                             if (respuesta=='ok'){
                                 $( "#respuesta" ).html('<div class="ui-widget">'+
@@ -46,7 +74,7 @@
                                     '</div>');
                                 notificacion_tip("./images/msg/ok.png","Cambiar Periodo","El periodo se ha cambiado.");
                             }else{
-                                mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la pagina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.');
+                                mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la pagina e intenta de nuevo. ');
                             }
                     
                             $( this ).dialog( "close" );
@@ -61,6 +89,15 @@
             }
         });
         
+        $( "#respaldodb" ).click(function(){
+       var nombre=$('#nombrerespaldo').val();
+       if($('#nombrerespaldo').val()!=''&&$('#nombrerespaldo').val()!=null){
+        open_in_new('configura_sistema/respaldoBD/'+nombre+'/'+$('[name="endonde"]').val());
+    }else{
+        open_in_new('configura_sistema/respaldoBD/'+'null'+'/'+$('[name="endonde"]').val());
+    }
+        });
+       
         $( "#bt_guarda_conf_gral" ).click(function(){
             var 
             costo=$('#costo_reservaciones'),
@@ -84,7 +121,7 @@
                         '</div>');
                     notificacion_tip("./images/msg/ok.png","Modificar Configuraciones","Se modificar&oacute;n las configuraciones satisfactoriamente.");
                 }else{
-                    mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la pagina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.');
+                    mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la pagina e intenta de nuevo. ');
                 }
             }
             allFields.removeClass( "ui-state-error" );
@@ -135,16 +172,16 @@ if ($s) {
 </style>
 <div class="row">
     <div id="mensajeper" style="display: none;" title="Cambiar periodo"></div>
+    <div id="mensajeborra" style="display: none;" title="Eliminar archivos"></div>
     <br>
     <div class=" twelvecol last">
         <div id="tabs">
             <ul>
                 <li><a href="#tabs-1">Configuraciones Generales</a></li>
-                <!--li><a href="#tabs-2">Base de Datos</a></li>
-                <li><a href="#tabs-3">Permisos</a></li-->
+                <li><a href="#tabs-2">Base de Datos</a></li>
+                <li><a href="#tabs-3">Usuarios del centro de c&oacute;mputo</a></li>
             </ul>
             <div id="tabs-1">
-
                 <br>
                 <div id="f_configura_periodo" class="pad30 ui-widget-content ui-corner-all"  Style=" padding-top: 0px !important">
                     <div align="center" Style="margin: 5px; padding: 5px;" class="ui-corner-all ui-widget-header boxshadowround">Cambiar periodo</div>
@@ -165,9 +202,7 @@ if ($s) {
                                         <input type="text" name="fecha_inicio_r1" id="fecha_inicio_r1" value="<?php echo $this->utl_apecc->getdate_SQL($this->config->item('fecha_periodo_inicio')); ?>" class="datepicker-ui ui-corner-all height_widget ui-widget-content"></td>
                                     <td width="25%"><label for="fecha_fin_r1">Fecha de Fin del Periodo:</label><br>
                                         <input type="text" name="fecha_fin_r1" id="fecha_fin_r1" value="<?php echo $this->utl_apecc->getdate_SQL($this->config->item('fecha_periodo_fin')); ?>" class="datepicker-ui ui-corner-all height_widget ui-widget-content" ></td>
-                                    <td colspan="2" id="respuesta">
-
-                                    </td>
+                                    <td colspan="2" id="respuesta"></td>
                                 </tr>
                             </table>
                             <input type="reset"  value="Limpiar Configuraciones" class="hide" id="bt_reset">
@@ -199,13 +234,62 @@ if ($s) {
                 </div>
 
             </div>
-            <!--div id="tabs-2">
+            <div id="tabs-2">
+                <div class="row">
+                    <div class=" fourcol">
+                        <table id="descdb" width="100%">
+                            <tr>
+                                <td class=" ui-widget-content paddingall6">Plataforma:</td>
+                                <td class=" ui-widget-content paddingall6"><?php echo $plataforma . ' ' . $version; ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class=" eightcol last">
+                        Nombre del Respaldo de la pase de datos(opcional):
+                        <form id="formrespaldo">
+                            <input type="text" id="nombrerespaldo" class="text" name="nombrerespaldo" placeholder="Proporcione el nombre del respaldo"><br>
+                            <input type="radio" name="endonde" value="descargar" checked> Descargar
+                            <input type="radio" name="endonde" value="server" > Guardar en servidor
+                        </form>
+                        <button id="respaldodb">&nbsp;&nbsp;<img src="./images/script.png">&nbsp;&nbsp;Crear respaldo de la base de datos</button>
+                    </div> <br>
+                </div>
+                <div class="row">
+                    <div class=" twelvecol last">
+                        <iframe style=" margin: 10px;" class=" ui-corner-all boxshadowround" height="400" width="90%" src="./respaldosdb">
+                        <p>Repaldos base de datos</p>
+                        </iframe>
+                    </div>
+                </div>
             </div>
             <div id="tabs-3">
-            </div-->
+                <div align="center" Style="margin: 10px; padding: 5px;" class="ui-corner-all ui-widget-header boxshadowround">Scripts</div>
+                <div class="ui-corner-all">
+                    <?php
+                    $this->load->helper('directory');
+                    $map = directory_map('./scriptsusuarios/');
+                    foreach ($map as $key => $value) {
+                        ?>
+                        <div class=" ui-corner-all">
+                            <div class="paddingall6 ui-widget-header">&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/folder.png"> &nbsp;<?php echo $key ?>&nbsp;<button style="float: right" onclick="borra_contenido('./scriptsusuarios/<?php echo $key ?>/')"><img src="./images/eliminar.png">Eliminar todos los archivos del directorio <?php echo $key ?></button> </div>
+                            <?php foreach ($value as $v) { ?>
+                                <div class="paddingall6 ui-widget-content">&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/script.png">&nbsp;<a href="<?php echo base_url() . 'scriptsusuarios/' . $key . '/' . $v ?>" target="_blank"><?php echo $v ?> </a></div>
+                            <?php } ?>
+                            <br>
+                        </div>
+                    <?php } ?>
+
+                </div><br>
+                 <div class="row">
+                    <div class=" twelvecol last">
+                        <iframe style=" margin: 10px;" class=" ui-corner-all boxshadowround" height="400" width="90%" src="./scriptsusuarios">
+                        <p>Repaldos base de datos</p>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 <br>
 <br>
@@ -216,3 +300,8 @@ if ($permisos == '') {
     echo '<style type="text/css">' . $permisos . '</style>';
 }
 ?>
+<style>
+    .paddingall6{
+        padding: 6px !important;
+    }
+</style>

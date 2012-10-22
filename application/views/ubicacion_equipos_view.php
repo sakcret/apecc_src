@@ -50,64 +50,43 @@
                     <tr>
                         <th width="20%">Campo</th>
                         <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
                         <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                     </tr>
                     <tr id="filter_col1">
                         <td align="left">N&uacute;mero de Serie</td>
                         <td align="center"><input type="text"     name="col1_filter" id="col1_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col1_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col1_smart" checked></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Marca</td>
                         <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
-                    </tr>
                     <tr id="filter_col3">
                         <td align="left">Modelo</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
                         <td align="left">N&uacute;mero de Inventario</td>
                         <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
                     </tr>
                     <tr id="filter_col5">
                         <td align="left">Procesador</td>
                         <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
                     </tr>
                     <tr id="filter_col6">
                         <td align="left">Disco Duro(GB)</td>
                         <td align="center"><input type="text"     name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_regex"  id="col6_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_smart"  id="col6_smart" checked></td>
                     </tr>
                     <tr id="filter_col7">
                         <td align="left">Memoria RAM(GB)</td>
                         <td align="center"><input type="text"     name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_regex"  id="col7_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_smart"  id="col7_smart" checked></td>
                     </tr>
                     <tr id="filter_col8">
                         <td align="left">Estado(solo la letra clave)</td>
                         <td align="center"><input type="text"     name="col8_filter" id="col8_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_regex"  id="col8_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_smart"  id="col8_smart" checked></td>
                     </tr>
                 </tbody>
             </table>
@@ -268,81 +247,26 @@
     </div>
 </tooltips>
 <style>
-    .tabla_equipos_almacen{
-        width: 15%;
-        float: left;
-        margin-left: 20px;
-        margin-bottom: 25px;
-        margin-top: 10px;
-    }
-    #content_almacen{
-        margin-top: 7px!important;
-        margin-bottom: 7px!important;
-        width: 185px !important;
-        margin: auto;
-
-    }
-    .tabla_salas{
-        width: 80%;
-        float: right;
-        margin-right: 20px;
-    }
-    .row1{
-        width: 100%;
-        margin: 0 auto;
-        overflow: hidden;
-    }
+    .tabla_equipos_almacen{width: 15%;float: left;margin-left: 20px; margin-bottom: 25px;margin-top: 10px; }
+    #content_almacen{margin-top: 7px!important;margin-bottom: 7px!important;width: 185px !important; margin: auto;}
+    .tabla_salas{width: 80%; float: right;margin-right: 20px;}
+    .row1{width: 100%;margin: 0 auto; overflow: hidden;}
     .total-eq{margin-right: 15px; font-weight: bolder; float: right !important;}
-
-    .buscar_dt{
-        width: 68px;
-        -moz-border-radius-bottomright: 6px; 
-        -webkit-border-bottom-right-radius: 6px; 
-        -khtml-border-bottom-right-radius: 6px; 
-        border-bottom-right-radius: 6px; 
-        -moz-border-radius-topleft: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px;
-        -moz-border-radius-topright: 6px; -webkit-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px;
-        -moz-border-radius-bottomleft: 6px; -webkit-border-bottom-left-radius: 6px; -khtml-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; 
-    }
-
-    /* drag objects (DIV inside table cells) */
-    .drag{
-        cursor: move;
-        margin: auto;
-        z-index: 10;
-        color: #222;
-        text-align: center;
-        opacity: 0.9;
-        filter: alpha(opacity=70);
-        width: auto !important;
-        border: 0px solid #555;
-        border-radius: 3px;
-        -moz-border-radius: 3px; 
-        font-size: 13px !important; 
-    }
+    .buscar_dt{width: 80px !important;}
+    .drag{cursor: move;margin: auto;z-index: 10;color: #222;text-align: center;opacity: 0.9;filter: alpha(opacity=70);width: auto !important;border: 0px solid #555;border-radius: 3px;-moz-border-radius: 3px;  font-size: 13px !important; }
 </style>
 <script>
     var dt_tabla_almacen;
     var sala_select=<?php echo $sala_actual_1; ?>;
     
-    /*Funcion para aplicar filtro global en el datatable equipos*/
+     /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#tabla_almacen').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#tabla_almacen').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable equipos*/
-    function fnFilterColumn ( i ){
-        $('#tabla_almacen').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
-    }	
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#tabla_almacen').dataTable().fnFilter( obj.val(),i, false, true);
+    }
     
     function sala_actual(idsala){
         sala_select=idsala;
@@ -440,8 +364,8 @@
     
     $(document).ready(function() {
         
-        $('#btn_busuqeda_eq').live('click',
-        function(){
+        $('#btn_busuqeda_eq').live('click',function(){
+            $('#busqueda_equ').val($('#busqueda_equ').val().toUpperCase());
             $('div').removeClass('ui-state-highlight');
             var ns=$('#busqueda_equ').val();
             $('#'+ns).addClass('ui-state-highlight');
@@ -456,16 +380,19 @@
                 notificacion_tip("./images/msg/no.png","No se encontro el equipo","No se pudo localizar el equipo <b>"+ns+'</b>.');      
             }
         });
-        
-        
-        $('#btn_clear_eq').live('click',
-        function(){
-            $('div').removeClass('ui-state-highlight');
-            $('#busqueda_equ').val('');
-        });
+        $('#btn_clear_eq').live('click',function(){ $('div').removeClass('ui-state-highlight');$('#busqueda_equ').val(''); });
         
         dt_tabla_almacen=$('#tabla_almacen').dataTable( {
-            "bJQueryUI": true,              
+            "bJQueryUI": true,      
+            "aoColumns": [ 
+                /*0 */{"bVisible":    false,"bSortable": false},
+                /*1 */{"bVisible":    false,"bSortable": false},
+                /*2 */{"bVisible":    false,"bSortable": false},
+                /*3 */{"bVisible":    false,"bSortable": false},
+                /*4 */{"bVisible":    false,"bSortable": false},
+                /*5 */{"bVisible":    false,"bSortable": false},
+                /*6 */{"bVisible":    false,"bSortable": false},
+                /*7 */{"bSortable": false}],
             "oLanguage":{
                 "sProcessing":   "<div style=\"width=70%;\" class=\"ui-widget-header boxshadowround\"><strong>Cargando</strong></div>",
                 "sLengthMenu":   "<img title=\"Ver Busqueda Avanzada\"  class=\"ui-state-default ui-corner-all\" id=\"b_avan\" src=\"./images/busqueda.png\">",
@@ -486,51 +413,18 @@
             "iDisplayLength": 4,
             "aLengthMenu": [[4], [4]]
         } );
-    
-        verOcultarColDT(0,dt_tabla_almacen);
-        verOcultarColDT(1,dt_tabla_almacen);
-        verOcultarColDT(2,dt_tabla_almacen);
-        verOcultarColDT(3,dt_tabla_almacen);
-        verOcultarColDT(4,dt_tabla_almacen);
-        verOcultarColDT(5,dt_tabla_almacen);
-        verOcultarColDT(6,dt_tabla_almacen);
         
         /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col1_filter").keyup( function() { fnFilterColumn( 0 ); } );
-        $("#col1_regex").click(  function() { fnFilterColumn( 0 ); } );
-        $("#col1_smart").click(  function() { fnFilterColumn( 0 ); } );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
-       
-        $("#col6_filter").keyup( function() { fnFilterColumn( 5 ); } );
-        $("#col6_regex").click(  function() { fnFilterColumn( 5 ); } );
-        $("#col6_smart").click(  function() { fnFilterColumn( 5 ); } );
-       
-        $("#col7_filter").keyup( function() { fnFilterColumn( 6 ); } );
-        $("#col7_regex").click(  function() { fnFilterColumn( 6 ); } );
-        $("#col7_smart").click(  function() { fnFilterColumn( 6 ); } );
-       
-        $("#col8_filter").keyup( function() { fnFilterColumn( 7 ); } );
-        $("#col8_regex").click(  function() { fnFilterColumn( 7 ); } );
-        $("#col8_smart").click(  function() { fnFilterColumn( 7 ); } );
+        $("#global_filter").typeWatch( {callback:function(){ fnFilterGlobal()},wait:750,highlight:true,captureLength:0 } ); 
+        
+        $("#col1_filter").typeWatch( {callback:function(){ fnFilterColumn( 0, $("#col1_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col5_filter").typeWatch( {callback:function(){ fnFilterColumn( 4, $("#col5_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col6_filter").typeWatch( {callback:function(){ fnFilterColumn( 5, $("#col6_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col7_filter").typeWatch( {callback:function(){ fnFilterColumn( 6, $("#col7_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col8_filter").typeWatch( {callback:function(){ fnFilterColumn( 7, $("#col8_filter") ); },wait:750,highlight:true,captureLength:0} ); 
         
         get_datos_almacen();
         $('.hover tbody td').hover(
@@ -551,7 +445,7 @@
             $("#busqueda_avanzada").dialog({
                 autoOpen: false,
                 resizable: true,
-                width:700,
+                width:450,
                 modal: false,
                 buttons: {
                     "Cerrar": function() {
@@ -562,15 +456,9 @@
             
         });
         
-        $('#tabla_almacen_filter .buscar_dt').keydown(function(){
-            rd.init('drag0');
-        });
-        $('#tabla_almacen_filter .buscar_dt').focus(function(){
-            rd.init('drag0');
-        });
-        $('#tabla_almacen_wrapper .ui-button').click(function(){
-            rd.init('drag0');
-        });
+        $('#tabla_almacen_filter .buscar_dt').keydown(function(){rd.init('drag0');});
+        $('#tabla_almacen_filter .buscar_dt').focus(function(){rd.init('drag0'); });
+        $('#tabla_almacen_wrapper .ui-button').click(function(){ rd.init('drag0'); });
         //$('#tabla_almacen').find('td').addClass('ui-state-focus');
         $('#b_avan').hover(function(){
             $(this).addClass('ui-state-active ui-corner-all');
@@ -627,7 +515,7 @@
                 resizable: false,
                 modal: true,
                 buttons: {
-                    "Eliminar": function() {
+                    "Mover a almacén": function() {
                         //obtener la posicion del elemento
                         var pos = rd.get_position(),
                         row = pos[4],

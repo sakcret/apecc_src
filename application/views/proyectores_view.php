@@ -13,12 +13,12 @@
                         <input type="text" name="fecha" id="fecha" class="text readonly"  readonly>
                     </td>
                 </tr>
-                <tr>
+                <tr style=" display: none !important;">
                     <td colspan="3"><label class="space_form" for="tipo_u">Tipo de usuario(opcional): </label><br>
-                        <select name="tipo_u" class="selectmenu-ui" id="tipo_u"></select></td>
+                        <input type="text" name="tipo_u" class="text"  val="4" id="tipo_u"></select></td>
                 </tr>
                 <tr>
-                    <td colspan="3" id="encargado_id"><label class="space_form" for="usuarios">Usuario Encargado*:</label><br>
+                    <td colspan="3" id="encargado_id"><label class="space_form" for="usuarios">Maestro/catedr&aacute;tico*:</label><br>
                         <select name="usuario" id="usuario"></select></td>
                 </tr>
                 <tr>
@@ -93,8 +93,8 @@
             <div class="ui-widget-header ui-corner-top header"><h1>Ver/Ocultar Campos</h1></div>
             <div id="vo_campos" style=" margin-bottom: 10px; margin-top: 10px;">
                 <input type="checkbox" onclick="verOcultarColDT(1,dt_presta_controls);" checked="checked" name="vo_fecha" id="vo_fecha" ><label for="vo_fecha">Fecha</label>
-                <input type="checkbox" onclick="verOcultarColDT(2,dt_presta_controls);" checked="checked" name="vo_login" id="vo_login" ><label for="vo_login">Login(Encargado)</label>
-                <input type="checkbox" onclick="verOcultarColDT(3,dt_presta_controls);" checked="checked" name="vo_encargado" id="vo_encargado" ><label for="vo_encargado">Encargado</label>
+                <input type="checkbox" onclick="verOcultarColDT(2,dt_presta_controls);" checked="checked" name="vo_login" id="vo_login" ><label for="vo_login">Login(Maestro/catedr&aacute;tico)</label>
+                <input type="checkbox" onclick="verOcultarColDT(3,dt_presta_controls);" checked="checked" name="vo_encargado" id="vo_encargado" ><label for="vo_encargado">Maestro/catedr&aacute;tico</label>
                 <input type="checkbox" onclick="verOcultarColDT(4,dt_presta_controls);" checked="checked" name="vo_actividad" id="vo_actividad" ><label for="vo_actividad">Actividad</label>
                 <input type="checkbox" onclick="verOcultarColDT(5,dt_presta_controls);" checked="checked" name="vo_horai" id="vo_horai" ><label for="vo_horai">Hora Inicio</label>
                 <input type="checkbox" onclick="verOcultarColDT(6,dt_presta_controls);" checked="checked" name="vo_horaf" id="vo_horaf" ><label for="vo_horaf">Hora Fin</label>
@@ -105,75 +105,60 @@
             </div>
         </center>
     </div>
-    <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround" style=" width: 70%;">
+    <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround" style=" width: 50%;">
         <center>
-            <div class="ui-widget-header ui-corner-top header"><h1>Busqueda Avanzada</h1></div>
+            <div class="ui-widget-header ui-corner-top header"><h1>B&uacute;    squeda Avanzada</h1></div>
             <table cellpadding="0" cellspacing="0" border="0" class="display" >
                 <thead>
                     <tr>
-                        <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
+                        <th width="16%">Campo</th>
+                        <th width="80%">Texto a Filtrar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
-                        <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
+                        <td align="center"><input type="text" placeholder="Buscar cualquier campo de la tabla de datos"   name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Fecha</td>
-                        <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
+                        <td align="center"><input type="text" placeholder="Ejemplo: 01-12-2012"   name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
                     </tr>
                     <tr id="filter_col3">
-                        <td align="left">Encargado login:</td>
-                        <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
+                        <td align="left">Login del Maestro/catedr&aacute;tico:</td>
+                        <td align="center"><input type="text"  placeholder="Ejemplo: rcj2000"  name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
                     </tr>
                     <tr id="filter_col4">
-                        <td align="left">Nombre del encargado</td>
+                        <td align="left">Maestro/catedr&aacute;tico</td>
                         <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
                     </tr>
                     <tr id="filter_col5">
                         <td align="left">Actividad</td>
                         <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
                     </tr>
                     <tr id="filter_col6">
                         <td align="left">Hora de Inicio</td>
-                        <td align="center"><input type="text"     name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_regex"  id="col6_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_smart"  id="col6_smart" checked></td>
+                        <td align="center"><input type="text"  placeholder="Formado: hh:mm:ss Ejemplo: 09:00:00"   name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                     <tr id="filter_col7">
                         <td align="left">Hora de Fin</td>
-                        <td align="center"><input type="text"     name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_regex"  id="col7_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_smart"  id="col7_smart" checked></td>
+                        <td align="center"><input type="text"   placeholder="Formado: hh:mm:ss Ejemplo: 10:00:00"   name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                     <tr id="filter_col8">
                         <td align="left">Sal&oacute;n</td>
                         <td align="center"><input type="text"     name="col8_filter" id="col8_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_regex"  id="col8_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_smart"  id="col8_smart" checked></td>
                     </tr>
                     <tr id="filter_col9">
-                        <td align="left">Estado(1=Entregado/ 0=No Entregado)</td>
-                        <td align="center"><input type="text"     name="col9_filter" id="col9_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col9_regex"  id="col9_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col9_smart"  id="col9_smart" checked></td>
+                        <td align="left">Estado:</td>
+                        <td align="center">
+                            <select id="col9_filter" name="col9_filter" style="height: 25px;width:96%">
+                                <option value="">Cualquier estado</option>
+                                <option value="1">Entregado</option>
+                                <option value="0" >No Entregado</option>
+                            </select></td>
                     </tr>
                 </tbody>
-            </table>
+            </table><br>
         </center>
     </div><br>
     <div class="row">
@@ -247,28 +232,17 @@
     var dt_presta_controls;
     var row_select=0,
     estado='';
-    /*Funcion para aplicar filtro global en el datatable presta_controls*/
+     /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtpresta_controls').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtpresta_controls').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable presta_controls*/
-    function fnFilterColumn ( i ){
-        $('#dtpresta_controls').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
-    }	
-    
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtpresta_controls').dataTable().fnFilter( obj.val(),i, false, true);
+    }
     //funcion que carga los valores del combo con el id=usuarios por medio de ajax, llamando a la funcion get_value definida en utilerias.js
     function cargausuarios(){
-        var tipo_u = $('#tipo_u').val();
+        var tipo_u = 9;
         var c = get_value('reservaciones_temporales/usuarios/',{tipo_u:tipo_u});
         $('[name="usuario"] option').remove();
         var todos="<option value='0'>Todos</option>";
@@ -276,14 +250,6 @@
         $('[name="usuario"]').append(c);
         $('#tipo_u').selectmenu();
         
-    }
-    function cargatipousuario(){
-        var datos = '';
-        var c = get_value('reservaciones_temporales/tipos_usuarios/',datos);
-        $('[name="tipo_u"] option').remove();
-        var todos="<option value='0'>Todos</option>";
-        $('[name="tipo_u"]').append(todos);
-        $('[name="tipo_u"]').append(c);
     }
     
     function elimina_prestamo(id){
@@ -383,42 +349,17 @@
             }
         } ); 
         
-        /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
-       
-        $("#col6_filter").keyup( function() { fnFilterColumn( 5 ); } );
-        $("#col6_regex").click(  function() { fnFilterColumn( 5 ); } );
-        $("#col6_smart").click(  function() { fnFilterColumn( 5 ); } );
-       
-        $("#col7_filter").keyup( function() { fnFilterColumn( 6 ); } );
-        $("#col7_regex").click(  function() { fnFilterColumn( 6 ); } );
-        $("#col7_smart").click(  function() { fnFilterColumn( 6 ); } );
-       
-        $("#col8_filter").keyup( function() { fnFilterColumn( 7 ); } );
-        $("#col8_regex").click(  function() { fnFilterColumn( 7 ); } );
-        $("#col8_smart").click(  function() { fnFilterColumn( 7 ); } );
+         /*Aplicar filtro al datatables (busqueda avanzada)*/
+        $("#global_filter").typeWatch( {callback:function(){fnFilterGlobal();  },wait:750,highlight:true,captureLength:0} ); 
         
-        $("#col9_filter").keyup( function() { fnFilterColumn( 8 ); } );
-        $("#col9_regex").click(  function() { fnFilterColumn( 8 ); } );
-        $("#col9_smart").click(  function() { fnFilterColumn( 8 ); } );
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col5_filter").typeWatch( {callback:function(){ fnFilterColumn( 4, $("#col5_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col6_filter").typeWatch( {callback:function(){ fnFilterColumn( 5, $("#col6_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col7_filter").typeWatch( {callback:function(){ fnFilterColumn( 6, $("#col7_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col8_filter").typeWatch( {callback:function(){ fnFilterColumn( 7, $("#col8_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col9_filter").change(function(){ fnFilterColumn( 8, $("#col9_filter") ); }); 
        
         /*ocultar y mostrar las ociones de filtro del datatable presta_controls(busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -468,6 +409,22 @@
                     "sLast":     "Último"
                 }
             },
+            "aoColumns": [ 
+                /*0-. */{"bVisible":    false },
+                /*1 */null,
+                /*2 */null,                
+                /*3*/null,
+                /*5 */null,
+                /*5 */null,
+                /*6 */null,
+                /*7 */null,
+                /*8 */{"bVisible":    false },
+                /*9 */null,
+                /*10 */{"bVisible":    false },
+                /*11 */null,
+                /*12 */null,
+                /*13 */{"bSortable": false}],
+            "aaSorting": [[ 8, "asc" ]],
             "aLengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "Todos"]],
             "sPaginationType": "full_numbers",    
             "bProcessing": true,
@@ -484,9 +441,6 @@
             }
         } );
         
-        verOcultarColDT(0,dt_presta_controls);
-        verOcultarColDT(8,dt_presta_controls);
-        verOcultarColDT(10,dt_presta_controls);
         $( "#dialog:ui-dialog" ).dialog( "destroy" );		
         var usuario = $( "#usuario" ),
         actividad = $( "#actividad" ),
@@ -541,8 +495,7 @@
         $( "#btn_agregar" )
         .button()
         .click(function() {
-            $('#encargado_id .ui-autocomplete-input').val('')
-            cargatipousuario();
+            $('#encargado_id .ui-autocomplete-input').val('');
             cargausuarios();
             var  hoy = new Date(),
             hora = fillZeroDateElement(hoy.getHours()),
@@ -575,10 +528,10 @@
                 if(estado=='No Entregado'){
                     entrega_control(row_select);
                 }else{
-                    mensaje($( "#mensaje" ),'Prestamo de Control Terminado ! ','./images/msg/info.png','El prestamo se ha terminado por favor seleccione un prestamo que este activo.','');   
+                    mensaje($( "#mensaje" ),'Prestamo de Control Terminado ! ','./images/msg/info.png','El prestamo se ha terminado seleccione un prestamo que este activo.','');   
                 }
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un Prestamo  ! ','./images/msg/warning.png','Selecciona un prestamo por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un Prestamo  ! ','./images/msg/warning.png','Selecciona un prestamo.','');
             }
         } );
 
@@ -587,7 +540,7 @@
             if((row_select!=0)&&(row_select!='')){
                 elimina_prestamo(row_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un Prestamo  ! ','./images/msg/warning.png','Selecciona un prestamo por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un Prestamo  ! ','./images/msg/warning.png','Selecciona un prestamo.','');
             }
         } );
     } );

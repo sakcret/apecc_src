@@ -42,7 +42,7 @@ class Proyectores extends CI_Controller {
 
     public function datosPrestamos() {
         $sIndexColumn = "id";
-        $aColumns = array($sIndexColumn, 'fecha','usuariocc','usuarioNombreAux','actividad', 'horaInicio', 'horaFin', 'salon', 'entregado', 'observaciones','usuarioSistemaPresta','usuarioSistemaEntrega');
+        $aColumns = array($sIndexColumn, 'DATE_FORMAT(fecha, \'%d/%m/%Y\')','usuariocc','usuarioNombreAux','actividad', 'horaInicio', 'horaFin', 'salon', 'entregado', 'observaciones','usuarioSistemaPresta','usuarioSistemaEntrega');
         $sTable = "reservaciones_proyectores";
         $sLimit = "";
         if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -63,6 +63,8 @@ class Proyectores extends CI_Controller {
                 $sOrder = "";
             }
         }
+        $inicioperiodo=$this->config->item('fecha_periodo_inicio');
+        $periodofin=$this->config->item('fecha_periodo_fin');
         $sWhere = "";
         if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
             $sWhere = "WHERE (";
@@ -81,6 +83,11 @@ class Proyectores extends CI_Controller {
                 }
                 $sWhere .= $aColumns[$i] . " LIKE '%" . $_GET['sSearch_' . $i] . "%' ";
             }
+        }
+        if($sWhere==""){
+            $sWhere .= "where (fecha BETWEEN '$inicioperiodo' AND '$periodofin')";
+        }else{
+             $sWhere .= "AND (fecha BETWEEN '$inicioperiodo' AND '$periodofin')";
         }
         $this->load->model("sql_generico_model");
         $rResult = $this->sql_generico_model->datosDataTable($aColumns, $sTable, $sWhere, $sOrder, $sLimit);

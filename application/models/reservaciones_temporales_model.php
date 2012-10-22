@@ -66,6 +66,11 @@ class Reservaciones_temporales_model extends CI_Model {
             'Estado' => $edo_equipo
         );
         $this->db->trans_begin();
+        //borrar reservacion activa para ese equipo
+        $this->db->where('NumeroSerie', $numserie);
+        $this->db->where('Estado', 'A');
+        $this->db->delete('reservacionesmomentaneas');
+        
         $this->db->insert('reservacionesmomentaneas', $insertreserv);
         $this->db->where('NumeroSerie', $numserie);
         $this->db->update('equipos', $updatequipo);

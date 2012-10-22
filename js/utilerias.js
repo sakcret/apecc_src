@@ -78,6 +78,34 @@ function get_value(purl, pparameters) {
     return valor;
 }
 
+function muestra_espera(){
+      if ($.blockUI) {
+        $.blockUI.defaults.baseZ = 200000;
+        $.blockUI({ 
+            message:'<img src="./images/loading3.gif" width="50" heigth="50"><h1>Cargando...</h1>Espere un momento por favor.',   
+            showOverlay: false, 
+            centerY: false, 
+            css: { 
+                width: '350px', 
+               border: 'none', 
+                margin:'auto',
+                backgroundColor: '#000', 
+                '-webkit-border-radius': '10px', 
+                '-moz-border-radius': '10px', 
+                opacity:'0.4',
+                filter:'alpha(opacity=40)',
+                color: '#fff' 
+            } 
+        });
+    }
+}
+
+function oculta_espera(){
+    if ($.blockUI) {
+        $.unblockUI();
+    }
+}
+
 /**
 *  Peticion ajax que recibe una respuesta del servidor en fomato de texto
 *  @param {string} urll -url a donde se hará la petición

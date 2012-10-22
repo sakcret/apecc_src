@@ -51,13 +51,13 @@ class Actualiza_db extends CI_Controller {
                         //dar formato al mensaje de reservacion de sala
                         if ($drf['tipo_actividad'] == 0) {
                             $tipo_act = 0;
-                            $nombre_act=$drf['nombre_actividad'];
+                            $nombre_act = $drf['nombre_actividad'];
                             $act = ' En clase de ' . $nombre_act . ' B' . $drf['bloque'] . '/S' . $drf['seccion'];
-                        }else{
-                            $nombre_act=$drf['nombre_actividad'];
+                        } else {
+                            $nombre_act = $drf['nombre_actividad'];
                             $act = ' En curso de ' . $nombre_act . ' B' . $drf['bloque'] . '/S' . $drf['seccion'];
-                            $tipo_act=1;
-                            }
+                            $tipo_act = 1;
+                        }
                         //obtener los equipos para una sala determinada
                         $datos_eq_sala = $this->getEquiposSalas($drf['sala']);
                         //cambiar el comentario de la sala
@@ -79,7 +79,7 @@ class Actualiza_db extends CI_Controller {
                                 $clave_reservacion = $numserie . substr($usuario, 0, 5) . date("ymdHis");
                                 $alrato = $ahorita->add(new DateInterval('PT' . $horas . 'H')); // a la hora actual le sumo las horas que se especificaron en la reservacion
                                 $horafin = $alrato->format("H") . ':00:00';
-                                $this->actualiza_estado_db_model->resevacion($clave_reservacion, $hoy_str, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $salaaux, $tipo_act,$nombre_act );
+                                $this->actualiza_estado_db_model->resevacion($clave_reservacion, $hoy_str, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $salaaux, $tipo_act, $nombre_act);
                             }
                         }
                     }
@@ -105,7 +105,7 @@ class Actualiza_db extends CI_Controller {
                 if ($this->validaFechaPeriodo($f_ini, $f_fin, $hoy)) {
                     //echo 'si esta en rango<br>';
                     $usuario = $drs['encargado'];
-                    $nombre_act=$drs['NombreActividad'];
+                    $nombre_act = $drs['NombreActividad'];
                     $act = ' En reservación de sala con la actividad: ' . $nombre_act;
                     $tipoActAux = 2;
                     //obtener los equipos para una sala determinada
@@ -166,7 +166,7 @@ class Actualiza_db extends CI_Controller {
      * funcion que libera las reservaciones fijas
      */
     function liberaSalaRF($dia, $hora) {
-        $hora_ant=((int)$hora)-1;
+        $hora_ant = ((int) $hora) - 1;
         $this->load->model("actualiza_estado_db_model");
         $datos_rf = $this->reservacionesFijas($dia, $hora_ant);
         $countrf = $datos_rf->num_rows();
@@ -174,21 +174,25 @@ class Actualiza_db extends CI_Controller {
             //para cada reservacion fija
             for ($x = 0; $x < $countrf; $x++) {
                 $drf = $datos_rf->row_array($x);
-                $this->actualiza_estado_db_model->terminaRF($drf['sala']);
-                $this->cambiaComentarioSala($drf['sala'], "");
-                //obtener los equipos para una sala determinada
-                $datos_eq_sala = $this->getEquiposSalas($drf['sala']);
-                $counteqsa = $datos_eq_sala->num_rows();
-                if ($counteqsa > 0) {
-                    //para cada equipo de la sala
-                    for ($y = 0; $y < $counteqsa; $y++) {
-                        $des = $datos_eq_sala->row_array($y);
-                        $this->actualiza_estado_db_model->libera_equipo($des['numserie']);
+                $result = $this->actualiza_estado_db_model->terminaRF($drf['sala']);
+                if ($result != FALSE) {
+                    $this->cambiaComentarioSala($drf['sala'], "");
+                    //obtener los equipos para una sala determinada
+                    $datos_eq_sala = $result;
+                    $counteqsa = $datos_eq_sala->num_rows();
+                    if ($counteqsa > 0) {
+                        //para cada equipo de la sala
+                        for ($y = 0; $y < $counteqsa; $y++) {
+                            $des = $datos_eq_sala->row_array($y);
+                            $this->actualiza_estado_db_model->libera_equipo($des['numserie']);
+                        }
                     }
                 }
             }
         }
     }
+    
+    
 
     private function liberaReservaciones($hora) {
         $this->load->model("actualiza_estado_db_model");

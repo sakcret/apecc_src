@@ -214,6 +214,30 @@ class Software_model extends CI_Model {
         //$this->db->cache_off();
         return $result;
     }
+    function getequipossoftware($idsw) {
+       $sql="SELECT equipos_software.NumeroSerie as ns,Sala as sa,
+                Fila as fi,Columna as co
+                FROM  software
+                JOIN equipos_software ON software.idSoftware=equipos_software.idSoftware
+                JOIN equipos_salas ON equipos_software.NumeroSerie=equipos_salas.NumeroSerie
+                JOIN salas ON equipos_salas.idSala=salas.idSala
+                WHERE software.idSoftware=$idsw
+                ORDER BY 2,3,4";
+        $result = $this->db->query($sql);
+        return $result;
+    }
+    function getequiposso($idso) {
+       $sql="SELECT equipos_sistemasoperativos.NumeroSerie AS ns,Sala AS sa,
+                Fila AS fi,Columna AS co
+                FROM  sistemasoperativos
+                JOIN equipos_sistemasoperativos ON sistemasoperativos.`idSistemaOperativo`=equipos_sistemasoperativos.`idSistemaOperativo`
+                JOIN equipos_salas ON equipos_sistemasoperativos.NumeroSerie=equipos_salas.NumeroSerie
+                JOIN salas ON equipos_salas.idSala=salas.idSala
+                WHERE sistemasoperativos.idSistemaOperativo='$idso'
+                ORDER BY 2,3,4";
+        $result = $this->db->query($sql);
+        return $result;
+    }
 
     function getgruposxsw($idsw) {
         //$this->db->cache_on();

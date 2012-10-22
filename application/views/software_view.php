@@ -170,53 +170,6 @@
 </div>
 <tooltips class="tooltip">
     <br>
-    <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround bottom10" style=" width: 70%;">
-        <center>
-            <div class="ui-widget-header ui-corner-top header"><h1>Busqueda Avanzada de Usuarios</h1></div>
-            <table cellpadding="0" cellspacing="0" border="0" class="display" >
-                <thead>
-                    <tr>
-                        <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="filter_global">
-                        <td align="left">Filtro Global</td>
-                        <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
-                    </tr>
-                    <tr id="filter_col2">
-                        <td align="left">Nombre del software</td>
-                        <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
-                    </tr>
-                    <tr id="filter_col3">
-                        <td align="left">versi&oacute;n</td>
-                        <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
-                    </tr>
-                    <tr id="filter_col4">
-                        <td align="left">Descripci&oacute;n</td>
-                        <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
-                    </tr>
-                    <tr id="filter_col5">
-                        <td align="left">Sistema Operativo</td>
-                        <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
-                    </tr>
-                </tbody>
-            </table>
-        </center>
-    </div>
     <div class="row boxshadowround ui-widget-content ui-corner-bottom">
         <div class="twelvecol last">
             <div class="tabs">
@@ -226,11 +179,71 @@
                     <li><a href="#tabs-3">Sistemas Operativos</a></li>
                 </ul>
                 <div id="tabs-1">
+                    <div id="dialog_equiposw" style="display: none;">
+                        <div class=" pad30">
+                            <table cellpadding="0" cellspacing="0" border="1" class="display" id="dtequipossw">
+                                <thead>
+                                    <tr>
+                                        <th width="40%">N&uacute;mero de serie</th>
+                                        <th width="20%">Sala</th>
+                                        <th width="20%">Fila</th>
+                                        <th width="20%">Columna</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>N&uacute;mero de serie</th>
+                                        <th>Sala</th>
+                                        <th>Fila</th>
+                                        <th>Columna</th> 
+                                    </tr>
+                                </tfoot>
+                            </table> <br>
+                        </div>
+                    </div>
+                    <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround bottom10" style=" width: 50%;">
+                        <center>
+                            <div class="ui-widget-header ui-corner-top header"><h1>B&uacute;squeda Avanzada de Software</h1></div>
+                            <table cellpadding="0" cellspacing="0" border="0" class="display" >
+                                <thead>
+                                    <tr>
+                                        <th width="20%">Campo</th>
+                                        <th width="80%">Texto a Filtrar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="filter_global">
+                                        <td align="left">Filtro Global</td>
+                                        <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text"></td>
+                                    </tr>
+                                    <tr id="filter_col2">
+                                        <td align="left">Nombre del software</td>
+                                        <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text"></td>
+                                    </tr>
+                                    <tr id="filter_col3">
+                                        <td align="left">Versi&oacute;n</td>
+                                        <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text"></td>
+                                    </tr>
+                                    <tr id="filter_col4">
+                                        <td align="left">Descripci&oacute;n</td>
+                                        <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text"></td>
+                                    </tr>
+                                    <tr id="filter_col5">
+                                        <td align="left">Sistema Operativo</td>
+                                        <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text" ></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                    </div>
                     <div class="ui-widget-header ui-corner-all but_bar_content">
                         <button id="btn_agregar_sw" class="but_bar prm_a"><img src="./images/agregar.png"/>&nbsp;Agregar</button>
                         <button id="btn_modificar_sw" class="but_bar prm_c"><img src="./images/modificar.png"/>&nbsp;Modificar</button>
                         <button id="btn_actualizar_sw" class="but_bar"><img src="./images/actualizar.png"/>&nbsp;Actualizar</button>
                         <button id="btn_eliminar_sw" class="but_bar prm_b"><img src="./images/eliminar.png"/>&nbsp;Eliminar</button>
+                        <button id="btn_ubicar_sw" class="but_bar"><img src="./images/swequ.png"/>&nbsp;Ubicar</button>
                         <button id="btn_asignar_grupo_sw" class="but_bar prm_s"><img src="./images/asigna.ico"/>&nbsp;Asignar Grupo</button>
                         <button class="but_bar" style="height: 28px !important; width: 240px;" id="mas_opc_busq"class="opc ui-icon-search">Ver busqueda avanzada</button>
                     </div>
@@ -241,9 +254,9 @@
                                 <th width="20%">Nombre del Software</th>
                                 <th width="7%">Versi&oacute;n</th>
                                 <th width="35%">Descripci&oacute;n</th> 
-                                <th width="15%">Sistema Operativo</th>
+                                <th width="14%">Sistema Operativo</th>
                                 <th>idso</th>
-                                <th width="8%">.</th>
+                                <th width="9%"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -263,7 +276,7 @@
                     <div class="ui-widget-header ui-corner-all" style="height: 20px; margin-bottom: 10px;">
                         <center><div style=" float: left; margin-left: 30px;">Grupos en los que se encuentra el Software: </div><div style=" margin-left: 10px; float: left;" id="gru_select">No se ha selecionado un Software</div></center>
                     </div>
-                    <table cellpadding="0" cellspacing="0" border="1" class="display" id="dtgrupossw">
+                    <table cellpadding="0" cellspacing="0" border="1" class="display" id="dtgrupossw" >
                         <thead>
                             <tr>
                                 <th>idgru</th>
@@ -314,12 +327,36 @@
                             </tr>
                         </tfoot>
                     </table> 
-
                 </div>
                 <div id="tabs-3">
+                     <div id="dialog_sos" style="display: none;">
+                        <div class=" pad30">
+                            <table cellpadding="0" cellspacing="0" border="1" class="display" id="dtequipossos">
+                                <thead>
+                                    <tr>
+                                        <th width="40%">N&uacute;mero de serie</th>
+                                        <th width="20%">Sala</th>
+                                        <th width="20%">Fila</th>
+                                        <th width="20%">Columna</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>N&uacute;mero de serie</th>
+                                        <th>Sala</th>
+                                        <th>Fila</th>
+                                        <th>Columna</th> 
+                                    </tr>
+                                </tfoot>
+                            </table> <br>
+                        </div>
+                    </div>
                     <div class="ui-widget-header ui-corner-all but_bar_content">
                         <button id="btn_agregar_so" class="but_bar prm_a"><img src="./images/agregar.png"/>&nbsp;Agregar</button>
                         <button id="btn_modificar_so" class="but_bar prm_c"><img src="./images/modificar.png"/>&nbsp;Modificar</button>
+                        <button id="btn_ubicar_so" class="but_bar"><img src="./images/swequ.png"/>&nbsp;Ubicar</button>
                         <button id="btn_actualizar_so" class="but_bar"><img src="./images/actualizar.png"/>&nbsp;Actualizar</button>
                         <button id="btn_eliminar_so" class="but_bar prm_b"><img src="./images/eliminar.png"/>&nbsp;Eliminar</button>
                     </div>
@@ -342,32 +379,68 @@
                         </tfoot>
                     </table> 
                 </div>
-
             </div>
         </div>
     </div><br>
 </tooltips>
 <script type="text/javascript" charset="utf-8">
-    var dt_grupossoftware,dt_so,dt_software,dt_grupos_sw,datos_grupo_sw_selec,datos_sw_selec;
-    var sw_select=0,so_select=0,gsw_select=0,grupo_sw_selec=0;
+    var dt_grupossoftware,dt_so,dt_software,dt_grupos_sw,datos_grupo_sw_selec,datos_sw_selec,dt_equipossw,dtequipossos;
+    var sw_select=0,so_select=0,gsw_select=0,grupo_sw_selec=0;sw_dataselect='',sw_dataselectso='';
     
-    /*Funcion para aplicar filtro global en el datatable usuarios*/
+    /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtsoftware').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtsoftware').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable usuarios*/
-    function fnFilterColumn ( i ){
-        $('#dtsoftware').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtsoftware').dataTable().fnFilter( obj.val(),i, false, true);
+    }
+    
+    function ubicar_software(idsw){
+        dt_equipossw.fnClearTable();
+        var respuesta = ajax_peticion_json('index.php/software/equiposSW/'+idsw,'');
+        if(respuesta==false) {
+        }else{
+            var a=[];
+            $.each(respuesta,function(k,v){a[k]=[v.ns,v.sa,v.fi,v.co]; });
+            dt_equipossw.fnAddData(a);
+        }
+        $("#dialog:ui-dialog").dialog( "destroy" );
+        $("#dialog_equiposw").dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width:500,
+            buttons: {
+                Cerrar: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        }).dialog("open"); 
+       $("#ui-dialog-title-dialog_equiposw").html(sw_dataselect);
+    }
+    function ubicar_sos(idso){
+        dtequipossos.fnClearTable();
+        var respuesta = ajax_peticion_json('index.php/software/equiposSOS/'+idso,'');
+        if(respuesta==false) {
+        }else{
+            var a=[];
+            $.each(respuesta,function(k,v){a[k]=[v.ns,v.sa,v.fi,v.co]; });
+            dtequipossos.fnAddData(a);
+        }
+        $("#dialog:ui-dialog").dialog( "destroy" );
+        $("#dialog_sos").dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width:500,
+            buttons: {
+                Cerrar: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        }).dialog("open"); 
+       $("#ui-dialog-title-dialog_sos").html(sw_dataselectso);
     }
     
     function muestra_datos_form_msw(id){
@@ -443,7 +516,7 @@
                     select_ui.removeClass( "ui-state-error" );
                     grupos.removeClass( "ui-state-error" );
                     var bValid = true;
-                    bValid = bValid && verificaSelect(grupos,'Selecione un <b>Grupo de software</b> por favor',tips);
+                    bValid = bValid && verificaSelect(grupos,'Selecione un <b>Grupo de software</b>',tips);
                     if ( bValid ) {
                         var datos =$("#form_asigna_grupo").serialize();
                         var respuesta = ajax_peticion("index.php/software/asignaGrupoSW",datos+"&idsw="+idsw);
@@ -591,7 +664,7 @@
                     allFields.removeClass( "ui-state-error" );
                     var bValid = true;
                     bValid = bValid && campoVacio(nombre,'Nombre del Software',tips);
-                    bValid = bValid && verificaSelect(so,'Selecione un <b>Sistema Operativo</b> por favor',tips);
+                    bValid = bValid && verificaSelect(so,'Selecione un <b>Sistema Operativo</b>.',tips);
                     if ( bValid ) {  
                         var datos = $( "#form_modifica_sw" ).serialize()+'&id='+id;
                         var urll="index.php/software/modificaSoftware";
@@ -775,26 +848,57 @@
         });
         
         /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
+        $("#global_filter").typeWatch( {callback:function(){fnFilterGlobal();  },wait:750,highlight:true,captureLength:0} ); 
         
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col5_filter").typeWatch( {callback:function(){ fnFilterColumn( 4, $("#col5_filter") ); },wait:750,highlight:true,captureLength:0} ); 
         
+        
+        
+        dt_equipossw=$('#dtequipossw').dataTable({
+            "bJQueryUI": true,              
+            "oLanguage":{
+                "sProcessing":   "<div class=\"ui-widget-header boxshadowround\"><strong>Procesando...</strong><img src='./images/load.gif'./></div>",
+                "sLengthMenu":   "Mostrar _MENU_ registros",
+                "sZeroRecords":  "No se encontraron resultados",
+                "sInfo":         "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+                "sInfoEmpty":    "Mostrando desde 0 hasta 0 de 0 registros",
+                "sInfoFiltered": "",
+                "sInfoPostFix":  "",
+                "sSearch":       "Buscar:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sPrevious": "Anterior",
+                    "sNext":     "Siguiente",
+                    "sLast":     "Último"
+                }
+            },
+            "aLengthMenu": [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 1000, "Todos"]]
+        });
+        dtequipossos=$('#dtequipossos').dataTable({
+            "bJQueryUI": true,              
+            "oLanguage":{
+                "sProcessing":   "<div class=\"ui-widget-header boxshadowround\"><strong>Procesando...</strong><img src='./images/load.gif'./></div>",
+                "sLengthMenu":   "Mostrar _MENU_ registros",
+                "sZeroRecords":  "No se encontraron resultados",
+                "sInfo":         "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+                "sInfoEmpty":    "Mostrando desde 0 hasta 0 de 0 registros",
+                "sInfoFiltered": "",
+                "sInfoPostFix":  "",
+                "sSearch":       "Buscar:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sPrevious": "Anterior",
+                    "sNext":     "Siguiente",
+                    "sLast":     "Último"
+                }
+            },
+            "aLengthMenu": [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 1000, "Todos"]]
+        });
         /*********************************************************************************************/
         /*Crear datatables de sw de software*/
         dt_grupossoftware=$('#dtgrupossoftware').dataTable({
@@ -872,7 +976,7 @@
                         var bValid = true;
                         bValid = bValid && campoVacio(nombre,'Nombre del Grupo',tips);
                             
-                        var sel_valid=verificaSelect(so,'Selecione un <b>Sistema Operativo</b> por favor',tips);
+                        var sel_valid=verificaSelect(so,'Selecione un <b>Sistema Operativo</b>.',tips);
                         if(!sel_valid){select_ui.addClass("ui-state-error");
                         }
                             
@@ -907,14 +1011,14 @@
             if((gsw_select!=0)&&(gsw_select!='')){
                 modifica_gruposw(gsw_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un grupo de software ! ','./images/msg/warning.png','Selecciona un grupo de software por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un grupo de software ! ','./images/msg/warning.png','Selecciona un grupo de software.','');
             }
         });
         $('#btn_eliminar_gsw').click(function(){
             if((gsw_select!=0)&&(gsw_select!='')){
                 elimina_gruposw(gsw_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un grupo de software ! ','./images/msg/warning.png','Selecciona un grupo de software por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un grupo de software ! ','./images/msg/warning.png','Selecciona un grupo de software.','');
             }
         });
         
@@ -960,7 +1064,7 @@
         $("#dtso tbody tr").live('click', function( e1 ) {
             if ( $(this).hasClass('row_selected') ) {
                 $(this).removeClass('row_selected');
-                so_select=0;
+                so_select=0;sw_dataselectso='';
             }
             else {
                 dt_so.$('tr.row_selected').removeClass('row_selected');
@@ -968,6 +1072,7 @@
                 var anSelected = fnGetSelected(dt_so);
                 var datos=dt_so.fnGetData(anSelected[0]);
                 so_select=datos[0];
+                sw_dataselectso=datos[1];
             }
         });
         
@@ -1015,14 +1120,22 @@
             if((so_select!=0)&&(so_select!='')){
                 modifica_so(so_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un sistema operativo  ! ','./images/msg/warning.png','Selecciona un sistema operativo por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un sistema operativo  ! ','./images/msg/warning.png','Selecciona un sistema operativo.','');
             }
         });
         $('#btn_eliminar_so').click(function(){
             if((so_select!=0)&&(so_select!='')){
                 elimina_so(so_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un sistema operativo ! ','./images/msg/warning.png','Selecciona un sistema operativo por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un sistema operativo ! ','./images/msg/warning.png','Selecciona un sistema operativo.','');
+            }
+        });
+        
+        $('#btn_ubicar_so').click(function(){
+            if((so_select!=0)&&(so_select!='')){
+                ubicar_sos(so_select);
+            }else{
+                mensaje($( "#mensaje" ),'No hay un sistema operativo selecionado ! ','./images/msg/warning.png','Selecciona un sistema operativo.','',400,true);
             }
         });
         
@@ -1047,6 +1160,14 @@
                     "sLast":     "Último"
                 }
             },
+            "aoColumns": [ 
+                /*0-. id*/{"bVisible":false,"bSortable":false },
+                /*1 Nombre sw*/null,
+                /*2 version*/null,                
+                /*3 desc*/null,
+                /*4 so*/null,
+                /*5 */{"bVisible":false,"bSortable":false },
+                /*6  ipc*/ {"bSortable": false}],
             "aLengthMenu": [[5,10, 25, 50, 100, 1000, -1], [5,10, 25, 50, 100, 1000, "Todos"]],
             "sPaginationType": "full_numbers",  
             "aaSorting": [[1, 'asc']],
@@ -1063,15 +1184,14 @@
                 });
             }
         });
-        verOcultarColDT(0,dt_software);//ocultar el primer campo del datatable
-        verOcultarColDT(5,dt_software);
+        
         /*agregar la clase row_select al datatable para determinar que elemento esta seleccionado*/
         $("#dtsoftware tbody tr").live('click', function( e ) {
             if ( $(this).hasClass('row_selected') ) {
                 $(this).removeClass('row_selected');
                 $("#gru_select").text("No se ha selecionado un Software");
                 dt_grupos_sw.fnClearTable();
-                sw_select=0;
+                sw_select=0;sw_dataselect='';
             }
             else {
                 dt_software.$('tr.row_selected').removeClass('row_selected');
@@ -1081,6 +1201,7 @@
                 datos_sw_selec=datos;
                 var respuesta=false;
                 sw_select=datos[0];
+                sw_dataselect=datos[1]+' '+datos[2]+' | Sistema Operativo: '+datos[4];
                 /**Agregar al datatables los grupos asociados al software seleccionado*/
                 dt_grupos_sw.fnClearTable();
                 $("#gru_select").text(datos[1]);
@@ -1128,7 +1249,7 @@
                         allFields.removeClass( "ui-state-error" );
                         var bValid = true;
                         bValid = bValid && campoVacio(nombre,'Nombre del Software',tips);
-                        var sel_valid=verificaSelect(so,'Selecione un <b>Sistema Operativo</b> por favor',tips);
+                        var sel_valid=verificaSelect(so,'Selecione un <b>Sistema Operativo</b>',tips);
                         if(!sel_valid){select_ui.addClass("ui-state-error");}
                         bValid = bValid && sel_valid;
                         if ( bValid ) {  
@@ -1161,7 +1282,7 @@
             if((sw_select!=0)&&(sw_select!='')){
                 modifica_software(sw_select);
             }else{
-                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software por favor.','',400,true);
+                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software.','',400,true);
             }
         });
         
@@ -1169,7 +1290,15 @@
             if((sw_select!=0)&&(sw_select!='')){
                 elimina_software(sw_select);
             }else{
-                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software por favor.','',400,true);
+                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software.','',400,true);
+            }
+        });
+        
+        $('#btn_ubicar_sw').click(function(){
+            if((sw_select!=0)&&(sw_select!='')){
+                ubicar_software(sw_select);
+            }else{
+                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software.','',400,true);
             }
         });
         
@@ -1177,7 +1306,7 @@
             if((sw_select!=0)&&(sw_select!='')){
                 asigna_grupo(sw_select,datos_sw_selec[5],$("#gru_select").text());
             }else{
-                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software por favor.','');
+                mensaje($( "#mensaje" ),'No hay software selecionado ! ','./images/msg/warning.png','Selecciona un software.','');
             }
         });
         
@@ -1223,9 +1352,12 @@
     });//findocument ready
 </script>
 <style>
+    #dtequipossw_filter .buscar_dt{ width: 150px !important;}
+    #dtequipossos_filter .buscar_dt{ width: 150px !important;}
     .but_bar_content{ height: 38px !important; margin-bottom: 10px !important;}
     #so_sw,#m_so_sw,#grupos_sw,#grupos_so{width: 300px !important;}
     #m_so_grupo,#so_grupo{width: 300px !important;}
+    .opc {cursor: pointer;margin-right: 3px !important;}
 </style>
 <?php
 if ($permisos == '') {

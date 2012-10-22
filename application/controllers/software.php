@@ -6,15 +6,15 @@ if (!defined('BASEPATH'))
 class Software extends CI_Controller {
 
     public function index() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         $permisos_us = $this->session->userdata('puedo');
         if (!$login) {
             redirect('acceso/acceso_denegado');
         }
         //si el usuario no tiene ningún permiso asignado
-        if($permisos_us==''){
-             redirect('acceso/acceso_home/inicio');
+        if ($permisos_us == '') {
+            redirect('acceso/acceso_home/inicio');
         }
         $this->load->library('utl_apecc');
         //obtener el arreglo con los permisos para el usuario del sistema
@@ -27,11 +27,11 @@ class Software extends CI_Controller {
             //si en el arreglo de permisos esta la clave de usuarios
             if (array_key_exists($rec, $ptemp)) {
                 $permisos = $this->utl_apecc->getCSS_prm($ptemp[$rec], $prm_array);
-            }else{
+            } else {
                 redirect('acceso/acceso_home/inicio');
             }
         } else {
-            $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array);//si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
+            $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array); //si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
         }
         $contenido['permisos'] = $permisos;
         //$this->load->model("software_model");
@@ -173,15 +173,15 @@ class Software extends CI_Controller {
             "iTotalDisplayRecords" => $iFilteredTotal,
             "aaData" => array()
         );
-        $nombresw=$idso = $id = $st = $color = '';
+        $nombresw = $idso = $id = $st = $color = '';
         for ($x = 0; $x < $rResult->num_rows(); $x++) {
             $aRow = $rResult->row_array($x);
             $row = array();
             $row['DT_RowId'] = 'row_' . $aRow[$sIndexColumn];
             $row['DT_RowClass'] = 'gradeA';
             for ($i = 0; $i < count($aColumns); $i++) {
-                if($aColumns[$i] =='software'){
-                    $nombresw= $aRow[$aColumns[$i]];
+                if ($aColumns[$i] == 'software') {
+                    $nombresw = $aRow[$aColumns[$i]];
                 }
                 if ($aColumns[$i] == $sIndexColumn) {
                     $id = $aRow[$aColumns[$i]];
@@ -197,6 +197,7 @@ class Software extends CI_Controller {
             }
             $row[] = '<img src="images/modificar.png" class="opc prm_c" title="Modificar" alt="Modificar" onclick="modifica_software(\'' . $id . '\',\'' . $color . '\',$(\'#c_' . $id . '\'))"/>
                       <img src="images/eliminar.png" class="opc prm_b" title="Eliminar" alt="Eliminar" onclick="elimina_software(\'' . $id . '\')"/>
+                      <img src="images/swequ.png" class="opc" title="Localizar equipos que cuentan con el software" alt="Ubicar" onclick="ubicar_software(\'' . $id . '\')"/>
                       <img src="images/asigna.ico" class="opc prm_s" title="Asignar un grupo de software" alt="Asignar grupo" onclick="asigna_grupo(\'' . $id . '\',\'' . $idso . '\',\'' . $nombresw . '\')"/>';
             $output['aaData'][] = $row;
         }
@@ -279,9 +280,9 @@ class Software extends CI_Controller {
         }
         echo $_GET['callback'] . '(' . json_encode($output) . ');';
     }
-    
+
     function agregaSO() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -293,9 +294,21 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al agregar el sistema operativo";
     }
+
+    function equiposSW($idsw) {
+        $this->load->model('software_model');
+        $equsw=$this->software_model->getequipossoftware($idsw)->result_array();
+        echo json_encode($equsw);
+    }
     
+    function equiposSOS($idso) {
+        $this->load->model('software_model');
+        $equsw=$this->software_model->getequiposso($idso)->result_array();
+        echo json_encode($equsw);
+    }
+
     function modificaSO() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -303,14 +316,14 @@ class Software extends CI_Controller {
         $this->load->model('software_model');
         $so = $this->input->Post("m_nombre_so");
         $idso = $this->input->Post("idso");
-        $sepudo = $this->software_model->modifica_so($idso,$so);
+        $sepudo = $this->software_model->modifica_so($idso, $so);
         if ($sepudo)
             echo 'ok'; else
             echo "Se produjo un error al modificar el sistema operativo";
     }
-    
+
     function asignaGrupoSW() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -323,9 +336,9 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al asignar el Software.";
     }
-    
+
     function desasignaGrupoSW() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -340,7 +353,7 @@ class Software extends CI_Controller {
     }
 
     function eliminaSoftware() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -352,9 +365,9 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al eliminar el software.";
     }
-    
+
     function eliminaSO() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -366,9 +379,9 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al eliminar el sistema operativo.";
     }
-    
+
     function eliminaGrupo() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -382,7 +395,7 @@ class Software extends CI_Controller {
     }
 
     function agregaSoftware() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -397,9 +410,9 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al agregar el Software.";
     }
-    
+
     function agregaGrupo() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -413,9 +426,9 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al agregar el Software.";
     }
-    
+
     function modificaGrupo() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -425,14 +438,14 @@ class Software extends CI_Controller {
         $nombre = $this->input->Post("m_nombre_grupo");
         $descripcion = $this->input->Post("m_descripcion_grupo");
         //$so = $this->input->Post("so_grupo");
-        $sepudo = $this->software_model->modifica_grupo($id,$nombre, $descripcion);
+        $sepudo = $this->software_model->modifica_grupo($id, $nombre, $descripcion);
         if ($sepudo)
             echo 'ok'; else
             echo "Se produjo un error al agregar el Software.";
     }
 
     function modificaSoftware() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -448,7 +461,7 @@ class Software extends CI_Controller {
             echo 'ok'; else
             echo "Se produjo un error al modificar el Software.";
     }
-    
+
     function getDatosSW() {
         $this->load->model("software_model");
         $id = $this->input->Post("id");
@@ -461,7 +474,7 @@ class Software extends CI_Controller {
         }
         echo json_encode($jsondata);
     }
-    
+
     function getDatosGrupo() {
         $this->load->model("software_model");
         $id = $this->input->Post("id");
@@ -472,7 +485,7 @@ class Software extends CI_Controller {
         }
         echo json_encode($jsondata);
     }
-    
+
     function getDatosSO() {
         $this->load->model("software_model");
         $id = $this->input->Post("id");

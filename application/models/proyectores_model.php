@@ -26,7 +26,7 @@ class Proyectores_model extends CI_Model {
     function entrega_Control($id, $observaciones,$login) {
         $this->db->trans_begin();
         $this->db->where('id', $id);
-        $this->db->update('reservaciones_proyectores', array('entregado' => 1,'usuarioSistemaEntrega'=>$login, 'observaciones' => $observaciones));
+        $this->db->update('reservaciones_proyectores', array('entregado' => 1,'usuarioSistemaEntrega'=>$login, 'observaciones' => $observaciones,'horaFin'=>date('H:i:s')));
         $this->db->limit(1);
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

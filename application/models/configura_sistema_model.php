@@ -7,9 +7,6 @@ class Configura_sistema_model extends CI_Model {
         $this->load->database();
     }
 
-    /*
-     * @note La hore de fin es un campo lógico generado a partir de la hora a la que se encuentra la actividad ya que cada actividad  se reserva por hora
-     */
     function cambia_periodo() {
         $fechaini=  $this->config->item('fecha_periodo_inicio');
         $fechafin=  $this->config->item('fecha_periodo_fin');

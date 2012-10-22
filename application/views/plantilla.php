@@ -3,11 +3,11 @@
 <html lang="es">
     <head>
         <base href= "<?php echo $this->config->item('base_url'); ?>">
+        <link rel="shortcut icon" href="./images/favicon.ico">
         <title>APECC</title>
         <meta name="author" content="CGT">
         <meta http-equiv="content-type" CONTENT="text/html; charset=utf-8">
-        <link rel="shortcut icon" href="./images/favicon.ico">
-
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
         <!--CSS Grid 1440-->
         <script type="text/javascript" language="javascript" src="./js/cssgrid1140/css3-mediaqueries.js"></script>
         <link rel="stylesheet" href="./css/cssgrid1140/1140.css" type="text/css"/>
@@ -18,7 +18,6 @@
             @import "./css/datatables/demo_table.css";
             @import "./css/datatables/adaptacion_themeroller.css";
         </style>
-
         <link rel="stylesheet" href="./css/jquery-ui/demos.css">
         <link rel="stylesheet" href="./css/jquery-ui/jquery-ui-1.8.20.custom.css">
         <link rel="stylesheet" href="./css/jquery-ui/jquery.ui.base.css">
@@ -34,7 +33,7 @@
         <!--jquery ui-->
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.effects.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.base.js"></script>
-         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.mousewheel-3.0.4.js"></script>
+        <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.mousewheel-3.0.4.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.accordion.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.autocomplete.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.button.js"></script>
@@ -43,7 +42,7 @@
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.tabs.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.datepicker.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.progressbar.js"></script>
-        
+
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.menu.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.menubar.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.tooltip.js"></script>
@@ -55,6 +54,7 @@
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.selectmenu.js"></script>
         <!-- fin jquery ui-->
         <script type="text/javascript" language="javascript" src="./js/jquery.blockUI.js"></script>
+        <script type="text/javascript" language="javascript" src="./js/jquery.typewatch.js"></script>
         <script type="text/javascript" language="javascript" src="./js/js_gral.js"></script>
         <script type="text/javascript" language="javascript" src="./js/utilerias.js"></script>
         <script type="text/javascript" language="javascript" src="./js/nav_menu.js"></script>
@@ -106,7 +106,7 @@
                 <img align="right"  src="./images/BANNER_APECC.png">
             </div> 
             <ul id="ulMenu" class="ui-state-default ui-corner-all boxshadow">
-                <li class="itemli no-icon"><a>&nbsp;&nbsp;&nbsp;</a></li>
+                <button><img onclick="redirect_to('inicio')" title="Ir a Inicio/Home" class="tooltip img_home" src="./images/menu_lt/home.png"></button>
                 <?php
                 $hidem = '';
                 $permisos = $this->session->userdata('puedo');
@@ -114,30 +114,32 @@
                 if ($pos !== false) {
                     ?>
                     <li class="itemli"><a>Reservaciones</a>
-                        <ul><?php if (stripos($permisos, 'rst') !== false) {?>
-                            <li><a id="nav_rt" class="manita">Moment&aacute;neas</a></li>
-                            <?php } if (stripos($permisos, 'rsf') !== false) {?>
-                            <li><a id="nav_rf" class="manita">Fijas</a></li>
-                            <?php }if (stripos($permisos, 'rss') !== false) {?>
-                            <li><a id="nav_as" class="manita">Apartado de Salas</a></li>
-                            <?php }else { $hidem.='$("#rs_d").css("display","none"); '; }?>
+                        <ul><?php if (stripos($permisos, 'rst') !== false) { ?>
+                                <li><a id="nav_rt" class="manita">Moment&aacute;neas</a></li>
+                            <?php } if (stripos($permisos, 'rsf') !== false) { ?>
+                                <li><a id="nav_rf" class="manita">Fijas</a></li>
+                            <?php }if (stripos($permisos, 'rss') !== false) { ?>
+                                <li><a id="nav_as" class="manita">Apartado de Salas</a></li>
+                            <?php } else {
+                                $hidem.='$("#rs_d").css("display","none"); ';
+                            } ?>
                         </ul>
                     </li>
-                <?php
-                } 
+                    <?php
+                }
                 $pos = stripos($permisos, 'us');
                 if ($pos !== false) {
                     ?>
                     <li class="itemli"><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Usuarios&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         <ul>
-                            <?php if (stripos($permisos, 'usu') !== false) {?>
-                            <li class="manita" id="nav_us"><a>Usuarios</a></li>
-                            <?php } if (stripos($permisos, 'ust') !== false) {?>
-                            <li class="manita" id="nav_ut"><a>Tipos de Usuario</a></li>
-                            <?php } ?>
+                            <?php if (stripos($permisos, 'usu') !== false) { ?>
+                                <li class="manita" id="nav_us"><a>Usuarios</a></li>
+                            <?php } if (stripos($permisos, 'ust') !== false) { ?>
+                                <li class="manita" id="nav_ut"><a>Tipos de Usuario</a></li>
+                    <?php } ?>
                         </ul>
                     </li>
-                <?php
+                    <?php
                 } else {
                     $hidem.='$("#us_d").css("display","none"); ';
                 }
@@ -149,23 +151,23 @@
                             <li class="manita" id="nav_ac"><a>Actividades</a></li>
                         </ul>
                     </li>
-                <?php
+                    <?php
                 }
                 $pos = stripos($permisos, 'eq');
                 if ($pos !== false) {
                     ?>
                     <li class="itemli"><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equipos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         <ul>
-                            <?php if (stripos($permisos, 'equ') !== false) {?>
-                            <li><a class="manita" id="nav_eq">Gesti&oacute;n de Equipos</a></li>
-                            <?php }if (stripos($permisos, 'eqb') !== false) {?>
-                            <li><a class="manita" id="nav_ue">Ubicaci&oacute;n de Equipos</a></li>
-                            <?php }if (stripos($permisos, 'eqs') !== false) {?>
-                            <li><a class="manita" id="nav_es">Asignacion de software</a></li>
-                            <?php }?>
+                            <?php if (stripos($permisos, 'equ') !== false) { ?>
+                                <li><a class="manita" id="nav_eq">Gesti&oacute;n de Equipos</a></li>
+                            <?php }if (stripos($permisos, 'eqb') !== false) { ?>
+                                <li><a class="manita" id="nav_ue">Ubicaci&oacute;n de Equipos</a></li>
+                            <?php }if (stripos($permisos, 'eqs') !== false) { ?>
+                                <li><a class="manita" id="nav_es">Asignacion de software</a></li>
+                    <?php } ?>
                         </ul>
                     </li>
-                <?php
+                    <?php
                 }
                 $pos = stripos($permisos, 'sw');
                 if ($pos !== false) {
@@ -176,42 +178,44 @@
                         </ul>
                     </li>
                     <?php
-                    }
-                    $pos = stripos($permisos, 'rp');
-                    if ($pos !== false) {
-                        ?>
+                }
+                $pos = stripos($permisos, 'rp');
+                if ($pos !== false) {
+                    ?>
                     <li class="itemli"><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reportes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         <ul>
-                            <?php if (stripos($permisos, 'rpg') !== false) {?>
-                            <li><a class="manita" id="nav_rg">Reportes Generales</a></li>
-                            <?php }if (stripos($permisos, 'rpp') !== false) {?>
-                            <li><a class="manita" id="nav_rp">Reportes Personalizados</a></li>
-                            <?php } ?>
+                            <?php if (stripos($permisos, 'rpg') !== false) { ?>
+                                <li><a class="manita" id="nav_rg">Reportes Generales</a></li>
+                            <?php }if (stripos($permisos, 'rpp') !== false) { ?>
+                                <li><a class="manita" id="nav_rp">Reportes Personalizados</a></li>
+                    <?php } ?>
                         </ul>
                     </li>
-                <?php } 
-                    $pos = stripos($permisos, 'pr');
-                    if ($pos !== false) {
-                        ?>
+                <?php
+                }
+                $pos = stripos($permisos, 'pr');
+                if ($pos !== false) {
+                    ?>
                     <li class="itemli"><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Proyectores&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         <ul>
-                            <?php if (stripos($permisos, 'prc') !== false) {?>
-                            <li><a class="manita" id="nav_prc">Pr&eacute;stamo de controles</a></li>
-                            <?php } ?>
+    <?php if (stripos($permisos, 'prc') !== false) { ?>
+                                <li><a class="manita" id="nav_prc">Pr&eacute;stamo de controles</a></li>
+                    <?php } ?>
                         </ul>
                     </li>
-                <?php } 
-                    unset($pos)?>
+                        <?php }
+                        unset($pos)
+                        ?>
                 <li class="itemli"><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sistema&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     <ul>
-                            <?php if (stripos($permisos, 'siu') !== false) {?>
+                        <?php if (stripos($permisos, 'siu') !== false) { ?>
                             <li><a class="manita" id="nav_su">Usuarios del sistema</a></li>
-                            <?php }if (stripos($permisos, 'sic') !== false) {?>
+<?php }if (stripos($permisos, 'sic') !== false) { ?>
                             <li><a class="manita" id="nav_sc">Configuraciones</a></li>
-                            <?php  } ?>
-                            <li><a class="manita" id="nav_ay">Ayuda</a></li>
-                            <li><a class="manita" id="nav_ad">Acerca de APECC</a></li>
-                        </ul>
+<?php } ?>
+                        <li><a class="manita" id="nav_ay">Ayuda</a></li>
+                        <li><a class="manita" id="nav_ad">Acerca de APECC</a></li>
+                    </ul>
                 </li>
 
                 <div id="timestamp" align="right"></div>
@@ -221,7 +225,9 @@
             <div id="titulo_pag"class="twelvecol ui-widget-header header ui-corner-top boxshadow">
                 <label style="float: left;  margin-left: 50px;" id="titulo_ventana" class="">
                     <center class="label_titulo">
-                    <?php  if (isset($titulo_pag) && ($titulo_pag != '')) { echo $titulo_pag . PHP_EOL; }  ?>
+<?php if (isset($titulo_pag) && ($titulo_pag != '')) {
+    echo $titulo_pag . PHP_EOL;
+} ?>
                     </center>
                     <!--div style="font-size: 10 px; width: auto; float:right; margin-right: 50px;" id="switcher"></div-->
                 </label>
@@ -249,24 +255,24 @@
             <div id="content" class="twelvecol last ui-widget-content boxshadow">
                 <div id="mensaje" class="hide"></div><!--Div donde se crearan los mensajes para cada accion de la pagina-->
                 <div id="dialog-aux" class="hide"></div> <!--Div auxilar donde se crearan los mensajes en caso de que mensajes este ocupado-->
-                <?php
-                if (isset($contenido) && ($contenido != '')) {
-                    echo $contenido . PHP_EOL;
-                }
-                ?>
+<?php
+if (isset($contenido) && ($contenido != '')) {
+    echo $contenido . PHP_EOL;
+}
+?>
             </div>
             <div id="footer" class="twelvecol last ui-widget-header ui-corner-bottom boxshadow" style="height:70px">
                 <div align="center" id="foot_lb">
-                    Automatizaci&oacute;n de Procesos en el Centro de Computo (APECC&nbsp; <?php echo $this->config->item("sis_version");?>)<br>
+                    Automatizaci&oacute;n de Procesos en el Centro de Computo (APECC&nbsp; <?php echo $this->config->item("sis_version"); ?>)<br>
                     Proyecto realizado para la facultad de Estad&iacute;stica e Inform&aacute;tica de la UNIVERSIDAD VERACRUZANA<br>
                     Jos&eacute; Adrian Ruiz Carmona
                     &reg; <?php
                     setlocale(LC_TIME, 'Spanish');
-                    echo date("F") . " " . date("Y"); 
-                    ?>
+                    echo date("F") . " " . date("Y");
+?>
                 </div>
             </div>
-                <?php if ($this->config->item('ver_menu_lt')) { ?>
+<?php if ($this->config->item('ver_menu_lt')) { ?>
                 <ul id="acess_menu">
                     <li><a class="boxshadowround" id="ml_hm" href="#">Home</a></li>
                     <li><a class="boxshadowround" onclick="window.location.reload()" >Actualizar</a></li>
@@ -275,10 +281,10 @@
                     <li><a class="boxshadowround" id="ml_ex" href="#">Salir</a></li>
                     <li><a class="boxshadowround" id="ml_hp" href="#">Ayuda</a></li>
                 </ul>
-               <script type="text/javascript">
-            $(document).ready(function(){ <?php echo $hidem ?>  });
-        </script>
-                <?php } ?>
+                <script type="text/javascript">
+                    $(document).ready(function(){ <?php echo $hidem ?>  });
+                </script>
+<?php } ?>
         </div>
     </body>
 </html>

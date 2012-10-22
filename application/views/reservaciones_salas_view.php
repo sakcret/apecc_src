@@ -1,3 +1,35 @@
+<script>
+    $(function() {
+        var dates = $( "#fecha_inicio, #fecha_fin" ).datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 3,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "fecha_inicio" ? "minDate" : "maxDate",
+                instance = $( this ).data( "datepicker" ),
+                date = $.datepicker.parseDate(
+                instance.settings.dateFormat ||
+                    $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings );
+                dates.not( this ).datepicker( "option", option, date );
+            }
+        });
+        var dates2 = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 3,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "m_fecha_inicio" ? "minDate" : "maxDate",
+                instance = $( this ).data( "datepicker" ),
+                date = $.datepicker.parseDate(
+                instance.settings.dateFormat ||
+                    $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings );
+                dates2.not( this ).datepicker( "option", option, date );
+            }
+        });
+    });
+</script>
 <div id="dialog-elimina" title="Cancelar reservaci&oacute;n de Sala" class="hide">
     <p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>
         &nbsp;&nbsp;Se cancelar&aacute; la reservaci&oacute;n Seleccionada. ¿Deseas Continuar?</p>
@@ -17,7 +49,7 @@
                         <input type="text" name="nombre_act" id="nombre_act" maxlength="100" class="text ui-widget-content ui-corner-all" /></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><label for="encargado">Encargado*:</label><br>
+                    <td colspan="3"><label for="encargado">Maestro o Encargado*:</label><br>
                         <select name="encargado" id="encargado"/>
                         </select></td>
                 </tr>
@@ -58,16 +90,16 @@
                         <input type="text" name="m_nombre_act" id="m_nombre_act" maxlength="100" class="text ui-widget-content ui-corner-all" /></td>
                 </tr>
                 <tr>
-                    <td colspan="3"><label for="m_encargado">Encargado*:</label><br>
+                    <td colspan="3"><label for="m_encargado">Maestro o Encargado*:</label><br>
                         <select name="m_encargado" id="m_encargado"/>
                         </select>
                 </tr>
                 <tr>
                     <td><label for="m_hora_inicio">Hora de Inicio*:</label>
-                        <input type="text" name="m_hora_inicio" id="m_hora_inicio" maxlength="25" class="text ui-widget-content ui-corner-all" /></td>
+                        <input type="text" placeholder="Ejemplo: 08:00:00" name="m_hora_inicio" id="m_hora_inicio" maxlength="25" class="text ui-widget-content ui-corner-all" /></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
                     <td><label for="m_hora_fin">Hora de Fin*:</label>
-                        <input type="text" name="m_hora_fin" id="m_hora_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
+                        <input type="text" placeholder="Ejemplo: 09:00:00" name="m_hora_fin" id="m_hora_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
                 </tr>
                 <tr>
                     <td><label for="m_fecha_inicio">Fecha de Inicio*:</label>
@@ -104,59 +136,41 @@
                 <thead>
                     <tr>
                         <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
+                        <th width="80%">Texto a Filtrar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
                         <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Sala</td>
                         <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
                     </tr>
                     <tr id="filter_col3">
                         <td align="left">Actividad</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
                         <td align="left">Encargado</td>
                         <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
                     </tr>
                     <tr id="filter_col5">
                         <td align="left">Fecha Inicio</td>
-                        <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
+                        <td align="center"><input type="text" placeholder="Ejemplo: 2012-12-01"  name="col5_filter" id="col5_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                     <tr id="filter_col6">
                         <td align="left">Fecha Fin</td>
-                        <td align="center"><input type="text"     name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_regex"  id="col6_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_smart"  id="col6_smart" checked></td>
+                        <td align="center"><input type="text" placeholder="Ejemplo: 2012-12-01" name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                     <tr id="filter_col7">
                         <td align="left">Hora inicio</td>
-                        <td align="center"><input type="text"     name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_regex"  id="col7_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_smart"  id="col7_smart" checked></td>
+                        <td align="center"><input type="text" placeholder="Formato hh:mm:ss Ejemplo: 11:00:00" name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                     <tr id="filter_col8">
                         <td align="left">Hora Fin</td>
-                        <td align="center"><input type="text"     name="col8_filter" id="col8_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_regex"  id="col8_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_smart"  id="col8_smart" checked></td>
+                        <td align="center"><input type="text" placeholder="Formato hh:mm:ss Ejemplo: 11:00:00"  name="col8_filter" id="col8_filter" class="text ui-widget-content ui-corner-all" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -181,7 +195,7 @@
                         <th>id</th>
                         <th>Sala</th>
                         <th>Actividad</th>
-                        <th>Encargado</th>                
+                        <th>Encargado/Maestro</th>                
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
                         <th>Hora Inicio</th>
@@ -201,7 +215,7 @@
                         <th>id</th>
                         <th>Sala</th>
                         <th>Actividad</th>
-                        <th>Encargado</th>                
+                        <th>Encargado/Maestro</th>                
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
                         <th>Hora Inicio</th>
@@ -211,13 +225,6 @@
                     </tr>
                 </tfoot>
             </table>
-            <div class="ui-widget-content ui-corner-all" style="margin-top: 8px; padding: 5px;"> 
-                <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-                    <strong>Importante !</strong> : <blockquote style="margin-left: 30px; margin-right: 20px;">
-                    1. La fecha de Inicio y fin de las reservaciones de salas son muy importantes, ya que mientras este en rango se seguir&aacute; apartando las sala asignada.
-                    Para evitar que se siga reservando asigne una fecha final fuera de rango, es decir una fecha anterior a la actual</blockquote>
-                </p>
-            </div>
             <br/>
         </div>
     </div>
@@ -226,11 +233,21 @@
     var dt_reservsalas;
     var row_select=0;
     
-     
-    var horas_src = [
-        "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00",
-        "15:00","16:00","17:00","18:00","19:00","20:00","21:00"
-    ];
+    function validaRangoFecha(strdate1,strdate2){
+        if(strdate1==strdate2){
+            return true;
+        }else{
+            var f1=new Date(strdate1);
+            var f2=new Date(strdate2); 
+            if(f1<f2){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    
+    var horas_src = [ "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00" ];
     
     function cambia_estado(o,id){
         var est=o.attr("cambia_edo");
@@ -256,27 +273,17 @@
     
     /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtreservsalas').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtreservsalas').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable*/
-    function fnFilterColumn ( i ){
-        $('#dtreservsalas').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
-    }		
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtreservsalas').dataTable().fnFilter( obj.val(),i, false, true);
+    }	
     
     function carga_encargados(){
         var c = get_value('usuarios/getUsuariosAcademicos','');
         $('[name="encargado"] option').remove();
-        var todos="<option value='0'>Todos</option>";
+        var todos="<option value='0'></option>";
         $('[name="encargado"]').append(todos);
         $('[name="encargado"]').append(c);
         $('#encargado').combobox();
@@ -353,8 +360,6 @@
                 $( "#m_hora_fin" ).val(data.hf);
                 $( "#m_fecha_inicio" ).val(data.fi);
                 $( "#m_fecha_fin" ).val(data.ff);
-                //$( "#m_sala" ).val(data.sa);
-               
                 $('#m_encargado').combobox();
                 $( "#m_sala" ).selectmenu("value", data.sa);
                 
@@ -388,6 +393,7 @@
                     var bValid = true;
                     allFields.removeClass( "ui-state-error" );
                     $('#sala-button,#form_modifica_reservsala .ui-autocomplete-input').removeClass('ui-state-error');
+                  
                     bValid = bValid && verificaSelectUI(sala,$( "#m_sala-button" ),"Debe selecionar una sala",tips);
                     bValid = bValid && campoVacio(nombre_act,'Nombre de Actividad',tips);
                     bValid = bValid && verificaSelect(encargado,'Por favor seleciona un encargado',tips)
@@ -400,6 +406,15 @@
                     bValid = bValid && validaCampoExpReg( fecha_inicio,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
                     bValid = bValid && campoVacio(fecha_fin,'Fecha de Fin',tips);
                     bValid = bValid && validaCampoExpReg( fecha_fin,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);          
+                    var arrayf1=fecha_inicio.val().split('/');
+                    var arrayf2=fecha_fin.val().split('/');
+                    var fechavalida=validaRangoFecha(arrayf1[2]+'-'+arrayf1[1]+'-'+arrayf1[0],arrayf2[2]+'-'+arrayf2[1]+'-'+arrayf2[0]);
+                    if(fechavalida){
+                        bValid = bValid && true;
+                    }else{
+                        bValid = bValid && false;
+                        fecha_fin.addClass( "ui-state-error" );tips.html('La fecha final no puede ser menor a la fecha inicial.');
+                    }
                     if ( bValid ) {  
                         var datos = $( "#form_modifica_reservsala" ).serialize()+'&id='+id;
                         var urll="index.php/reservaciones_salas/modificaReservacion";
@@ -425,40 +440,8 @@
     }
     
     $(document).ready(function() {
-        /*var dates = $( "#fecha_inicio, #fecha_fin" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            onSelect: function( selectedDate ) {
-                var option = this.id == "from" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
-            }
-        });
-var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            onSelect: function( selectedDate ) {
-                var option = this.id == "from" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
-            }
-        });*/
-        
-        $( "#fecha_inicio, #fecha_fin,#m_fecha_inicio, #m_fecha_fin" ).datepicker();
-        
-        
-             
-        $('#hora_inicio,#hora_fin,#m_hora_inicio,#m_hora_fin').autocomplete({
-            source: horas_src
-        });
+        $( "#fecha_inicio, #fecha_fin,#m_fecha_inicio, #m_fecha_fin" ).datepicker();       
+        $('#hora_inicio,#hora_fin,#m_hora_inicio,#m_hora_fin').autocomplete({source: horas_src});
                 
         /* selecciona una fila del datatable no aplica para server_aside proccessing*/
         $('#dtreservsalas tbody tr').live('click', function (e) {
@@ -472,40 +455,17 @@ var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
                 var datos=dt_reservsalas.fnGetData(anSelected[0]);
                 row_select=datos[0];
             }
-        } ); 
+        }); 
         
         /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
-       
-        $("#col6_filter").keyup( function() { fnFilterColumn( 5 ); } );
-        $("#col6_regex").click(  function() { fnFilterColumn( 5 ); } );
-        $("#col6_smart").click(  function() { fnFilterColumn( 5 ); } );
-       
-        $("#col7_filter").keyup( function() { fnFilterColumn( 6 ); } );
-        $("#col7_regex").click(  function() { fnFilterColumn( 6 ); } );
-        $("#col7_smart").click(  function() { fnFilterColumn( 6 ); } );
-       
-        $("#col8_filter").keyup( function() { fnFilterColumn( 7 ); } );
-        $("#col8_regex").click(  function() { fnFilterColumn( 7 ); } );
-        $("#col8_smart").click(  function() { fnFilterColumn( 7 ); } );
+        $("#global_filter").typeWatch( { callback:function(){ fnFilterGlobal()},wait:750,highlight:true,captureLength:0} );    
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col5_filter").typeWatch( {callback:function(){ fnFilterColumn( 4, $("#col5_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col6_filter").typeWatch( {callback:function(){ fnFilterColumn( 5, $("#col6_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col7_filter").typeWatch( {callback:function(){ fnFilterColumn( 6, $("#col7_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col8_filter").typeWatch( {callback:function(){ fnFilterColumn( 7, $("#col8_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
        
         /*ocultar y mostrar las ociones de filtro del datatable (busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -572,8 +532,8 @@ var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
             }
         } );
         verOcultarColDT(0,dt_reservsalas);
-        
-        
+       
+        $( "#vo_campos" ).buttonset();		
         $( "#dialog:ui-dialog" ).dialog( "destroy" );		
         var nombre_act = $( "#nombre_act" ),
         sala = $( "#sala" ),
@@ -609,9 +569,60 @@ var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
                     bValid = bValid && validaCampoExpReg( fecha_inicio,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
                     bValid = bValid && campoVacio(fecha_fin,'Fecha de Fin',tips);
                     bValid = bValid && validaCampoExpReg(fecha_fin,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
-                    if ( bValid ) {  
+                    var arrayf1=fecha_inicio.val().split('/');
+                    var arrayf2=fecha_fin.val().split('/');
+                    var fechavalida=validaRangoFecha(arrayf1[2]+'-'+arrayf1[1]+'-'+arrayf1[0],arrayf2[2]+'-'+arrayf2[1]+'-'+arrayf2[0]);
+                    var hayclase = ajax_peticion_json('index.php/reservaciones_salas/validaReservSala','horai='+hora_inicio.val()+'&horaf='+hora_fin.val()+'&sala='+sala.val());
+                    if(hayclase==false) {
+                        sihayquiero=true;
+                    }else{//si no hay clase entre las horas especificadas 
+                        var html='<br><table align="center" width="100%"><tr><th class="ui-widget-header">Actividad</th><th class="ui-widget-header">D&iacute;a</th><th class="ui-widget-header">Hora Inicio</th><th class="ui-widget-header">Hora Fin</th></tr>';
+                        $.each( hayclase, function(k, v){
+                            html+='<tr><td class="ui-widget-content">'+v.ac+'</td><td class="ui-widget-content">'+v.di+'</td><td class="ui-widget-content">'+v.hi+'</td><td class="ui-widget-content">'+v.hf+'</td></tr>';
+                        });
+                        html+='</table><hr class="boxshadowround"><font>Si el equipo no es utilizado en la reservaci&oacute;n fija puede crear una nueva reservación.</font>';
+                        var om=$( "#mensaje" );
+                        //,html,550,true);
+                        var titulo= 'Se ha encontrado una colisi&oacute;n',
+                        text1='Se ha encontrado un choque entre las reservaci&oacute;n actual y alguna(s) actividad(es).<br>'+
+                            'A continuaci&oacute;n se presenta(n) la(s) actividad(es) que se traslapan con la reservaci&oacute;n, para que corrija la hora de fin.<hr class="boxshadowround">';
+                        $( "#dialog:ui-dialog" ).dialog( "destroy" );
+                        om.attr('title','');
+                        om.html('<p><span style="float:left; margin:0 7px 0px 0;"><img src="./images/msg/warning.png"/></span>'
+                            +text1+'</p><p style="font-size: 13px;">'+html+'</p>');
+                        om.attr('title',titulo);
+                        $("#ui-dialog-title-mensaje").html(titulo);
+                        om.dialog({
+                            modal: true,
+                            width:550,
+                            buttons: {
+                                'Entiendo aún asi quiero reservar': function() {
+                                    om.attr('title','');
+                                    om.html('');
+                                    sihayquiero=true;
+                                    $( this ).dialog( "close" );
+                                },
+                                'Corregir datos': function() {
+                                    sihayquiero=false;
+                                    om.attr('title','');
+                                    om.html('');
+                                    $( this ).dialog( "close" );
+                                }
+                            },
+                            close: function() {
+                                om.attr('title','');
+                                om.html('');
+                            }
+                        }).dialog("open");
+                    }
+                    if(fechavalida){
+                        bValid = bValid && true;
+                    }else{
+                        bValid = bValid && false;
+                        fecha_fin.addClass( "ui-state-error" );tips.html('La fecha final no puede ser menor a la fecha inicial.');
+                    }
+                    /* if ( bValid ) {  
                         var datos = $( "#form_agrega_reservsala" ).serialize();
-                        alert(datos);
                         var urll="index.php/reservaciones_salas/agregaReservacion";
                         var respuesta = ajax_peticion(urll,datos);
                         if (respuesta=='ok'){
@@ -621,7 +632,7 @@ var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
                             mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la p&aacute;gina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.',400,true);
                         }                 
                         $( this ).dialog( "close" );
-                    }
+                    }*/
                 },
                 Cancelar : function() {
                     $( this ).dialog( "close" );
@@ -633,9 +644,7 @@ var dates = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
             }
         });
 
-        $( "#btn_agregar" )
-        .button()
-        .click(function() {
+        $( "#btn_agregar" ).button().click(function() {
             carga_encargados();
             carga_salas();
             $( "#f_agregar_reserva_sala" ).dialog( "open" );

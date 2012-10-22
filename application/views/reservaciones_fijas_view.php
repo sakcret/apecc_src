@@ -1,61 +1,15 @@
 <style>
-    .tabla_actividades_div{
-        width: 15%;
-        float: left;
-        margin-left: 20px;
-        margin-bottom: 25px;
-        margin-top: 10px;
-    }
-    #content_almacen{
-        margin-top: 7px!important;
-        margin-bottom: 7px!important;
-        width: 185px !important;
-        margin: auto;
-
-    }
-    .tabla_salas{
-        width: 79%;
-        float: right;
-        margin-right: 20px;
-    }
-    .row1{
-        width: 100%;
-        margin: 0 auto;
-        overflow: hidden;
-    }
-
-    .drgst{
-        height: 120px !important;
-        width: 130px !important;
-    }
-    .buscar_dt{
-        width: 68px;
-        -moz-border-radius-bottomright: 6px; 
-        -webkit-border-bottom-right-radius: 6px; 
-        -khtml-border-bottom-right-radius: 6px; 
-        border-bottom-right-radius: 6px; 
-        -moz-border-radius-topleft: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px;
-        -moz-border-radius-topright: 6px; -webkit-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px;
-        -moz-border-radius-bottomleft: 6px; -webkit-border-bottom-left-radius: 6px; -khtml-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; 
-    }
-    .tam_td{
-        width: 16%;
-        height: 16%;
-    }
-    .img_resize{
-        width: 100px !important;
-        height: 100px !important;
-    }
-    .wid_act{
-        width: 160px !important;
-        height: 27px !important;
-    }
-    .head_hor{
-        width: 67px;
-        height: 37px;
-    }
+    .tabla_actividades_div{ width: 15%;float: left; margin-left: 20px; margin-bottom: 25px;  margin-top: 10px; }
+    #content_almacen{margin-top: 7px!important; margin-bottom: 7px!important;width: 185px !important;margin: auto; }
+    .tabla_salas{width: 79%; float: right;margin-right: 20px;}
+    .row1{width: 100%;margin: 0 auto;overflow: hidden; }
+    .drgst{height: 120px !important;width: 130px !important;}
+    .buscar_dt{width: 80px !important; }
+    .tam_td{width: 16%; height: 16%;}
+    .img_resize{width: 100px !important;height: 100px !important;}
+    .wid_act{width: 160px !important;height: 27px !important;}
+    .head_hor{  width: 67px;height: 37px;}
 </style>
-
 <?php
 echo '<style>';
 foreach ($actividades_color as $r) {
@@ -69,41 +23,29 @@ echo '</style>';
             <thead>
                 <tr>
                     <th width="20%">Campo</th>
-                    <th width="35%">Texto a Filtrar</th>
-                    <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                    <th width="20%">Filtro <br/>Inteligente</th>
+                    <th width="80%">Texto a Buscar</th>
                 </tr>
             </thead>
             <tbody>
                 <tr id="filter_global">
                     <td align="left">Filtro Global</td>
                     <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                 </tr>
                 <tr id="filter_col2">
                     <td align="left">Nombre corto</td>
                     <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
                 </tr>
                 <tr id="filter_col3">
                     <td align="left">Catedr&aacute;tico/responsable</td>
                     <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                 </tr>
                 <tr id="filter_col4">
                     <td align="left">bloque</td>
                     <td align="center"><input type="text"     name="col1_filter" id="col4_filter" class="text"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col4_regex"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col4_smart" checked></td>
                 </tr>
                 <tr id="filter_co5">
                     <td align="left">Secci&oacute;n</td>
                     <td align="center"><input type="text"     name="col1_filter" id="col5_filter" class="text"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col5_regex"></td>
-                    <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col5_smart" checked></td>
                 </tr>
             </tbody>
         </table>
@@ -122,7 +64,7 @@ echo '</style>';
 <div id="drag0"  class="row1 tooltip">
     <div class="tabla_actividades_div ui-widget-content ui-corner-all"> 
         <div id="content_almacen"> 
-            <table cellpadding="0" cellspacing="0" border="0" class="display hover" id="mover_almacen">
+            <table cellpadding="0" cellspacing="0" border="0" class="display hover">
                 <tr><td class="trash ui-widget-header ui-corner-all" title="Eliminar Horario de la tabla de reservaciones fijas(Arrastralo aqu&iacute;)"><center><img src="./images/trash.png"><br>Eliminar Horario<br></center></td></tr>
             </table>
             <br>
@@ -153,7 +95,7 @@ echo '</style>';
                 </tfoot>
             </table>
             <br>
-            <table cellpadding="0" cellspacing="0" border="0" class="display hover" id="mover_almacen">
+            <table cellpadding="0" cellspacing="0" border="0" class="display hover" id="dtactividades">
                 <tr><td class="trash ui-widget-header ui-corner-all" title="Eliminar Horario de la tabla de reservaciones fijas(Arrastralo aqu&iacute;)"><center><img src="./images/trash.png"><br>Eliminar Horario<br></center></td></tr>
             </table>
         </div>
@@ -184,7 +126,7 @@ echo '</style>';
                                 <tbody>
                                     <tr>
                                         <td class="mark blank reporte">
-                                            <input type="checkbox" id="report" title="Ver reporte de Experiencia Educativa"/><label for="report"><img src="./images/reporte_min.ico"/>&nbsp;Rep.</label>
+                                            &nbsp;<br>
                                         </td>
                                         <td class="mark blank ui-state-default">Lunes</td>
                                         <td class="mark blank ui-state-default">Martes</td>
@@ -239,28 +181,18 @@ echo '</style>';
                     $( this ).dialog( "close" );
                 }
             }
-        }).dialog("open");
-        
-    }
-    /*Funcion para aplicar filtro global en el datatable actividades*/
-    function fnFilterGlobal (){
-        $('#tabla_actividades').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
-    }
-    /*Funcion para aplicar filtro aun campo en el datatable actividades*/
-    function fnFilterColumn ( i ){
-        $('#tabla_actividades').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
+        }).dialog("open");   
     }
     
+    /*Funcion para aplicar filtro global en el datatable*/
+    function fnFilterGlobal (){
+        $('#tabla_actividades').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
+    }
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#tabla_actividades').dataTable().fnFilter( obj.val(),i, false, true);
+    }
+
     function sala_actual(idsala){
         sala_select=idsala;
         //selected_tab = $tabs.tabs('option', 'selected');
@@ -315,32 +247,20 @@ if (isset($val) && ($val != 0)) {
             "aLengthMenu": [[12], [12]]
                 
         } );
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
+           /*Aplicar filtro al datatables (busqueda avanzada)*/
+        $("#global_filter").typeWatch( {callback:function(){fnFilterGlobal();  },wait:750,highlight:true,captureLength:0} ); 
         
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-        
-        $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col4_filter").typeWatch( {callback:function(){ fnFilterColumn( 3, $("#col4_filter") ); },wait:750,highlight:true,captureLength:0} ); 
+        $("#col5_filter").typeWatch( {callback:function(){ fnFilterColumn( 4, $("#col5_filter") ); },wait:750,highlight:true,captureLength:0} ); 
         
         $('#b_avan').click(function(){
             $("#dialog:ui-dialog").dialog( "destroy" );
             $("#busqueda_avanzada").dialog({
                 autoOpen: false,
                 resizable: true,
-                width:700,
+                width:450,
                 modal: false,
                 buttons: {
                     "Cerrar": function() {
@@ -387,7 +307,7 @@ if (isset($val) && ($val != 0)) {
     redips_init = function () {
         // reference to the REDIPS.drag object
         rd = REDIPS.drag;
-        rd.init('drag0');         
+        rd.init('drag0');    
         rd.drop_option = 'single';	
         rd.hover.color_td = '#9BB3DA';
         rd.trash_ask = false;
@@ -408,11 +328,11 @@ if (isset($val) && ($val != 0)) {
         };
         // borrar de la tabla de tiempos
         rd.myhandler_deleted = function () {
-            $('#mensaje').html('<div id="mover_almacen_dialog" title="Mover a almacen" style="display:none;">'+
+            $('#mensaje').html('<div id="dtactividades_dialog" title="Mover a almacen" style="display:none;">'+
                 '<p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>'+
                 '&nbsp;&nbsp;Se mover&aacute; el equipo seleccionado al almac&eacute;n. ¿Deseas Continuar?</p></div>');
             $("#dialog:ui-dialog").dialog( "destroy" );
-            $("#mover_almacen_dialog").dialog({
+            $("#dtactividades_dialog").dialog({
                 autoOpen: false,
                 resizable: false,
                 modal: true,

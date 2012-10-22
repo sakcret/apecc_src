@@ -1,1 +1,4 @@
-smbpasswd -e aap1754
+smbpasswd -e aal1182
+smbpasswd -e vll2090
+smbpasswd -e rmr1838
+smbpasswd -e rmr1838

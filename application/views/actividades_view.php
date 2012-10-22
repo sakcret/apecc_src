@@ -114,43 +114,37 @@ echo '</style>';
 <tooltips class="tooltip">
     <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround" style=" width: 70%;">
         <center>
-            <div class="ui-widget-header ui-corner-top header"><h1>Busqueda Avanzada de Equipos</h1></div>
+            <div class="ui-widget-header ui-corner-top header"><h1>B&uacute;squeda Avanzada de Actividades</h1></div>
             <table cellpadding="0" cellspacing="0" border="0" class="display" >
                 <thead>
                     <tr>
                         <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
+                        <th width="80%">Texto a buscar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
-                        <td align="left">Filtro Global</td>
-                        <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
+                        <td align="left">B&uacute;squeda Global</td>
+                        <td align="center"><input type="text" placeholder="B&uacute;squeda por cualquier campo de la tabla de datos"  name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Nombre de la actividad</td>
                         <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
                     </tr>
                     <tr id="filter_col3">
                         <td align="left">Nombre corto</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
                         <td align="left">Tipo de actividad</td>
-                        <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
+                        <td align="center"><select  name="col4_filter" id="col4_filter" style=" width: 96%" class="text">
+                                <option value="">Todas las actividades</option>
+                                <option value="0">Clase/Experiencia educativa</option>
+                                <option value="1">Curso</option>
+                            </select></td>
                     </tr>
                 </tbody>
-            </table>
+            </table><br>
         </center>
     </div>
     <br/>
@@ -247,8 +241,6 @@ echo '</style>';
     </div>
 </tooltips>
 <br/>
-
-
 <script type="text/javascript" charset="utf-8">
     var dt_acatedraticos,dt_actividades,data_row_select;
     var row_select=0,row_select_catedra=0;
@@ -264,23 +256,13 @@ echo '</style>';
             $('#periodo-curso').show(); 
         }
     }
-    /*Funcion para aplicar filtro global en el datatable actividades*/
+  /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtactividades').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtactividades').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable actividades*/
-    function fnFilterColumn ( i ){
-        $('#dtactividades').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtactividades').dataTable().fnFilter( obj.val(),i, false, true);
     }
     
     function cambia_color(id,color,o){
@@ -677,25 +659,10 @@ echo '</style>';
         });  
         
         /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col1_filter").keyup( function() { fnFilterColumn( 0 ); } );
-        $("#col1_regex").click(  function() { fnFilterColumn( 0 ); } );
-        $("#col1_smart").click(  function() { fnFilterColumn( 0 ); } );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-       
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
+        $("#global_filter").typeWatch( { callback:function(){ fnFilterGlobal()},wait:750,highlight:true,captureLength:0} );    
+        $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col3_filter").typeWatch( {callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
+        $("#col4_filter").change(function(){ fnFilterColumn( 3, $("#col4_filter") ); } ); 
        
         /*ocultar y mostrar las ociones de filtro del datatable actividades(busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -736,6 +703,7 @@ echo '</style>';
                 }
             },
             "aaSorting": [[1, 'asc']],
+            "iDisplayLength": 5,
             "aLengthMenu": [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todos"]],
             "sPaginationType": "full_numbers",            
             "bProcessing": true,
@@ -862,7 +830,7 @@ echo '</style>';
                 asignar_actividad(row_select);
             }else{
                 mensaje($( "#mensaje" ),'Warning','./images/msg/warning.png'
-                ,'<b>No se ha seleccionado ning&uacute;n actividad.</b><hr class="boxshadowround"/>'
+                ,'<b>No se ha seleccionado ninguna actividad.</b><hr class="boxshadowround"/>'
                 ,'Por favor seleccione una actividad.',400,false);
             }
         } );
@@ -873,7 +841,7 @@ echo '</style>';
                 elimina_actividad(row_select);
             }else{
                 mensaje($( "#mensaje" ),'Warning','./images/msg/warning.png'
-                ,'<b>No se ha seleccionado ning&uacute;n actividad.</b><hr class="boxshadowround"/>'
+                ,'<b>No se ha seleccionado ninguna actividad.</b><hr class="boxshadowround"/>'
                 ,'Por favor seleccione una actividad.',400,false);
             }
         } );

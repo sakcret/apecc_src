@@ -1,13 +1,15 @@
 <?php
 //parsear lso resultados de la consulta en un arreglo indizado por fecha y sala
-foreach ($datos_salas->result() as $row) {
-    $resrv_ciclo[$row->fecha][$row->sala] = array('sala' => $row->sala, 'horas' => $row->horas);
-}
-
-foreach ($resrv_ciclo as $k => $v) {
-    $resrv_ciclo_total[$k] = array();
-    foreach ($v as $key => $value) {
-        array_push($resrv_ciclo_total[$k], $value['horas']);
+if ($datos_salas->num_rows() > 0) {
+    foreach ($datos_salas->result() as $row) {
+        $resrv_ciclo[$row->fecha][$row->sala] = array('sala' => $row->sala, 'horas' => $row->horas);
+    }
+    $resrv_ciclo_total = array();
+    foreach ($resrv_ciclo as $k => $v) {
+        $resrv_ciclo_total[$k] = array();
+        foreach ($v as $key => $value) {
+            array_push($resrv_ciclo_total[$k], $value['horas']);
+        }
     }
 }
 ?>
@@ -184,24 +186,26 @@ foreach ($resrv_ciclo as $k => $v) {
                             },
                             series: [
 <?php
-$num_reg = count($resrv_ciclo_total);
-$c = 1;
-$coma = ',';
-echo '{' . PHP_EOL . '
+if (isset($resrv_ciclo_total) && (count($resrv_ciclo_total) > 0)) {
+    $num_reg = count($resrv_ciclo_total);
+    $c = 1;
+    $coma = ',';
+    echo '{' . PHP_EOL . '
 type: \'area\',' . PHP_EOL . 'pointInterval: 24 * 3600 * 1000,' . PHP_EOL . '
 pointStart: Date.UTC(2012, 01, 01),pointEnd: Date.UTC(2012, 06, 30),' . PHP_EOL . '
 name: \'Horas\',' . PHP_EOL . '
 data: [';
-foreach ($resrv_ciclo_total as $key => $value) {
-    $fecha = $key;
-    if ($num_reg == $c) {
-        echo '[Date.UTC(' . substr($fecha, 0, 4) . ',' . substr($fecha, 5, 2) . ',' . substr($fecha, 8, 2) . '), ' . array_sum($value) . ']';
-    } else {
-        echo '[Date.UTC(' . substr($fecha, 0, 4) . ',' . substr($fecha, 5, 2) . ',' . substr($fecha, 8, 2) . '), ' . array_sum($value) . '],';
+    foreach ($resrv_ciclo_total as $key => $value) {
+        $fecha = $key;
+        if ($num_reg == $c) {
+            echo '[Date.UTC(' . substr($fecha, 0, 4) . ',' . substr($fecha, 5, 2) . ',' . substr($fecha, 8, 2) . '), ' . array_sum($value) . ']';
+        } else {
+            echo '[Date.UTC(' . substr($fecha, 0, 4) . ',' . substr($fecha, 5, 2) . ',' . substr($fecha, 8, 2) . '), ' . array_sum($value) . '],';
+        }
     }
+    $c++;
+    echo ']}';
 }
-$c++;
-echo ']}';
 ?>                  
                                                                 
             ]

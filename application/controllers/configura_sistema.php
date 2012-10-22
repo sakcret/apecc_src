@@ -33,7 +33,12 @@ class Configura_sistema extends CI_Controller {
         } else {
             $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array); //si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
         }
+        $this->load->database();
         $contenido['permisos'] = $permisos;
+        $contenido['plataforma'] = $this->db->platform();
+        ;
+        $contenido['version'] = $this->db->version();
+        ;
         $this->load->library('utl_apecc');
         $this->config->set_item('nombre_item', 'valor_item');
         $data['titulo_pag'] = "CONFIGURACIONES DEL SISTEMA - CCFEI";
@@ -116,6 +121,45 @@ class Configura_sistema extends CI_Controller {
         if ($sepudo)
             echo 'ok'; else
             echo "Se produjo un error al cambiar el datos de la base de datos correspondientes al  periodo.";
+    }
+
+    function borraArchivos() {
+        $login = $this->session->userdata('login');
+        if (!$login) {
+            redirect('acceso/acceso_denegado');
+        }
+        $dir = $this->input->post('url');
+        $this->load->helper('file');
+        if ($dir != '' && $dir != null && isset($dir)) {
+            delete_files($dir);
+            echo 'ok';
+        } else {
+            echo 'no';
+        }
+    }
+
+    function respaldoBD($nombre,$endonde) {
+        // Hacer copia de respaldo para la BD entera y asignarla a una variable
+        $this->load->database();
+        $this->load->dbutil();
+        $backup = $this->dbutil->backup();
+        $server_guarda=false;
+        ($endonde=='server')?$server_guarda=true:$server_guarda=false;
+        if ($server_guarda) {
+            $this->load->helper('file');
+            if ($nombre != '' && $nombre != 'null') {
+                write_file('respaldosdb/' . $nombre . '.sql.gz', $backup);
+            } else {
+                write_file('respaldosdb/apecc_backup_db_' . date('Y-m-d') . '.sql.gz', $backup);
+            }
+        } else {
+            $this->load->helper('download');
+             if ($nombre != '' && $nombre != 'null') {
+                force_download($nombre . '.sql.gz', $backup);
+            } else {
+                force_download('apecc_backup_db_' . date('Y-m-d') . '.sql.gz', $backup);
+            }
+        }
     }
 
 }

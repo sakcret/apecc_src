@@ -13,10 +13,10 @@ class Equipos_model extends CI_Model {
 
     function agrega_equipo($numSer, $marca, $modelo, $numInv, $procesador, $disco, $ram) {
         $datos = array(
-            'NumeroSerie' => $numSer,
+            'NumeroSerie' => strtoupper($numSer),
             'Marca' => $marca,
             'Modelo' => $modelo,
-            'NumeroInventario' => $numInv,
+            'NumeroInventario' =>  strtoupper($numInv),
             'Procesador' => $procesador,
             'DiscoDuro' => $disco,
             'RAM' => $ram,
@@ -38,7 +38,7 @@ class Equipos_model extends CI_Model {
         $datos = array(
             'Marca' => $marca,
             'Modelo' => $modelo,
-            'NumeroInventario' => $numInv,
+            'NumeroInventario' =>  strtoupper($numInv),
             'Procesador' => $procesador,
             'DiscoDuro' => $disco,
             'RAM' => $ram,

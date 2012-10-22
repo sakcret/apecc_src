@@ -119,9 +119,9 @@
                                     <td class="ui-state-focus">Pr&eacute;stamo de controles<font style=" font-size: 8px;">(Equipos de proyecci&oacute;n)</font></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_a" class="prc checkbox-ui" name="prm[]" id="a_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_b" class="prc checkbox-ui" name="prm[]" id="b_prc" disabled="disabled"></td>
-                                   <td class="ui-state-focus"><input type="checkbox" value="prc_c" class="prc checkbox-ui" name="prm[]" id="c_prc" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" value="prc_c" class="prc checkbox-ui" name="prm[]" id="c_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus">&nbsp;</td>
-                                   <td class="ui-state-focus"><input type="checkbox" value="prc_v" class="checkbox-ui" name="prm[]" id="v_prc" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" value="prc_v" class="checkbox-ui" name="prm[]" id="v_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_t" class="checkbox-ui"name="prm[]" id="t_prc" disabled="disabled"></td>
                                 </tr>
                                 <tr>
@@ -155,7 +155,7 @@
                                 </tr>
                                 <tr>
                                     <td class="ui-state-focus">Reservaciones Fijas</td>
-                                    <td class="ui-state-focus"><input type="checkbox" class="checkbox-ui" value="rst_f" name="prm[]" id="t_rsf" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" class="checkbox-ui" value="rsf_t" name="prm[]" id="t_rsf" disabled="disabled"></td>
                                 </tr>
                                 <tr>
                                     <td class="ui-state-focus">Ubicación de Equipos</td>
@@ -201,7 +201,7 @@
                     <input type="text" name="m_login" id="m_login" maxlength="15"  class="readonly text ui-widget-content ui-corner-all" readonly="readonly" />
                     <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                            <strong>No mostrarse la contraseña por cuestiones de cifrado:</strong> Si desea cambiar contraseña proporcione una nueva si no ,deje el campo en blanco y el cambio no se realizar&aacute; .para mayor informaci&oacute;n Consultar Manual en la secci&oacute;n de permisos y seguridad.</p>
+                            <strong>No se muestra la contraseña por cuestiones de cifrado:</strong> Si desea cambiar contraseña proporcione una nueva si no ,deje el campo en blanco y el cambio no se realizar&aacute; .para mayor informaci&oacute;n Consultar Manual en la secci&oacute;n de permisos y seguridad.</p>
                     </div>
                     <label for="m_password">Password*:</label>
                     <input type="password" name="m_password" id="m_password" maxlength="15" class="text ui-widget-content ui-corner-all" />
@@ -211,7 +211,7 @@
                     <input type="text" id="m_email" name="m_email" maxlength="80" title="Fecha inicial" class="text height_widget ui-corner-all"/>
                     <label for="m_rol">Rol(Recomendado) este determinar&aacute; los permisos:</label><br>
                     <select id="m_rol" width="90%" name="m_rol">
-                        <option value="0">-- Elegir un rol --</option>
+                        <option value="0" width="90%">-- Elegir un rol --</option>
                         <?php
                         foreach ($roles as $rol) {
                             echo '<option value="' . $rol['clave'] . '">' . $rol['rol'] . '</option>';
@@ -305,9 +305,9 @@
                                     <td class="ui-state-focus">Pr&eacute;stamo de controles<font style=" font-size: 8px;">(Equipos de proyecci&oacute;n)</font></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_a" class="prc checkbox-ui" name="prm[]" id="m_a_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_b" class="prc checkbox-ui" name="prm[]" id="m_b_prc" disabled="disabled"></td>
-                                   <td class="ui-state-focus"><input type="checkbox" value="prc_c" class="prc checkbox-ui" name="prm[]" id="m_c_prc" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" value="prc_c" class="prc checkbox-ui" name="prm[]" id="m_c_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus">&nbsp;</td>
-                                   <td class="ui-state-focus"><input type="checkbox" value="prc_v" class="checkbox-ui" name="prm[]" id="m_v_prc" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" value="prc_v" class="checkbox-ui" name="prm[]" id="m_v_prc" disabled="disabled"></td>
                                     <td class="ui-state-focus"><input type="checkbox" value="prc_t" class="checkbox-ui"name="prm[]" id="m_t_prc" disabled="disabled"></td>
                                 </tr>
                                 <tr>
@@ -341,7 +341,7 @@
                                 </tr>
                                 <tr>
                                     <td class="ui-state-focus">Reservaciones Fijas</td>
-                                    <td class="ui-state-focus"><input type="checkbox" class="checkbox-ui" value="rst_f" name="prm[]" id="m_t_rsf" disabled="disabled"></td>
+                                    <td class="ui-state-focus"><input type="checkbox" class="checkbox-ui" value="rsf_t" name="prm[]" id="m_t_rsf" disabled="disabled"></td>
                                 </tr>
                                 <tr>
                                     <td class="ui-state-focus">Ubicación de Equipos</td>
@@ -378,44 +378,42 @@
     <br/>
     <div align="center" id="busqueda_avanzada" class="hide row ui-widget-content ui-corner-all boxshadowround" style=" width: 70%;">
         <center>
-            <div class="ui-widget-header ui-corner-top header"><h1>Busqueda Avanzada de Equipos</h1></div>
+            <div class="ui-widget-header ui-corner-top header"><h1>B&uacute;squeda Avanzada de Usuarios del Sistema</h1></div>
             <table cellpadding="0" cellspacing="0" border="0" class="display" >
                 <thead>
                     <tr>
-                        <th width="20%">Campo</th>
-                        <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
+                        <th width="10%">Campo</th>
+                        <th width="80%">Texto a Filtrar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
                         <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                     </tr>
                     <tr id="filter_col1">
                         <td align="left">Login</td>
                         <td align="center"><input type="text"     name="col1_filter" id="col1_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col1_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col1_smart" checked></td>
                     </tr>
                     <tr id="filter_col3">
                         <td align="left">Nombre</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
-                        <td align="left">Nombre</td>
-                        <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
+                        <td align="left">Rol</td>
+                        <td align="center">
+                            <select style=" width: 96% !important; height: 24px !important;"  name="col4_filter" id="col4_filter" >
+                                <option value="" selected="selected">Todos</option>
+                                <?php
+                                foreach ($roles as $k=>$v) {
+                                    echo '<option value="'.$k.'">'.$v['rol'].'</option>';
+                                }unset($roles);s
+                                ?>
+                            </select>
+                        </td>
                     </tr>
-
                 </tbody>
-            </table>
+            </table><br>
         </center>
     </div>
     <br/>
@@ -467,23 +465,13 @@
     var dt_usuariossistema,data_row_select;
     var row_select=0,row_select_catedra=0;
     
-    /*Funcion para aplicar filtro global en el datatable user_sises*/
+    /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
-        $('#dtusuariossistema').dataTable().fnFilter( 
-        $("#global_filter").val(),
-        null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
-    );
+        $('#dtusuariossistema').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
-    /*Funcion para aplicar filtro aun campo en el datatable user_sises*/
-    function fnFilterColumn ( i ){
-        $('#dtusuariossistema').dataTable().fnFilter( 
-        $("#col"+(i+1)+"_filter").val(),
-        i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
-    );
+    /*Funcion para aplicar filtro aun campo en el datatable */
+    function fnFilterColumn ( i,obj ){
+        $('#dtusuariossistema').dataTable().fnFilter( obj.val(),i, false, true);
     }
     
     function ver_permisos(id){ 
@@ -711,7 +699,7 @@
             if ( $(this).hasClass('row_selected') ) {
                 $(this).removeClass('row_selected');
                 row_select=0; 
-                $("#act_select").text('No se ha seleccionado una user_sis');
+                $("#act_select").text('No se ha seleccionado un usuario');
             }else {
                 dt_usuariossistema.$('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
@@ -723,26 +711,32 @@
         } );
         
         
-        /*Aplicar filtro al datatables (busqueda avanzada)*/
-        $("#global_filter").keyup( fnFilterGlobal );
-        $("#global_regex").click( fnFilterGlobal );
-        $("#global_smart").click( fnFilterGlobal );
-				
-        $("#col1_filter").keyup( function() { fnFilterColumn( 0 ); } );
-        $("#col1_regex").click(  function() { fnFilterColumn( 0 ); } );
-        $("#col1_smart").click(  function() { fnFilterColumn( 0 ); } );
-				
-        $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
-        $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-       
-        $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
+        $("#global_filter").typeWatch( {
+            callback:function(){ fnFilterGlobal()},
+            wait:750,
+            highlight:true,
+            captureLength:0
+        } ); 
+        
+        $("#col1_filter").typeWatch( {
+            callback:function(){ fnFilterColumn( 0, $("#col1_filter") ); },
+            wait:750,
+            highlight:true,
+            captureLength:0
+        } ); 
+        $("#col2_filter").typeWatch( {
+            callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },
+            wait:750,
+            highlight:true,
+            captureLength:0
+        } ); 
+        $("#col3_filter").typeWatch( {
+            callback:function(){ fnFilterColumn( 2, $("#col3_filter") ); },
+            wait:750,
+            highlight:true,
+            captureLength:0
+        } ); 
+        $("#col4_filter").change(function(){ fnFilterColumn( 3, $("#col4_filter") );} ); 
        
         /*ocultar y mostrar las ociones de filtro del datatable user_sises(busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -782,6 +776,14 @@
                     "sLast":     "Último"
                 }
             },
+             "aoColumns": [ 
+                /*0-. login*/null,
+                /*1 pass*/{"bSortable": false,"bVisible":    false },
+                /*2 Nombre completo*/null,                
+                /*3 rol*/null,
+                /*4 correo*/null,
+                /*5 permisos*/{"bSortable": false,"bVisible":    false },
+                /*5 opc*/{"bSortable": false}],
             "aaSorting": [[1, 'asc']],
             "aLengthMenu": [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todos"]],
             "sPaginationType": "full_numbers",            
@@ -799,8 +801,7 @@
             }
         } );
        
-        verOcultarColDT(1,dt_usuariossistema);
-        verOcultarColDT(5,dt_usuariossistema);
+      
         $("#dialog:ui-dialog").dialog( "destroy" );
         var nombre= $( "#nombre" ),
         login = $( "#login" ),
@@ -885,7 +886,7 @@
             }else{
                 mensaje($( "#mensaje" ),'Atenci&oacute;n','./images/msg/warning.png'
                 ,'<b>No se ha seleccionado ning&uacute;n usuario.</b><hr class="boxshadowround"/>'
-                ,'Por favor seleccione un usuario.',400,false);
+                ,'Seleccione un usuario.',400,false);
             }
         } );
 
@@ -896,7 +897,7 @@
             }else{
                 mensaje($( "#mensaje" ),'Atenci&oacute;n','./images/msg/warning.png'
                 ,'<b>No se ha seleccionado ning&uacute;n usuario.</b><hr class="boxshadowround"/>'
-                ,'Por favor seleccione un usuario.',400,false);
+                ,'Seleccione un usuario.',400,false);
             }
         } );
         

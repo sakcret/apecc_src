@@ -149,6 +149,10 @@
                     "sLast":     "Último"
                 }
             },
+             "aoColumns": [ 
+                /*0-. id*/null,
+                /*1 tipo*/null,
+                /*2 opc*/{"bSortable": false}],
             "aLengthMenu": [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "Todos"]],
             "sPaginationType": "full_numbers",            
             "bProcessing": true,
@@ -217,7 +221,7 @@
             if((row_select!=0)&&(row_select!='')){
                 modifica_tipou(row_select);
             }else{
-                mensaje($( "#mensaje" ),'No ha selecionado un tipo de usuario  ! ','./images/msg/warning.png','Selecciona un tipo de usuario por favor.','');
+                mensaje($( "#mensaje" ),'No ha selecionado un tipo de usuario  ! ','./images/msg/warning.png','Selecciona un tipo de usuario.','');
             }
         } );
     } );

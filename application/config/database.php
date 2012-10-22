@@ -48,6 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
+/*$db['default']['hostname'] = '148.226.81.254';
+$db['default']['username'] = 'apecc09';
+$db['default']['password'] = 'kenwamabuni09';
+$db['default']['database'] = 'apecc2';*/
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'root';

@@ -12,10 +12,6 @@
                             <select name="tipo_u" class="selectmenu-ui" id="tipo_u"></select></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><label class="space_form" for="usuarios">Usuario*:</label><br>
-                            <select name="usuario" id="usuario"></select></td>
-                    </tr>
-                    <tr>
                         <td>
                             Tipo de b&uacute;squeda:
                             <div id="radiobusqueda">
@@ -24,6 +20,10 @@
                             </div>
                         </td>
                         <td><br><span id="no_find_u" style=" margin-top: 5px; margin-bottom: 5px;"><img src="./images/ayuda.ico">&nbsp;&nbsp;No encuentro al Usuario</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label class="space_form" for="usuarios">Usuario*:</label><br>
+                            <select name="usuario" id="usuario"></select></td>
                     </tr>
                     <tr>
                         <td width="86"><label for="hora_inicio">Hora de Inicio(Solo lectura):</label>
@@ -102,7 +102,7 @@
 </div><br>
 <div class="row tooltip">
     <div class="twelvecol last">
-        <div style=" margin-top: 8px; margin-bottom: 12px;" class="ui-corner_all boxshadowround">
+        <div style=" margin-top: 5px; margin-bottom: 12px;" class="ui-corner_all boxshadowround">
             <table width="100%" border="0">
                 <tr>
                     <td id="ayuda_edos_equ" width="16%"><img src="./images/ayuda.png"/>&nbsp;Estado de equipos:</td>
@@ -115,15 +115,21 @@
                 </tr>
             </table>
         </div>
-        <div style=" margin-top: 8px; margin-bottom: 12px;" class="ui-corner_all boxshadowround">
-            <table width="100%" border="0">
-                <tr>
-                    <td id="ayuda_edos_equ" width="16%"><img src="./images/ayuda.png"/>&nbsp;Barra de detalles de equipo:</td>
-                    <td width="14%"><img width="19" src="./images/pc_edos/pc_sos.png"/>&nbsp;Mostrar sistemas operativos</td>
-                    <td width="14%"><img width="19" src="./images/pc_edos/pc_sw.png"/>&nbsp;Mostrar software por sistema</td>
-                    <td width="14%"><img width="19" src="./images/pc_edos/pc_dt.png"/>&nbsp;Mostrar caracter&iacute;sticas del equipo</td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="threecol">
+                <input type="text" name="busqueda_equ" id="busqueda_equ" class="text">
+            </div>
+            <div class="twocol">
+                <button id="btn_busuqeda_eq" style=" margin-left: 5px;"><img src="./images/pc_edos/pc.ico"/>&nbsp;Buscar equipo</button>
+            </div>
+            <div class="threecol">
+                <button id="btn_clear_eq"><img src="./images/clear.png"/>&nbsp;Limpiar busqueda</button>
+            </div>
+            <div class="fourcol last">
+                <img width="19" src="./images/pc_edos/pc_sos.png"/>&nbsp;Sistemas operativos&nbsp;
+                <img width="19" src="./images/pc_edos/pc_sw.png"/>&nbsp;Software&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img width="19" src="./images/pc_edos/pc_dt.png"/>&nbsp;Caracter&iacute;sticas
+            </div>
         </div>
         <?php
 
@@ -159,7 +165,7 @@
         $porcentaje = (100 / $numreg) - 1;
         echo ' <div id="tabs">' . PHP_EOL . '<ul>' . PHP_EOL;
         for ($is = 0; $is < $numreg; $is++) {
-            echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%" onclick="sala_actual(' . $s[$is]["idSala"] . ')" href="#tabs-' . $s[$is]["idSala"] . '">&nbsp;&nbsp;Sala ' . $s[$is]["Sala"] . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>' . PHP_EOL;
+            echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%"  id="tabf_' . $s[$is]["idSala"] . '" onclick="sala_actual(' . $s[$is]["idSala"] . ')" href="#tabs-' . $s[$is]["idSala"] . '">Sala ' . $s[$is]["Sala"] . '</a></li>' . PHP_EOL;
         }
         echo '</ul>' . PHP_EOL;
         for ($i = 0; $i < $numreg; $i++) {
@@ -636,9 +642,6 @@
                     
                                 $( this ).dialog( "close" );
                             },
-                            "Modificar": function() {
-                                $( this ).dialog( "close" );
-                            },
                             Cancelar: function() {
                                 $( this ).dialog( "close" );
                             }
@@ -653,6 +656,15 @@
     }//fin asigna_equipo
 
     $(function() {
+        $('#btn_busuqeda_eq').live('click',function(){
+             $('#busqueda_equ').val($('#busqueda_equ').val().toUpperCase());
+            $('div').removeClass('ui-state-highlight');var ns=$('#busqueda_equ').val();$('#'+ns).addClass('ui-state-highlight');
+            var respuesta=ajax_peticion_json("index.php/ubicacion_equipos/findEquipo/"+ns,'');
+            if(respuesta!=false&&respuesta!=null){
+                if(respuesta.sala!=''&&respuesta.sala!=null&&respuesta.sala!='null'){$('#tabf_'+respuesta.sala).click();}else{mensaje($( "#mensaje" ),'Equipo en almac&eacute;n ','./images/msg/info.png','El equipo <b>'+ns+'</b>Se encuentra en almac&eacute;n. <hr class="boxshadowround"> Puede asignarlo a una sala buscandolo en la tabla de almac&eacute;n situada en la parte izquierda de esta p&aacute;gina.','',500,false); }
+            }else{notificacion_tip("./images/msg/no.png","No se encontro el equipo","No se pudo localizar el equipo <b>"+ns+'</b>.');}
+        });
+        $('#btn_clear_eq').live('click',function(){ $('div').removeClass('ui-state-highlight');$('#busqueda_equ').val(''); });
         //calcular campos al dar clic en lo botones del spiner
         $('#hrhide .ui-spinner-down,#hrhide .ui-spinner-up').live('click',function(){
             var va=$('#horas');
@@ -687,6 +699,10 @@
             '* La cuenta de usuario no esta <b>actualizado</b> '
                 +'<br>* El usuario <b>No se encuentra en la base de datos o el login</b> no corresponde con sus dem&aacute;s datos.'
                 +'<br><A href="'+base_url+'index.php/usuarios" target="_blank">Actualizar/Agregar Usuario</A>');
+        });
+        $("#xmatricula, #xnombre" ).click(function(){
+            $('#usuario').val('0');
+            $('#form_reservacion .ui-autocomplete-input').val('');
         });
         $("#tabs" ).tabs();
         var horas=$("#horas" ).spinner({min:1,max:12});

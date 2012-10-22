@@ -329,6 +329,46 @@ class Utl_apecc {
         }
         return $dia;
     }
+    
+    function gethora($hora) {
+        $h = 0;
+        switch ($hora) {
+            case '07:00':$h = 1;
+                break;
+            case '08:00':$h = 2;
+                break;
+            case '09:00':$h = 3;
+                break;
+            case '10:00':$h = 4;
+                break;
+            case '11:00':$h = 5;
+                break;
+            case '12:00':$h = 6;
+                break;
+            case '13:00':$h = 7;
+                break;
+            case '14:00':$h = 8;
+                break;
+            case '15:00':$h = 9;
+                break;
+            case '16:00':$h = 10;
+                break;
+            case '17:00':$h = 11;
+                break;
+            case '18:00':$h = 12;
+                break;
+            case '19:00':$h = 13;
+                break;
+            case '20:00':$h = 14;
+                break;
+            case '21:00':$h = 15;
+                break;
+            case '22:00':$h = 16;
+                break;
+            default:break;
+        }
+        return $h;
+    }
 
     public function getMesStr($m) {
         switch ($m) {
