@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 class Usuarios_model extends CI_Model {
 
@@ -8,8 +30,9 @@ class Usuarios_model extends CI_Model {
     }
 
     function getUsuario($login) {
-        $this->db->where('login', $login);
-        $query = $this->db->get('usuarios');
+        $sql = "SELECT usuarios.login,matricula,usuarios.nombre,paterno,materno,num_cred,actualiza,idtipo,NumeroPersonal FROM usuarios
+LEFT JOIN academicos ON usuarios.login=academicos.Login where usuarios.login='$login'";
+        $query = $this->db->query($sql);
         return $query;
     }
 
@@ -160,13 +183,14 @@ class Usuarios_model extends CI_Model {
         return $result;
     }
 
-    function modifica_usuario($login, $matricula, $nombre, $apaterno, $amaterno, $actualiza, $esmaestro) {
+    function modifica_usuario($login, $matricula, $nombre, $apaterno, $amaterno, $actualiza, $esmaestro, $tipou, $numeropersonal) {
         $datos = array(
             'matricula' => $matricula,
             'nombre' => $nombre,
             'paterno' => $apaterno,
             'materno' => $amaterno,
-            'actualiza' => $actualiza
+            'materno' => $amaterno,
+            'idtipo' => $tipou
         );
         $this->db->trans_begin();
         $this->db->where('login', $login);
@@ -177,13 +201,50 @@ class Usuarios_model extends CI_Model {
         } else {
             $this->db->trans_commit();
             if ($esmaestro == 'si') {
-                $datos_academico = array(
-                    'Nombre' => $nombre,
-                    'ApellidoPaterno' => $apaterno,
-                    'ApellidoMaterno' => $amaterno
-                );
                 $this->db->where('Login', $login);
-                $this->db->update('academicos', $datos_academico);
+                $cuantos = $this->db->get('academicos')->num_rows();
+                if ($cuantos < 1) {
+                    //insert
+                    $datos_academico = array(
+                        'NumeroPersonal' => $numeropersonal,
+                        'Nombre' => $nombre,
+                        'ApellidoPaterno' => $apaterno,
+                        'ApellidoMaterno' => $amaterno,
+                        'Login' => $login
+                    );
+                    $this->db->insert('academicos', $datos_academico);
+                } else {
+                    $datos_academico = array(
+                        'Nombre' => $nombre,
+                        'ApellidoPaterno' => $apaterno,
+                        'ApellidoMaterno' => $amaterno
+                    );
+                    $this->db->where('Login', $login);
+                    $this->db->update('academicos', $datos_academico);
+                }
+            } else {
+                if ($login != '' && isset($login)) {
+                    /* obtener las actividades asociadas al academico */
+                    $this->db->where('NumeroPersonal', $numeropersonal);
+                    $acts_acad = $this->db->get('actividad_academico');
+                   if ($acts_acad->num_rows() > 0) {
+                        foreach ($acts_acad->result() as $aa) {
+                            /* Eliminar las actividades asociadas al academico */
+                            $this->db->where('IdActividadAcademico', $aa->IdActividadAcademico);
+                            $this->db->delete('reservacionesfijas');
+                        }
+                        /* Eliminar las actividades asociadas al academico */
+                        $this->db->where('NumeroPersonal', $numeropersonal);
+                        $this->db->delete('actividad_academico');
+                    }
+                    /* Eliminar las reservaciones de sala asociadas al academico */
+                    $this->db->where('NumeroPersonal', $numeropersonal);
+                    $this->db->delete('reservacionessalas');
+                    /* Eliminar academico */
+                    $this->db->where('Login', $login);
+                    $this->db->delete('academicos');
+                    $this->db->limit(1);
+                }
             }
             $result = TRUE;
         }

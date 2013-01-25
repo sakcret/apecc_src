@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -45,6 +67,14 @@ class Reportes_per extends CI_Controller {
                 '<script type="text/javascript" language="javascript" src="./js/highcharts/modules/exporting.js"></script>' . PHP_EOL;
 
         $contenido['datos_salas'] = $this->salas_model->datos_salas();
+        $contenido['usuarios'] = $this->reportes_model->get_usuarios();
+        $contenido['marcas'] = $this->reportes_model->get_marcas();
+        $contenido['modelos'] = $this->reportes_model->get_modelos();
+        $contenido['academicos_rss'] = $this->reportes_model->get_academicos_rss();
+        $contenido['academicos_rsf'] = $this->reportes_model->get_academicos_rsf();
+        $contenido['encargados_controles'] = $this->reportes_model->get_encargador_controles();
+        $contenido['quien_reserva'] = $this->reportes_model->get_quienreserva();
+        $contenido['procesadores'] = $this->reportes_model->get_procesadores();
         $contenido['tipos_u_rows'] = $this->usuarios_model->getTipos();
         $contenido['datos_actividades'] = $this->actividades_model->getActividades_cpt();
         $contenido['datos_sistemasop'] = $this->equipo_software_model->get2Sos();
@@ -67,7 +97,7 @@ class Reportes_per extends CI_Controller {
         if ($f1 != '' && $f2 != '') {
             $fecha_inicio = $this->utl_apecc->getSQL_date($f1);
             $fecha_fin = $this->utl_apecc->getSQL_date($f2);
-            $titulo_rep.='(Periodo ' . $fecha_inicio . '-' . $fecha_fin . ')';
+            $titulo_rep.='(Periodo ' . $f1 . '-' . $f2 . ')';
         } else {
             $fecha_inicio = $fecha_fin = '';
         }
@@ -76,12 +106,19 @@ class Reportes_per extends CI_Controller {
         $sala = $this->input->Post("sala");
         $tipoact = $this->input->Post("tipo_act");
         $detalle_act = $this->input->Post("detalle_act");
-        $login_usuario = $this->input->Post("log_usu");
+        $usu = $this->input->Post("log_usu");
+        $usu = explode('-', $usu);
+        $login_usuario = $usu[0];
+
+        $usus = $this->input->Post("quien_reserv");
+        $usus = explode('-', $usus);
+        $quien_reserv = $usus[0];
+
         $data_head['titulo_rep'] = '<h3>Reporte de Uso del Centro de Computo</h3>';
-        $contenido['datos_reservaciones'] = $this->reportes_model->datosUsoCC($fecha_inicio, $fecha_fin, $sala, $tipoact, $detalle_act, $login_usuario);
+        $contenido['datos_reservaciones'] = $this->reportes_model->datosUsoCC($fecha_inicio, $fecha_fin, $sala, $tipoact, $detalle_act, $login_usuario, $quien_reserv);
         $contenido['datos_reservaciones_historial'] = $this->reportes_model->datosUsoCC_historial($fecha_inicio, $fecha_fin, $sala, $tipoact, $detalle_act, $login_usuario);
         $vista = $this->load->view('reportes/uso_personalizado', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -143,7 +180,7 @@ class Reportes_per extends CI_Controller {
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_actividades'] = $this->reportes_model->getActividadesRep($tipoact);
         $vista = $this->load->view('reportes/actividades', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -204,7 +241,7 @@ class Reportes_per extends CI_Controller {
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_equipos'] = $this->reportes_model->getEquiposRep($marca, $modelo, $procesador, $ram, $ram_op, $disco, $disco_op, $sala, $edo);
         $vista = $this->load->view('reportes/equipos', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -265,8 +302,9 @@ class Reportes_per extends CI_Controller {
         $data_head['titulo_rep'] = $titulo_rep;
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_usuarioscc'] = $this->reportes_model->getUsuariosCCRep($tipou, $estatus);
+        //die($this->db->last_query());
         $vista = $this->load->view('reportes/usuarioscc', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -322,7 +360,7 @@ class Reportes_per extends CI_Controller {
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_rsf'] = $this->reportes_model->getReservacionesFijasRep($act, $sala, $hora, $encargado, $tipoact);
         $vista = $this->load->view('reportes/reservacionesfijas', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -385,7 +423,7 @@ class Reportes_per extends CI_Controller {
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_rss'] = $this->reportes_model->getReservacionesSalasRep($act, $sala, $horai, $fechai, $encargado, $edo);
         $vista = $this->load->view('reportes/reservacionessalas', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -454,7 +492,7 @@ class Reportes_per extends CI_Controller {
         $contenido['titulo_rep'] = $titulo_rep;
         $contenido['datos_sw'] = $this->reportes_model->getSoftwareRep($so, $gruposw);
         $vista = $this->load->view('reportes/software', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -499,35 +537,24 @@ class Reportes_per extends CI_Controller {
     }
 
     function reporte_software_equipo() {
-        $this->load->library('table');
         $this->load->model("reportes_model");
         $this->load->library("utl_apecc");
         $this->load->library('mpdf');
+        $conalmacen = true;
         $titulo = $this->input->Post("nom_rep_swe");
-        $equipo = $this->input->Post("num_serie");
-        $vista = '';
-        if (isset($equipo) && $equipo != '') {
-            $strequ = '(N&uacute;mero de serie del equipo: ' . $equipo . ')';
-
-            $titulo_rep = 'Reporte de software por equipo';
-            if (isset($titulo) && $titulo != '') {
-                $titulo_rep = $titulo;
-            }
-            $data_head['titulo_rep'] = $titulo_rep;
-            $contenido['titulo_rep'] = $titulo_rep . $strequ;
-            $contenido['datos_sw'] = $this->reportes_model->getSWequipo($equipo);
-            $vista = $this->load->view('reportes/softwareequipo', $contenido, TRUE);
-        } else {
-            $titulo_rep = 'Reporte de software por equipo';
-            if (isset($titulo) && $titulo != '') {
-                $titulo_rep = $titulo;
-            }
-            $data_head['titulo_rep'] = $titulo_rep;
-            $contenido['titulo_rep'] = $titulo_rep . $strequ;
-            $contenido['datos_sw'] = $this->reportes_model->getSWxEquipos();
-            $vista = $this->load->view('reportes/softwareequipo_to2', $contenido, TRUE);
+        $almcen = $this->input->Post("con_almacen");
+        ($almcen == 'si') ? $conalmacen = true : $conalmacen = false;
+        $titulo_rep = 'Reporte de software por Sala';
+        if (isset($titulo) && $titulo != '') {
+            $titulo_rep = $titulo;
         }
-        //$this->mpdf->StartProgressBarOutput(2);
+        $data_head['titulo_rep'] = $titulo_rep;
+        $contenido['titulo_rep'] = $titulo_rep . $strequ;
+        $contenido['datos_sw'] = $this->reportes_model->getdatarepsoftwaregral($conalmacen);
+        $contenido['numero_equiposxsala'] = $this->reportes_model->getnumeroeqxsala();
+        
+        $vista = $this->load->view('reportes/softwareequipo_gral', $contenido, true);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';
@@ -540,6 +567,57 @@ class Reportes_per extends CI_Controller {
         $this->mpdf->WriteHTML($vista);
         $this->mpdf->Output("$titulo_rep.pdf", 'I');
     }
+
+    /* function reporte_software_equipo_1() {
+      $this->load->library('table');
+      $this->load->model("reportes_model");
+      $this->load->library("utl_apecc");
+      $this->load->library('mpdf');
+      $titulo = $this->input->Post("nom_rep_swe");
+      $equipo = $this->input->Post("num_serie");
+      $vista = '';
+      if (isset($equipo) && $equipo != '') {
+      $strequ = '(N&uacute;mero de serie del equipo: ' . $equipo . ')';
+
+      $titulo_rep = 'Reporte de software por equipo';
+      if (isset($titulo) && $titulo != '') {
+      $titulo_rep = $titulo;
+      }
+      $data_head['titulo_rep'] = $titulo_rep;
+      $contenido['titulo_rep'] = $titulo_rep . $strequ;
+      $contenido['datos_sw'] = $this->reportes_model->getSWequipo($equipo);
+      $vista = $this->load->view('reportes/softwareequipo', $contenido, TRUE);
+      } else {
+      $titulo_rep = 'Reporte de software por equipo';
+      if (isset($titulo) && $titulo != '') {
+      $titulo_rep = $titulo;
+      }
+      $data_head['titulo_rep'] = $titulo_rep;
+      $contenido['titulo_rep'] = $titulo_rep . $strequ;
+      $contenido['datos_sw'] = $this->reportes_model->getSWxEquipos();
+      $vista = $this->load->view('reportes/softwareequipo_to2', $contenido, TRUE);
+      }
+      $titulo_rep = 'Reporte de software por equipo';
+      if (isset($titulo) && $titulo != '') {
+      $titulo_rep = $titulo;
+      }
+      $data_head['titulo_rep'] = $titulo_rep;
+      $contenido['titulo_rep'] = $titulo_rep . $strequ;
+      $contenido['datos_sw'] = $this->reportes_model->getdatarepsoftwaregral();
+
+      $this->mpdf->StartProgressBarOutput(2);
+      $this->mpdf->SetDefaultFontSize(9);
+      $this->mpdf->SetDisplayMode('fullpage');
+      $this->mpdf->setAutoTopMargin = 'pad';
+      $this->mpdf->orig_tMargin = 1;
+      //$this->mpdf->orig_bMargin = 7;
+      $this->mpdf->SetHTMLHeader($this->load->view('reportes/encabezado_rep', $data_head, true));
+      $this->mpdf->SetHTMLFooter($this->load->view('reportes/pie_pagina_rep', '', true));
+      $this->mpdf->AddPage('L');
+      ;
+      $this->mpdf->WriteHTML($vista);
+      $this->mpdf->Output("$titulo_rep.pdf", 'I');
+      } */
 
     function reporte_software_equipoxsl() {
         $this->load->library('table');
@@ -575,7 +653,7 @@ class Reportes_per extends CI_Controller {
         header("Expires: 0");
         echo $vista;
     }
-    
+
     function reporte_prestamo_controles() {
         $this->load->library('table');
         $this->load->model("reportes_model");
@@ -597,16 +675,16 @@ class Reportes_per extends CI_Controller {
         }
         $data_head['titulo_rep'] = $titulo_rep;
         $contenido['titulo_rep'] = $titulo_rep;
-        
+
         $encargado = $this->input->Post("encargado_rpc");
         $edo = $this->input->Post("edo_rpc");
         $act = $this->input->Post("act_rpc");
         $salon = $this->input->Post("salon_rpc");
-        
+
         $data_head['titulo_rep'] = '<h3>Reporte de Prestamo de Control(Equipos de Proyección)</h3>';
         $contenido['datos_controles'] = $this->reportes_model->datos_prestamo_controles($fecha_inicio, $fecha_fin, $encargado, $edo, $act, $salon);
-       $vista = $this->load->view('reportes/prestamo_controles', $contenido, TRUE);
-        //$this->mpdf->StartProgressBarOutput(2);
+        $vista = $this->load->view('reportes/prestamo_controles', $contenido, TRUE);
+        //$this->mpdf->StartProgressBarOutput(1);
         $this->mpdf->SetDefaultFontSize(9);
         $this->mpdf->SetDisplayMode('fullpage');
         $this->mpdf->setAutoTopMargin = 'pad';

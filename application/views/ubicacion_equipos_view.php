@@ -99,8 +99,8 @@
                 <td width="14%"><img src="./images/pc_edos/pc_O_min.png"/>&nbsp;Ocupado</td>
                 <td width="14%"><img src="./images/pc_edos/pc_L_min.png"/>&nbsp;Libre</td>
                 <td width="14%"><img src="./images/pc_edos/pc_C_min.png"/>&nbsp;En Clase o Curso</td>
-                <td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;Descompuesto</td>
-                <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;Mantenimiento</td>
+                <!--td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;Descompuesto</td>
+                <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;Mantenimiento</td-->
                 <td width="14%"><img src="./images/pc_edos/pc__min.png"/>&nbsp;Sin estado</td>
             </tr>
         </table>
@@ -494,8 +494,13 @@
                 if (respuesta=='ok'){
                     notificacion_tip("./images/msg/ok.png","Ubicacion de equipos","La actualizaci&oacute;n se realiz&oacute;, de manera correcta.");
                 }else{
-                    mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la p&aacute;gina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.',400,false);
+                    mensaje($( "#mensaje" ),'Ubicar equipo ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Error al ubicar equipo, Intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador. <br><b>Se procederá a recargar la p&aacute;gina al cerrar este cuadro de dialogo.</d>',400,true);
                     //window.setTimeout(redirect_to('ubicacion_equipos'),40000);
+                    $( "#mensaje" ).dialog({
+                        close:function(){
+                            redirect_to('ubicacion_equipos');
+                        }
+                    });
                 }
                 get_datos_almacen();
                 rd.init('drag0');
@@ -535,7 +540,7 @@
                         $( this ).dialog( "close" );
                     },
                     Cancelar: function() {
-                        //redirect_to('ubicacion_equipos');
+                        redirect_to('ubicacion_equipos');
                         $( this ).dialog( "close" );
                     }
                 }

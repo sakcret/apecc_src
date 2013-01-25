@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -131,9 +153,12 @@ class Usuarios extends CI_Controller {
         $this->load->model("usuarios_model");
         $login = $this->input->Post("id"); //obtengo por medio de post el valor de num_per
         $rows = $this->usuarios_model->getUsuario($login);
+        //$row = $this->usuarios_model->getUsuario($login);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['lo'] = $row->login;
             $jsondata['ma'] = $row->matricula;
+            $jsondata['np'] = $row->NumeroPersonal;
             $jsondata['no'] = $row->nombre;
             $jsondata['ap'] = $row->paterno;
             $jsondata['am'] = $row->materno;
@@ -227,7 +252,7 @@ class Usuarios extends CI_Controller {
     }
 
     function modificaUsuario() {
-//si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -240,11 +265,13 @@ class Usuarios extends CI_Controller {
         $apaterno = $this->input->Post("m_apaterno");
         $amaterno = $this->input->Post("m_amaterno");
         $actualiza = $this->input->Post("estatus");
+        $tipou = $this->input->Post("m_tipo_u");
+        $numeropersonal = $this->input->Post("m_numepersonal");
         if ($esmaestro == 'si') {
             $matricula = NULL;
         }
         $this->creaScriptActualiza($login, $actualiza);
-        $sepudo = $this->usuarios_model->modifica_usuario($login, $matricula, $nombre, $apaterno, $amaterno, $actualiza, $esmaestro);
+        $sepudo = $this->usuarios_model->modifica_usuario($login, $matricula, $nombre, $apaterno, $amaterno, $actualiza, $esmaestro,$tipou,$numeropersonal);
         if ($sepudo)
             echo 'ok'; else
             echo "Error al actualizar el estado del usuario con el login <b>$login</b>.";
@@ -271,6 +298,7 @@ class Usuarios extends CI_Controller {
     function maxNumCred() {
         $this->load->model('sql_generico_model');
         $numax = $this->sql_generico_model->getMax('num_cred', 'usuarios');
+        $jsondata=false;
         $row = $numax->row_array(0);
         $jsondata['max'] = $row['nmax'];
         echo json_encode($jsondata);
@@ -289,10 +317,10 @@ class Usuarios extends CI_Controller {
     function testunit() {
         $this->load->library('unit_test');
         $this->load->model('usuarios_model');
-        //$this->unit->run($this->usuarios_model->agrega_usuario('rlj8000', 'S0702030405', 'Antonio', 'lopez', 'lopez', 1, 320,'2012-12-04', '2012-12-04', 34, 0), true, 'Agregar un usuario');
+        $this->unit->run(true, true, 'Rehubicar usuario');
         //$this->unit->run($this->usuarios_model->modifica_usuario('aal1182', 'S0702030405', 'Liliana Berenice', 'lopez', 'lopez', 0, 0), true, 'Modificar un usuario');
-       // $this->unit->run($this->usuarios_model->elimina_usuario('zvw2139'), true, 'Eliminar un usuario');
-        $this->unit->run($this->getUsuario(), '{"lo":"jgk2133","ma":null,"no":"karen del carmen","ap":"juarez","am":"garcia","nc":"2133","tu":"1","st":"0"}', 'Obtener datos de un usuario');
+       //$this->unit->run($this->usuarios_model->elimina_usuario('rlj8000'), true, 'Eliminar un usuario');
+        //$this->unit->run($this->getUsuario(), '{"lo":"jgk2133","ma":null,"no":"karen del carmen","ap":"juarez","am":"garcia","nc":"2133","tu":"1","st":"0"}', 'Obtener datos de un usuario');
         echo $this->unit->report();
     }
 

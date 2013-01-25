@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 class Equipo_software extends CI_Controller {
 
@@ -46,7 +68,7 @@ class Equipo_software extends CI_Controller {
         $this->load->model('equipo_software_model');
         $software_equipo = $this->equipo_software_model->getSoftwareEquipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $jsondata[$i]['sw'] = $row->nombre;
@@ -62,7 +84,7 @@ class Equipo_software extends CI_Controller {
         $this->load->model('equipo_software_model');
         $software_equipo = $this->equipo_software_model->getsosequipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $i++;
@@ -74,7 +96,7 @@ class Equipo_software extends CI_Controller {
         $this->load->model('equipo_software_model');
         $software_equipo = $this->equipo_software_model->getswequipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $i++;
@@ -86,7 +108,7 @@ class Equipo_software extends CI_Controller {
         $this->load->model('equipo_software_model');
         $so_equipo = $this->equipo_software_model->get2Sos();
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($so_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->idSistemaOperativo;
             $jsondata[$i]['so'] = $row->sistemaOperativo;

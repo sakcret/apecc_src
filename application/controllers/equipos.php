@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -129,6 +151,7 @@ class Equipos extends CI_Controller {
         $this->load->model("equipos_model");
         $numSer = $this->input->Post("id"); //obtengo por medio de post el valor de num_per
         $rows = $this->equipos_model->getequipo($numSer);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['ns'] = $row->NumeroSerie;
             $jsondata['ma'] = $row->Marca;
@@ -219,6 +242,7 @@ class Equipos extends CI_Controller {
 
     function maxNumCred() {
         $this->load->model('sql_generico_model');
+        $jsondata=false;
         $numax = $this->sql_generico_model->getMax('num_cred', 'equipos');
         $row = $numax->row_array(0);
         $jsondata['max'] = $row['nmax'];
@@ -229,7 +253,7 @@ class Equipos extends CI_Controller {
         $this->load->model('equipos_model');
         $software_equipo = $this->equipos_model->getsos2equipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $jsondata[$i]['so'] = $row->so;
@@ -242,7 +266,7 @@ class Equipos extends CI_Controller {
         $this->load->model('equipos_model');
         $software_equipo = $this->equipos_model->getdetallesequipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $jsondata[$i]['so'] = $row->so;
@@ -255,7 +279,7 @@ class Equipos extends CI_Controller {
         $this->load->model('equipos_model');
         $software_equipo = $this->equipos_model->getSoftwareEquipo($numserie);
         $i = 0;
-        $jsondata = null;
+        $jsondata=false;
         foreach ($software_equipo->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $jsondata[$i]['sw'] = $row->software;

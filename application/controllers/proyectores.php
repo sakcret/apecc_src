@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -84,11 +106,11 @@ class Proyectores extends CI_Controller {
                 $sWhere .= $aColumns[$i] . " LIKE '%" . $_GET['sSearch_' . $i] . "%' ";
             }
         }
-        if($sWhere==""){
-            $sWhere .= "where (fecha BETWEEN '$inicioperiodo' AND '$periodofin')";
+        /*if($sWhere==""){
+            $sWhere .= "where (fechaInicio BETWEEN '$inicioperiodo' AND '$periodofin')";
         }else{
-             $sWhere .= "AND (fecha BETWEEN '$inicioperiodo' AND '$periodofin')";
-        }
+             $sWhere .= "AND (fechaInicio BETWEEN '$inicioperiodo' AND '$periodofin')";
+        }*/
         $this->load->model("sql_generico_model");
         $rResult = $this->sql_generico_model->datosDataTable($aColumns, $sTable, $sWhere, $sOrder, $sLimit);
         $sQuery = $this->sql_generico_model->numFilasSQL();
@@ -148,7 +170,8 @@ class Proyectores extends CI_Controller {
         $id =$this->input->Post("id"); 
         $rows = $this->proyectores_model->getprestamo($id);
         $row = $rows->row();
-        $jsondata['fe'] = $row->fecha;
+        $jsondata=false;
+        $jsondata['fe'] = $row->fechaInicio;
         $jsondata['en'] = $row->usuarioNombreAux;
         $jsondata['ac'] = $row->actividad;
         $jsondata['hi'] = $row->horaInicio;
@@ -205,74 +228,5 @@ class Proyectores extends CI_Controller {
             echo 'ok'; else
             echo "Error al entregar el control.";
     }
-
-    function actualizaStatusPrestamoContol() {
-        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
-        $login = $this->session->userdata('login');
-        if (!$login) {
-            redirect('acceso/acceso_denegado');
-        }
-        $this->load->model('proyectores_model');
-        $id = $this->input->Post("id");
-        $st = $this->input->Post("st");
-        $sepudo = $this->proyectores_model->actualiza_st_equipo($id, $st);
-        if ($sepudo)
-            echo 'ok'; else
-            echo "Error al actualizar el estado del equipo con el numSer <b>$id</b>.";
-    }
-
-    function dateToMysql($f) {
-        $fechaMySQL = substr($f, 6, 4) . '-' . substr($f, 3, 2) . '-' . substr($f, 0, 2);
-        return $fechaMySQL;
-    }
-
-    function maxNumCred() {
-        $this->load->model('sql_generico_model');
-        $numax = $this->sql_generico_model->getMax('num_cred', 'equipos');
-        $row = $numax->row_array(0);
-        $jsondata['max'] = $row['nmax'];
-        echo json_encode($jsondata);
-    }
-
-    public function getSos2PrestamoContol($numserie) {
-        $this->load->model('proyectores_model');
-        $software_equipo = $this->proyectores_model->getsos2equipo($numserie);
-        $i = 0;
-        $jsondata = null;
-        foreach ($software_equipo->result() as $row) {
-            $jsondata[$i]['id'] = $row->id;
-            $jsondata[$i]['so'] = $row->so;
-            $i++;
-        }
-        echo json_encode($jsondata);
-    }
-
-    public function getDetallesPrestamoContol($numserie) {
-        $this->load->model('proyectores_model');
-        $software_equipo = $this->proyectores_model->getdetallesequipo($numserie);
-        $i = 0;
-        $jsondata = null;
-        foreach ($software_equipo->result() as $row) {
-            $jsondata[$i]['id'] = $row->id;
-            $jsondata[$i]['so'] = $row->so;
-            $i++;
-        }
-        echo json_encode($jsondata);
-    }
-
-    public function getSoftwarePrestamoContol($numserie) {
-        $this->load->model('proyectores_model');
-        $software_equipo = $this->proyectores_model->getSoftwarePrestamoContol($numserie);
-        $i = 0;
-        $jsondata = null;
-        foreach ($software_equipo->result() as $row) {
-            $jsondata[$i]['id'] = $row->id;
-            $jsondata[$i]['sw'] = $row->software;
-            $jsondata[$i]['so'] = $row->so;
-            $i++;
-        }
-        echo json_encode($jsondata);
-    }
-
 }
 

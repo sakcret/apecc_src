@@ -95,33 +95,12 @@ $(function() {
         './images/menu_lt/salir.png',
         './images/menu_lt/info.png'
         ]
-    });
-    
-    //acciones para el menu lateral
-    $("#ml_hm").click(function(){
-        redirect_to('inicio');
-    }
-    );
-    $("#ml_us").click(function(){
-        redirect_to('usuarios');
-    }
-    );
-    $("#ml_rm").click(function(){
-        redirect_to('reservaciones_temporales');
-    }
-    );
-    $("#ml_ex").click(function(){
-        cerrar_sesion();
-    }
-    ); 
-    $("#ml_hp").click(function(){
-        redirect_to('help');
-    }
-    );     
+    }); 
+        
     $('#nav_ad').click(function(){
         mensaje($( "#mensaje" ),'Acerca de APECC','./images/BANNER_APECC.png"'
             ,''
-            ,'<br><br><br><b>APECC v1.3<br>Licenciado bajo GPL v2</b><br><hr class="boxshadowround"><center>UNIVERSIDAD VERACRUZANA<br>'+
+            ,'<br><br><br><b>APECC v1.5<br>Licenciado bajo GPL v3</b><br><hr class="boxshadowround"><center>UNIVERSIDAD VERACRUZANA<br>'+
             'Facultad de Estad&iacute;stica e Inform&aacute;tica<br>Jos&eacute; Adrian Ruiz Carmona<br>sakcret@gmail.com<br></center>'+
             '<hr class="boxshadowround"><span style="font-size: 10px !important;">Proyecto Desarrollado a cargo de:<br> &nbsp;&nbsp;&nbsp;- MCC Fredy Castañeda Sánchez<br>&nbsp;&nbsp;&nbsp;- LI Martha Elizabet Domínguez Bárcenas<br>Idea original: Issac Salazar Herrera</span>',400,false);
     });

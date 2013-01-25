@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/ 
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -306,6 +328,13 @@ class Software extends CI_Controller {
         $equsw=$this->software_model->getequiposso($idso)->result_array();
         echo json_encode($equsw);
     }
+    
+   
+    function software_grupo($idgru) {
+        $this->load->model('software_model');
+        $grusw=$this->software_model->getsoftware_grupo($idgru)->result_array();
+        echo json_encode($grusw);
+    }
 
     function modificaSO() {
         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
@@ -466,6 +495,7 @@ class Software extends CI_Controller {
         $this->load->model("software_model");
         $id = $this->input->Post("id");
         $rows = $this->software_model->getsoftware($id);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['nom'] = $row->software;
             $jsondata['ver'] = $row->version;
@@ -479,6 +509,7 @@ class Software extends CI_Controller {
         $this->load->model("software_model");
         $id = $this->input->Post("id");
         $rows = $this->software_model->getgrupo($id);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['nom'] = $row->nombre;
             $jsondata['des'] = $row->descripcion;
@@ -490,6 +521,7 @@ class Software extends CI_Controller {
         $this->load->model("software_model");
         $id = $this->input->Post("id");
         $rows = $this->software_model->get_datos_so($id);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['nom'] = $row->sistemaOperativo;
         }

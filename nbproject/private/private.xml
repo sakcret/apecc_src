@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
         <file>
             <url>application/models/catedraticos_model.php</url>
@@ -12,6 +11,32 @@
         <file>
             <url>application/views/reservaciones_fijas_view.php</url>
             <line>103</line>
+        </file>
+    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0">
+        <file>
+            <url>application/models/catedraticos_model.php</url>
+            <bookmark id="0">
+                <name/>
+                <line>2</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>application/models/actualiza_estado_db_model.php</url>
+            <bookmark id="0">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>application/views/reservaciones_fijas_view.php</url>
+            <bookmark id="0">
+                <name/>
+                <line>103</line>
+                <key/>
+            </bookmark>
         </file>
     </editor-bookmarks>
 </project-private>

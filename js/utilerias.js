@@ -46,7 +46,7 @@ function get_value(purl, pparameters) {
                 '-webkit-border-radius': '10px', 
                 '-moz-border-radius': '10px', 
                 opacity:'0.4',
-                filter:'alpha(opacity=40)',
+                filter:'alpha(opacity =40)',
                 color: '#fff' 
             } 
         });
@@ -360,4 +360,17 @@ function allCheckboxUICheck(id_obj,estado){
     
 }
 
+function validaRangoFecha(strdate1,strdate2){
+        if(strdate1==strdate2){
+            return true;
+        }else{
+            var f1=new Date(strdate1);
+            var f2=new Date(strdate2); 
+            if(f1<f2){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 

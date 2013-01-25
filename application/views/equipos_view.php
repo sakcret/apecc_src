@@ -30,10 +30,10 @@
                 <tr>
 
                     <td><label for="disco">Disco Duro (recomendado):</label>            
-                        <input type="text" name="disco" onkeypress="return IsNumber(event);" id="disco" value="512" class="height_widget" maxlength="11"/></td>
+                        <input type="text" name="disco" onkeypress="return IsNumber(event);" id="disco" value="512" class="height_widget" maxlength="11"/><span>&nbsp;&nbsp;GB</span></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
                     <td><label for="ram">Memoria RAM (recomendado):</label>
-                        <input type="text" name="ram" id="ram" value="4" onkeypress="return IsNumberFloat(event);" class="height_widget" maxlength="11"/></td>
+                        <input type="text" name="ram" id="ram" value="4" onkeypress="return IsNumberFloat(event);" class="height_widget" maxlength="11"/><span>&nbsp;&nbsp;GB</span></td>
                 </tr>
             </table>	
         </fieldset>
@@ -67,14 +67,14 @@
                 </tr>
                 <tr>
                     <td><label for="m_disco">Disco Duro:</label>            
-                        <input type="text" name="m_disco" id="m_disco" value="512" class="height_widget" maxlength="11"/></td>
+                        <input type="text" name="m_disco" id="m_disco" value="512" class="height_widget" maxlength="11"/><span>&nbsp;&nbsp;GB</span></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
                     <td><label for="m_ram">Memoria RAM:</label>
-                        <input type="text" name="m_ram" id="m_ram" value="4" class="height_widget" maxlength="11"/></td>
+                        <input type="text" name="m_ram" id="m_ram" value="4" class="height_widget" maxlength="11"/><span>&nbsp;&nbsp;GB</span></td>
                 </tr>
                 <tr>
                     <td colspan="3"><label for="m_edo">Estado Actual(Solo lectura):</label>
-                        <input type="text" name="m_edo" id="m_edo" maxlength="25" class="text ui-widget-content ui-corner-all" /></td>
+                        <input type="text" name="m_edo" id="m_edo" maxlength="25" class="text ui-widget-content ui-corner-all" readonly/></td>
                 </tr>
                 <tr id="row_edo" class="hide">
                     <td colspan="3">
@@ -126,64 +126,54 @@
                     <tr>
                         <th width="20%">Campo</th>
                         <th width="35%">Texto a Filtrar</th>
-                        <th width="20%">Tratar como <br/>expresi&oacute;n Regular</th>
-                        <th width="20%">Filtro <br/>Inteligente</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr id="filter_global">
                         <td align="left">Filtro Global</td>
                         <td align="center"><input type="text"     name="global_filter" id="global_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_regex"  id="global_regex" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="global_smart"  id="global_smart"  checked></td>
                     </tr>
                     <tr id="filter_col1">
                         <td align="left">N&uacute;mero de Serie</td>
                         <td align="center"><input type="text"     name="col1_filter" id="col1_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_regex"  id="col1_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col1_smart"  id="col1_smart" checked></td>
                     </tr>
                     <tr id="filter_col2">
                         <td align="left">Marca</td>
                         <td align="center"><input type="text"     name="col2_filter" id="col2_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_regex"  id="col2_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col2_smart"  id="col2_smart" checked></td>
                     </tr>
                     <tr id="filter_col3">
                         <td align="left">Modelo</td>
                         <td align="center"><input type="text"     name="col3_filter" id="col3_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_regex"  id="col3_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col3_smart"  id="col3_smart" checked></td>
                     </tr>
                     <tr id="filter_col4">
                         <td align="left">N&uacute;mero de Inventario</td>
                         <td align="center"><input type="text"     name="col4_filter" id="col4_filter" class="text ui-widget-content ui-corner-all"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_regex"  id="col4_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col4_smart"  id="col4_smart" checked></td>
                     </tr>
                     <tr id="filter_col5">
                         <td align="left">Procesador</td>
                         <td align="center"><input type="text"     name="col5_filter" id="col5_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_regex"  id="col5_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col5_smart"  id="col5_smart" checked></td>
                     </tr>
                     <tr id="filter_col6">
                         <td align="left">Disco Duro(GB)</td>
                         <td align="center"><input type="text"     name="col6_filter" id="col6_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_regex"  id="col6_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col6_smart"  id="col6_smart" checked></td>
                     </tr>
                     <tr id="filter_col7">
                         <td align="left">Memoria RAM(GB)</td>
                         <td align="center"><input type="text"     name="col7_filter" id="col7_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_regex"  id="col7_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col7_smart"  id="col7_smart" checked></td>
                     </tr>
                     <tr id="filter_col8">
-                        <td align="left">Estado(solo la letra clave)</td>
-                        <td align="center"><input type="text"     name="col8_filter" id="col8_filter" class="text ui-widget-content ui-corner-all" ></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_regex"  id="col8_regex"></td>
-                        <td align="center"><input class="checkbox-ui" type="checkbox" name="col8_smart"  id="col8_smart" checked></td>
+                        <td align="left">Estado:</td>
+                        <td align="center">
+                            <select name="col8_filter" id="col8_filter" style=" width: 96% !important; height: 28px">
+                                <option value="">-- Todos los estados --</option>
+                                <option value="L">Libre</option>
+                                <option value="O">Ocupado</option>
+                                <option value="C">En clase/Curso</option>
+                                <!--option value="D">Descompuesto</option>
+                                <option value="M">Mantenimiento</option-->
+                                <option value="null">sin estado</option>
+                            </select>
+                        </td>
                     </tr>
                     <!--tr id="filter_col9">
                         <td align="left">Descripci&oacute;n</td>
@@ -192,7 +182,7 @@
                         <td align="center"><input type="checkbox" name="col9_smart"  id="col9_smart" checked></td>
                     </tr-->
                 </tbody>
-            </table>
+            </table><br>
         </center>
     </div><br>
     <div class="row">
@@ -214,8 +204,8 @@
                         <td width="14%"><img src="./images/pc_edos/pc_O_min.png"/>&nbsp;(O) Ocupado</td>
                         <td width="14%"><img src="./images/pc_edos/pc_L_min.png"/>&nbsp;(L) Libre</td>
                         <td width="14%"><img src="./images/pc_edos/pc_C_min.png"/>&nbsp;(C) En Clase o Curso</td>
-                        <td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;(D) Descompuesto</td>
-                        <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;(M) Mantenimiento</td>
+                        <!--td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;(D) Descompuesto</td>
+                        <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;(M) Mantenimiento</td-->
                         <td width="14%"><img src="./images/pc_edos/pc__min.png"/>&nbsp;(S) Sin estado</td>
                     </tr>
                 </table>
@@ -268,8 +258,8 @@
         $('#dtequipos').dataTable().fnFilter( 
         $("#global_filter").val(),
         null, 
-        $("#global_regex")[0].checked, 
-        $("#global_smart")[0].checked
+        false, 
+        true
     );
     }
     /*Funcion para aplicar filtro aun campo en el datatable equipos*/
@@ -277,8 +267,8 @@
         $('#dtequipos').dataTable().fnFilter( 
         $("#col"+(i+1)+"_filter").val(),
         i, 
-        $("#col"+(i+1)+"_regex")[0].checked, 
-        $("#col"+(i+1)+"_smart")[0].checked
+        false, 
+        true
     );
     }		
                 
@@ -452,36 +442,14 @@
         $("#global_smart").click( fnFilterGlobal );
 				
         $("#col1_filter").keyup( function() { fnFilterColumn( 0 ); } );
-        $("#col1_regex").click(  function() { fnFilterColumn( 0 ); } );
-        $("#col1_smart").click(  function() { fnFilterColumn( 0 ); } );
-				
         $("#col2_filter").keyup( function() { fnFilterColumn( 1 ); } );
-        $("#col2_regex").click(  function() { fnFilterColumn( 1 ); } );
-        $("#col2_smart").click(  function() { fnFilterColumn( 1 ); } );
-				
         $("#col3_filter").keyup( function() { fnFilterColumn( 2 ); } );
-        $("#col3_regex").click(  function() { fnFilterColumn( 2 ); } );
-        $("#col3_smart").click(  function() { fnFilterColumn( 2 ); } );
-				
         $("#col4_filter").keyup( function() { fnFilterColumn( 3 ); } );
-        $("#col4_regex").click(  function() { fnFilterColumn( 3 ); } );
-        $("#col4_smart").click(  function() { fnFilterColumn( 3 ); } );
-				
         $("#col5_filter").keyup( function() { fnFilterColumn( 4 ); } );
-        $("#col5_regex").click(  function() { fnFilterColumn( 4 ); } );
-        $("#col5_smart").click(  function() { fnFilterColumn( 4 ); } );
-       
         $("#col6_filter").keyup( function() { fnFilterColumn( 5 ); } );
-        $("#col6_regex").click(  function() { fnFilterColumn( 5 ); } );
-        $("#col6_smart").click(  function() { fnFilterColumn( 5 ); } );
-       
         $("#col7_filter").keyup( function() { fnFilterColumn( 6 ); } );
-        $("#col7_regex").click(  function() { fnFilterColumn( 6 ); } );
-        $("#col7_smart").click(  function() { fnFilterColumn( 6 ); } );
        
-        $("#col8_filter").keyup( function() { fnFilterColumn( 7 ); } );
-        $("#col8_regex").click(  function() { fnFilterColumn( 7 ); } );
-        $("#col8_smart").click(  function() { fnFilterColumn( 7 ); } );
+        $("#col8_filter").change( function() { fnFilterColumn( 7 ); } );
        
         /*ocultar y mostrar las ociones de filtro del datatable equipos(busqueda avanzada)*/
         $('#mas_opc_busq').button().click(function() {            
@@ -612,10 +580,13 @@
         $('#m_tipo_u').selectmenu();
         $('#ayuda_edos_equ').click(function(){
             mensaje($( "#mensaje" ),'Ayuda (Estados de equipos)','./images/msg/ayuda.png'
-            ,'Puede cambiar el estado de los equipos dando clic sobre el boton que repreenta el estado.'
-            ,'*Solo se puede cambiar el estado en estos casos: <br><br>De <img src="./images/pc_edos/pc_L_min.png"/>Libre a <img src="./images/pc_edos/pc_D_min.png"/><b>Descompuesto</b> o <img src="./images/pc_edos/pc_M_min.png"/><b>Mantenimiento</b>.<br>'+
-                'De <img src="./images/pc_edos/pc_D_min.png"/><b>Descompuesto</b> o <img src="./images/pc_edos/pc_M_min.png"/><b>Mantenimiento</b> a <img src="./images/pc_edos/pc__min.png"/>Sin Estado<br>'+
-                '<br>Si lo que desea es asignarlo a una reservacion momentanea puede hacerlo desde <A href="'+base_url+'index.php/reservaciones_temporales" target="_blank">Aqu&iacute;</A>',500,false);
+            ,'El color en los equipos representa el estado actual del equipo.'
+            ,'<br><br><br><ul><li><img src="./images/pc_edos/pc_L_min.png"/>&nbsp;<b>Libre: </b>El equipo se encuentra en una reservaci&oacute;n temporal.</li>'+
+            '<li><img src="./images/pc_edos/pc_O_min.png"/>&nbsp;<b>Ocupado: </b>El equipo se encuentra utilizado por una reservación temporal.</li>'+
+            '<li><img src="./images/pc_edos/pc_C_min.png"/>&nbsp;<b>Clase/Curso/Reservaci&oacute;n de sala: </b>El equipo se encuentra utilizado por una reservación fija(clase, curso o reservaci&oacute;n de sala).</li>'+
+            '<li><img src="./images/pc_edos/pc__min.png"/>&nbsp;<b>Sin estado: </b>El equipo se encuentra en el almac&eacute;n(puede usuarse una vez ubicado en alguna sala <b>Ubicaci&oacute;n de equipos <A href="'+base_url+'index.php/ubicacion_equipos" target="_blank">Aqu&iacute;</A></b>).</li></ul>'+
+                
+                '<br>Si lo que desea es asignarlo a una reservaci&oacute;n temporal puede hacerlo desde <A href="'+base_url+'index.php/reservaciones_temporales" target="_blank">Aqu&iacute;</A>',810,false);
         });
         $('#disco,#m_disco').spinner({min:0,step:80});
         $('#ram,#m_ram').spinner({min:0});

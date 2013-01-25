@@ -1,5 +1,7 @@
 <div id="f_agregar_tipo" title="Agregar un tipo de usuario" class="hide">
     <p class="form_tips">Los campos marcados con * son obligatorios.</p>
+    <p class=""><strong>Importante: </strong> Al agregar a un nuevo tipo de usuario, es necesario hacer modificaciones correspondientes en el script de altas para evitar conflictos al
+    agregar las cuentas al servidor.</p>
     <form method="POST" action="" id="form_agregar_tipo">
         <fieldset>
             <table width="100%" border="1">

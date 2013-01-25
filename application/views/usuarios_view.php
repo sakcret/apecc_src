@@ -2,9 +2,9 @@
     <p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>
         &nbsp;&nbsp;El usuario se borrar&aacute; permanentemente. <hr class="boxshadowround">
     <b>! Importante </b>&nbsp;&nbsp;<br>
-    - Se eliminar&aacute;  el uso de equipos del centro de c&oacute;mputo, moviendolas al historial.<br>
-    En case de ser acad&eacute;mico:<br>
-    - Se desasigna&aacute;n las actividades asociadas al acad&eacute;mico y se eliminar&aacute;n las reservaciones fijas resultantes de la asignaci&oacute;n
+    - Se eliminar&aacute;n  los registros de uso de equipos del centro de c&oacute;mputo, movi&eacute;ndolas al historial.<br>
+    En caso de ser acad&eacute;mico:<br>
+    - Se desasignar&aacute;n las actividades asociadas al acad&eacute;mico y se eliminar&aacute;n las reservaciones fijas resultantes de la asignaci&oacute;n
 </div>
 <div id="f_agregar_usuario" title="Agregar un Usuario" style="display:none;">
     <p class="form_tips">Los campos marcados con * son obligatorios.</p>
@@ -85,7 +85,7 @@
                     <input type="text" name="m_amaterno" id="m_amaterno" maxlength="15" class="text" /></td>
             </tr>
             <tr>
-                <td colspan="3"><label for="tipo_u">Tipo de usuario(Solo lectura):</label>
+                <td colspan="3"><label for="tipo_u">Tipo de usuario:</label>
                     <div class="ui-corner-all">
                         <select name="m_tipo_u" class="ui-corner-all" id="m_tipo_u">
                             <option value="0">Selecciona tipo de usuario</option>
@@ -104,12 +104,14 @@
                         <input type="text" name="m_matricula" id="m_matricula" maxlength="9" class="text" />
                     </div>
                     <div style=" display: none;" id="m_div_numper">
-                        <label for="m_numepersonal">N&uacute;mero de Personal(Solo lectura)*:</label>
-                        <input type="text" name="m_numepersonal" id="m_numepersonal" readonly maxlength="9" class="text" />
+                        <label for="m_numepersonal">N&uacute;mero de Personal*:</label>
+                        <input type="text" name="m_numepersonal" id="m_numepersonal" maxlength="9" class="text" />
                     </div></td>
                 <td>&nbsp;</td>
-                <td><label for="m_ncredencial">Numero de credencial(Solo lectura):</label>            
-                    <input type="text" name="m_ncredencial" id="m_ncredencial" maxlength="9" readonly class="text" /></td>
+                <td>
+                    <label for="m_ncredencial">Numero de credencial(Solo lectura):</label>            
+                    <input type="text" name="m_ncredencial" id="m_ncredencial" maxlength="9" readonly class="text" />
+                </td>
             </tr>
             <tr>
                 <td colspan="3"><div align="center" id="radios">
@@ -202,8 +204,8 @@
                 <table width="100%" border="0">
                     <tr><td width="130">&nbsp;</td>
                         <td id="ayuda_st_usuarios" class="manita" width="200" ><img src="./images/ayuda.png"/>&nbsp;Est&aacute;tus de Usuario:</td>
-                        <td><img src="./images/status_no_actualizado.png"/>&nbsp;Cuenta de usuario <b>Actualizada</b> (Activa)</td>
-                        <td><img src="./images/status_actualizado.png"/>&nbsp;Cuenta de usuario <b>No Actualizada</b> (Inactiva)</td>
+                        <td><img src="./images/status_actualizado.png"/>&nbsp;Cuenta de usuario <b>Actualizada</b> (Activa)</td>
+                        <td><img src="./images/status_no_actualizado.png"/>&nbsp;Cuenta de usuario <b>No Actualizada</b> (Inactiva)</td>
                     </tr>
                 </table>
             </div>
@@ -248,7 +250,8 @@
     var dt_usuarios,
     row_select=0,
     numperesobliga=false,
-    matesobliga=true;
+    matesobliga=true,mnumperesobliga=false,
+    mmatesobliga=true;
     
     function trimOnBlur(o){
         var str=o.val();
@@ -327,6 +330,7 @@
         }).dialog("open");    
     }
     var matesobligam=false;
+    var idusuant=0;
     function muestraDatosUsuarioForm(id){
         $.ajax({
             url:"index.php/usuarios/getUsuario",
@@ -342,17 +346,22 @@
                     $( "#m_apaterno" ).val(data.ap); 
                     $( "#m_amaterno" ).val(data.am); 
                     $( "#m_ncredencial" ).val(data.nc);           
+                    $( "#m_numepersonal" ).val(data.np);           
                     //$( "#m_tipo_u" ).val(data.tu);
                     $('#m_tipo_u').selectmenu("value", data.tu);
+                    idusuant=data.tu;
                     if($('#m_tipo_u').val()==9){
                         $('#m_div_mat').hide();
                         $('#m_div_numper').show();
-                        matesobligam=false;
+                        mmatesobliga=false;
+                        mnumperesobliga=true;
                     }else{
-                        matesobligam=true;
+                        mmatesobliga=true;
+                        mnumperesobliga=false;
                         $('#m_div_numper').hide();
                         $('#m_div_mat').show();
                     }
+                    
                     if(data.st==1){
                         $("#st1").attr("checked", "checked");
                     }else{
@@ -394,14 +403,21 @@
                     bValid = bValid && validaCampoExpReg(apaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚñÑ]*$/,"Por favor ingresa un 'Apellido Paterno' válido." ,tips);
                     bValid = bValid && verificaLongitud(amaterno,"Apellido Materno",1,15,tips);
                     bValid = bValid && validaCampoExpReg(amaterno,/^[A-Za-z\s áéíóúñÁÉÍÓÚñÑ]*$/,"Por favor ingresa un 'Apellido Materno' válido.",tips );
-                    if(matesobligam) {
+                    if(mmatesobliga) {
                         esMaestro='no';
                         bValid = bValid && campoVacio(matricula,"Matricula",tips);
                         bValid = bValid && validaCampoExpReg(matricula,/^\S\d{8}$/,"Matricula inválida... El formato de la 'Matricula debe ser: una letra S seguida de 8 números \nEjemplo: S07010150.",tips );
                     }
+                    if(mnumperesobliga) {
+                        esMaestro='si';
+                        bValid = bValid && campoVacio(numper,"N&uacute;mero de personal",tips);
+                        bValid = bValid && validaCampoExpReg(numper,/^\S\d+$/,"N&uacute;mero de personal inválido... ",tips );
+                    }
                     if ( bValid ) {  
                         if($('#m_tipo_u').val()==9){
                             esMaestro='si';
+                        }else{
+                            esMaestro='no';
                         }
                         var datos = $( "#form_modifica_usuario" ).serialize()+'&esmaestro='+esMaestro;//obtener los datos del formulario y serializarlos
                         var urll="index.php/usuarios/modificaUsuario";
@@ -458,6 +474,23 @@
                 $('#div_mat').show('highlight', 'slow');
                 numperesobliga=false;
                 matesobliga=true;
+            }
+        });
+        
+        $('#m_tipo_u').change(function(){
+            if($(this).val()==9){
+                $('#m_div_numper').show('highlight', 'slow');
+                $('#m_div_mat').hide('highlight', 'slow');
+                mnumperesobliga=true;
+                mmatesobliga=false;
+            }else{
+                $('#m_div_numper').hide('highlight', 'slow');
+                $('#m_div_mat').show('highlight', 'slow');
+                mnumperesobliga=false;
+                mmatesobliga=true;
+                if(idusuant==9){
+                 mensaje($( "#mensaje" ),'Cuidado ! ','./images/msg/warning.png','Estas a punto de cambiar el usuario actual de <b>catedr&aacute;tico</b> a <b>otro tipo de usuario.</b>','Al hacer el cambio se eliminar&aacute;n los privilegios que se tenian como catedr&aacute;tico, de manera que las actividades asignadas a este usuario ser&aacute;n eliminadas.',400,true);
+                }
             }
         });
         
@@ -670,7 +703,6 @@
         $('#tipo_u').selectmenu();
         $( "#radios" ).buttonset();
         $('#m_tipo_u').selectmenu();
-        $('#m_tipo_u').selectmenu("disable");
         $('#col5_filter').datepicker();
         
         //Asigna accion al boton para actualizar datatables

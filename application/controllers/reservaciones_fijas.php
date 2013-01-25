@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -139,7 +161,7 @@ class Reservaciones_fijas extends CI_Controller {
         $filas[11] = $this->horario('18:00', $id_sala);
         $filas[12] = $this->horario('19:00', $id_sala);
         $filas[13] = $this->horario('20:00', $id_sala);
-        $filas[14] = $this->horario('21:00', $id_sala);
+        //$filas[14] = $this->horario('21:00', $id_sala);
         return $filas;
     }
 
@@ -172,9 +194,20 @@ class Reservaciones_fijas extends CI_Controller {
                 break;
             case '19:00':$h = 13;
                 break;
+            case '20:00':$h = 14;
+                break;
             default:break;
         }
         return $h;
+    }
+    
+    function borraHorarios() {
+        $sala=$this->input->post('sala');
+        $this->load->model('reservaciones_fijas_model');
+        $sepudo=$this->reservaciones_fijas_model->borrarHorarios($sala);
+        if ($sepudo)
+            echo 'ok'; else
+            echo "Error al borrar los horarios";
     }
 
 }

@@ -1,5 +1,26 @@
 <?php
-
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -133,11 +154,17 @@ class Actividades extends CI_Controller {
         }
         echo $_GET['callback'] . '(' . json_encode($output) . ');';
     }
+    
+    function getColors(){
+        $this->load->model("actividades_model");
+        echo json_encode($this->actividades_model->actividades_color());
+    }
 
     function getActividades() {
         $this->load->model("actividades_model");
         $login = $this->input->Post("id"); //obtengo por medio de post el valor de num_per
         $rows = $this->actividades_model->getActividades($login);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['lo'] = $row->login;
             $jsondata['ma'] = $row->matricula;
@@ -272,6 +299,7 @@ class Actividades extends CI_Controller {
         $this->load->model("actividades_model");
         $id = $this->input->Post("id");
         $rows = $this->actividades_model->getactividad($id);
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata['no'] = $row->Actividad;
             $jsondata['nc'] = $row->NombreCorto;
@@ -286,6 +314,7 @@ class Actividades extends CI_Controller {
         $id = $this->input->Post("idact");
         $rows = $this->actividades_model->getcatedraticosactividad($id);
         $i = 0;
+        $jsondata=false;
         foreach ($rows->result() as $row) {
             $jsondata[$i]['id'] = $row->id;
             $jsondata[$i]['np'] = $row->NumeroPersonal;

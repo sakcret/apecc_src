@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -45,7 +67,7 @@ class Reservaciones_salas extends CI_Controller {
 
     function datosReservSalas() {
         $sIndexColumn = "IdReservSala";
-        $aColumns = array($sIndexColumn, 'Sala', 'NombreActividad', 'encargado', 'FechaInicio', 'FechaFin', 'HoraInicio', 'HoraFin', 'Estado');
+        $aColumns = array($sIndexColumn, 'Sala', 'NombreActividad', 'encargado', 'FechaInicio', 'HoraInicio', 'HoraFin', 'Estado');
         $sTable = "datos_reservsalas";
         $sLimit = "";
         if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -204,38 +226,92 @@ class Reservaciones_salas extends CI_Controller {
         $this->load->model("reservaciones_salas_model");
         $this->load->library("utl_apecc");
         $idreserv = $this->input->Post("id");
+        $jsondata = false;
         $rows = $this->reservaciones_salas_model->getdatosreserv($idreserv);
         foreach ($rows->result() as $row) {
             $jsondata['no'] = $row->NombreActividad;
             $jsondata['hi'] = $row->HoraInicio;
             $jsondata['hf'] = $row->HoraFin;
             $jsondata['fi'] = $this->utl_apecc->getdate_SQL($row->FechaInicio);
-            $jsondata['ff'] = $this->utl_apecc->getdate_SQL($row->FechaFin);
+            //$jsondata['ff'] = $this->utl_apecc->getdate_SQL($row->FechaFin);
             $jsondata['sa'] = $row->idSala;
             $jsondata['ec'] = $row->NumeroPersonal;
         }
         echo json_encode($jsondata);
     }
+    
+    private function getSQL_date($fecha) {
+        $f = substr($fecha, 6, 4) . '-' . substr($fecha, 3, 2) . '-' . substr($fecha, 0, 2);
+        return $f;
+    }
+    
+    function gethora($hora) {
+        $h = 0;
+        switch ($hora) {
+            case '07:00':$h = 1;
+                break;
+            case '08:00':$h = 2;
+                break;
+            case '09:00':$h = 3;
+                break;
+            case '10:00':$h = 4;
+                break;
+            case '11:00':$h = 5;
+                break;
+            case '12:00':$h = 6;
+                break;
+            case '13:00':$h = 7;
+                break;
+            case '14:00':$h = 8;
+                break;
+            case '15:00':$h = 9;
+                break;
+            case '16:00':$h = 10;
+                break;
+            case '17:00':$h = 11;
+                break;
+            case '18:00':$h = 12;
+                break;
+            case '19:00':$h = 13;
+                break;
+            case '20:00':$h = 14;
+                break;
+            case '21:00':$h = 15;
+                break;
+            case '22:00':$h = 16;
+                break;
+            default:break;
+        }
+        return $h;
+    }
 
     function validaReservSala() {
         $this->load->model("reservaciones_salas_model");
         $this->load->library("utl_apecc");
-        $horai= $this->input->Post('horai');
-        $horaf= $this->input->Post('horaf');
-        $sala= $this->input->Post('sala');
-        $result = $this->reservaciones_salas_model->validaReservSala($sala, $this->utl_apecc->gethora($horai),$this->utl_apecc->gethora($horaf));
-        $jsondata = false;
-        $index = 0;
-        if ($result->num_rows()) {
-            foreach ($result->result() as $d) {
-                $jsondata[$index]['hi'] = $d->horainicio;
-                $jsondata[$index]['hf'] = $d->horafin;
-                $jsondata[$index]['ac'] = $d->actividad;
-                $jsondata[$index]['di'] = $d->dia;
-                $index++;
-            }
+        $horai = $this->input->Post('horai');
+        $horaf = $this->input->Post('horaf');
+        $fecha = $this->input->Post('fecha');
+        $sala = $this->input->Post('sala');
+        $jsondata=false;
+        try {
+            $dia = new DateTime($this->getSQL_date($fecha));
+            $f = $dia->format('Y-m-d');
+            $result = $this->reservaciones_salas_model->validaReservSala($sala, $this->gethora($horai), $this->gethora($horaf) - 1, $dia->format('N'), $f);
+            $index = 0;
+            //if ($result->num_rows()) {
+                foreach ($result->result() as $d) {
+                    $jsondata[$index]['hi'] = $d->horainicio;
+                    $jsondata[$index]['hf'] = $d->horafin;
+                    $jsondata[$index]['ac'] = $d->actividad;
+                    $jsondata[$index]['di'] = $d->dia;
+                    $index++;
+                }
+            //}
+            echo json_encode($jsondata);
+        } catch (Exception $e) {
+            echo 'Excepcion capturada: ', $e->getMessage(), "\n";
+            
         }
-        echo json_encode($jsondata);
     }
 
 }

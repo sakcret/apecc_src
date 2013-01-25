@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/ 
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -40,21 +62,17 @@ class Reservaciones_temporales extends CI_Controller {
             $permisos = $this->utl_apecc->getCSS_prm(false, $prm_array); //si es falso no se encontraron permisos por lo tanto se ponen los atributos para solo lectura
         }
         $contenido['permisos'] = $permisos;
-        $this->load->model('reservaciones_temporales_model');
-        $this->load->model('salas_model');
         //setlocale(LC_TIME, 'es_MX');
         setlocale(LC_TIME, 'Spanish');
-        $contenido['titulo_pag'] = "RESERVACIONES MOMENT&Aacute;NEAS";
+        $contenido['titulo_pag'] = "RESERVACIONES TEMPORALES";
         $contenido['include'] = '<script type="text/javascript" language="javascript" src="./js/jsequipos.js"></script>' . PHP_EOL;
-        $contenido['salas'] = $this->salas_model->datos_salas();
-        $contenido['equipos_salas'] = $this->reservaciones_temporales_model->equipos_salas();
-        $contenido['reserv_temp'] = $this->reservaciones_temporales_model->reserv_temp();
+        $contenido['datos_salas_reserv'] = $this->load_salas_reservacionestemp('load');
         $data['contenido'] = $this->load->view('reservaciones_temporales_view', $contenido, true);
         $this->load->view('plantilla', $data);
     }
 
     public function reservacion_momentanea() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -87,8 +105,9 @@ class Reservaciones_temporales extends CI_Controller {
             $horafin = 0;
             $importe = 0;
         }
-        $quienreserva=$login;
-        $sepudo = $this->reservaciones_temporales_model->resevacion($clave_reservacion, $hoy, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $sala,$quienreserva);
+        $quienreserva = $login;
+        $jsondata = false;
+        $sepudo = $this->reservaciones_temporales_model->resevacion($clave_reservacion, $hoy, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $sala, $quienreserva);
 
         $jsondata['idreser'] = $clave_reservacion;
         $jsondata['horai'] = $horainicio;
@@ -104,11 +123,24 @@ class Reservaciones_temporales extends CI_Controller {
         }
     }
 
+    function load_salas_reservacionestemp($tipopeticion) {
+        $this->load->model('reservaciones_temporales_model');
+        $this->load->model('salas_model');
+        $contenido['salas'] = $this->salas_model->datos_salas();
+        $contenido['equipos_salas'] = $this->reservaciones_temporales_model->equipos_salas();
+        $contenido['reserv_temp'] = $this->reservaciones_temporales_model->reserv_temp();
+        if ($tipopeticion == 'reload') {
+            echo $this->load->view('salas_reservtemp_reload', $contenido, true);
+        } else {
+            return $this->load->view('salas_reservtemp_reload', $contenido, true);
+        }
+    }
+
     public function termina_actualiza_reservacion() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
-            redirect('acceso/acceso_denegado');
+            $tipopeticionredirect('acceso/acceso_denegado');
         }
         $idreserv = $this->input->post('idereserv');
         $numSerie = $this->input->post('equipo');
@@ -138,7 +170,7 @@ class Reservaciones_temporales extends CI_Controller {
         }
         echo $u;
     }
-    
+
     //funcion que devuelve los usuarios en forma de <option></option> para el combo de usuarios filtrados
     //por el tipo de usuario seleccionado ademas de seleccionar solo aquellos donde el campo actualiza=1
     function usuarios_matricula() {
@@ -168,7 +200,7 @@ class Reservaciones_temporales extends CI_Controller {
     function valida_existencia_rm($login) {
         $this->load->model('reservaciones_temporales_model');
         $result = $this->reservaciones_temporales_model->valid_exist_rm($login);
-        //echo $this->db->last_query();
+        $jsondata = false;
         if ($result->num_rows() == 0) {
             echo json_encode('puede');
         } else {
@@ -203,7 +235,7 @@ class Reservaciones_temporales extends CI_Controller {
     }
 
     function liberaSala() {
-         //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
+        //si se a auntenticado el usuario del sistema podrá entrar sino sera redireccionado para que ingrese
         $login = $this->session->userdata('login');
         if (!$login) {
             redirect('acceso/acceso_denegado');
@@ -219,11 +251,13 @@ class Reservaciones_temporales extends CI_Controller {
             if ($counteqsa > 0) {
                 for ($y = 0; $y < $counteqsa; $y++) {
                     $des = $datos_eq_sala->row_array($y);
-                    $this->actualiza_estado_db_model->libera_equipo($des['numserie']);
+                    if (($des['edo'] != 'D') && ($des['edo'] != 'M')&& ($des['edo'] != 'O')) {
+                        $this->actualiza_estado_db_model->libera_equipo($des['numserie']);
+                    }
                 }
             }
         }
-       echo 'ok';
+        echo 'ok';
     }
 
     function validaReservHoras($horai, $horaf, $sala) {
@@ -233,7 +267,7 @@ class Reservaciones_temporales extends CI_Controller {
         $horafi = $this->gethora($horaf) - 1;
         $result = $this->reservaciones_temporales_model->validaReservHoras($dia, $horain, $horafi, $sala);
         $jsondata = false;
-        $index=0;
+        $index = 0;
         if ($result->num_rows()) {
             foreach ($result->result() as $d) {
                 $jsondata[$index]['hi'] = $d->horainicio;

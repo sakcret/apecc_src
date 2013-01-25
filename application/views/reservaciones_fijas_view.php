@@ -13,7 +13,7 @@
 <?php
 echo '<style>';
 foreach ($actividades_color as $r) {
-    echo '.color_' . $r['idactividad'] . ' {background-color: ' . $r['color'] . ';}';
+    echo '.color_' . $r['id'] . ' {background-color: ' . $r['color'] . ';}';
 }
 echo '</style>';
 ?> 
@@ -125,8 +125,7 @@ echo '</style>';
                             <table id="table2<?php echo $s[$i]["idSala"]; ?>" class="ui-grid-content ui-widget-content" style=" width: 100%" >
                                 <tbody>
                                     <tr>
-                                        <td class="mark blank reporte">
-                                            &nbsp;<br>
+                                        <td class="mark blank reporte"><img width="24px" src="./images/borrar_todo.png" class="manita" onclick="borra_horarios_sala('<?php echo $s[$i]["idSala"]; ?>')" title="Borrar Horarios"><br>
                                         </td>
                                         <td class="mark blank ui-state-default">Lunes</td>
                                         <td class="mark blank ui-state-default">Martes</td>
@@ -163,6 +162,34 @@ echo '</style>';
     selected_tab;
     
     var sala_select=<?php echo $sala_actual_1; ?>;
+    
+    function borra_horarios_sala(sala){
+        $("#dialog:ui-dialog").dialog( "destroy" );
+        $("#dialog-aux").attr('title','Borrar Horarios');
+        $("#dialog-aux").html('<p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>'
+            +'&nbsp;&nbsp;Se proceder&aacute; a <b>Borrar todos los horarios de las reservaciones fijas</b><hr class="boxshadowround"><b>¿Deseas Continuar?</b></p>');
+        $("#dialog-aux").dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Borra horarios": function() {
+                    var datos ="sala="+sala;
+                    var urll="index.php/reservaciones_fijas/borraHorarios";
+                    var respu =ajax_peticion(urll,datos);
+                    window.location.reload();
+                    if (respu=='ok'){
+                        //alert(respu);
+                    }
+                    $( this ).dialog( "close" );
+                },
+                Cancelar: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        }).dialog("open"); 
+    
+    }
     
     function info_act(act,resp,blo,sec){
         $('#mensaje').html('<div id="info_actividad" title="'+act+'" class="hide">'+
@@ -355,6 +382,7 @@ if (isset($val) && ($val != 0)) {
                         $( this ).dialog( "close" );
                     },
                     Cancelar: function() {
+                          window.location.reload();
                         $( this ).dialog( "close" );
                     }
                 }

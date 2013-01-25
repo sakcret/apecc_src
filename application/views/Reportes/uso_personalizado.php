@@ -17,7 +17,7 @@ $money_total = 0; ?>
                 <th>N&uacute;mero de Serie</th>
                 <th>Actividad</th>
                 <th>Tipo de Actividad</th>
-                <th>Quien Reserva</th>
+                <th>Quien Reserv&oacute;</th>
             </tr>
         </thead>
         <?php

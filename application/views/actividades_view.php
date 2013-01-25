@@ -1,7 +1,8 @@
+
 <?php
 echo '<style>';
 foreach ($actividades_color as $r) {
-    echo '.color_' . $r['idactividad'] . ' {background-color: ' . $r['color'] . ';}';
+    echo '.color_' . $r['id'] . ' {background-color: ' . $r['color'] . ';}';
 }
 echo '</style>';
 ?> 
@@ -17,7 +18,7 @@ echo '</style>';
 <div id="dialog-elimina" title="Eliminar Actividad" style="display:none;">
     <p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>
         &nbsp;&nbsp;El actividad se borrar&aacute; permanentemente.<hr class="boxshadowround">
-    <b>Nota:&nbsp;</b>Al hacer esto tambi&eacute;n se eliminar&aacute;n las asociaciones de catedraticos de esta actividad, de igual forma 
+    <b>Nota:&nbsp;</b>Al hacer esto tambi&eacute;n se eliminar&aacute;n las asociaciones de catedr&aacute;ticos de esta actividad, de igual forma 
     las reservaciones fijas asignadas a cada catedr&aacute;tico ser&aacute;n eliminadas.
     <br><b>¿A&uacute;n as&iacute; Deseas Continuar?</b></p>
 </div>
@@ -96,10 +97,10 @@ echo '</style>';
         <fieldset>
             <table width="100%" border="1">
                 <tr>
-                    <td colspan="3"><label for="nombre_cat" >Nombre del Catedr&aacute;tico*:</label><br>
-                        <select name="catedraticos" id="catedraticos"></select><br></td>
+                    <td colspan="3"><label for="nombre_cat" >Nombre del Catedr&aacute;tico*:</label>
+                        <select name="catedraticos" id="catedraticos"></select><div id="ayuda_catedratico">No encuentro el catedr&aacute;tico</div><br></td>
                 </tr>
-                <tr>
+                <tr id="bloque_seccion">
                     <td><label for="bloque_act">Bloque de la actividad*:</label>
                         <input type="text" name="bloque_act" onkeypress="return IsNumber(event);" id="bloque_act" maxlength="15" class="text ui-widget-content ui-corner-all" /></td>
                     <td>&nbsp;&nbsp;</td>
@@ -109,6 +110,8 @@ echo '</style>';
             </table> 
         </fieldset>
     </form>
+    
+
 </div>
 <br/>
 <tooltips class="tooltip">
@@ -256,7 +259,7 @@ echo '</style>';
             $('#periodo-curso').show(); 
         }
     }
-  /*Funcion para aplicar filtro global en el datatable*/
+    /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
         $('#dtactividades').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
@@ -409,15 +412,14 @@ echo '</style>';
                     allFields.removeClass( "ui-state-error" );
                     bValid = bValid && campoVacio(nombre,'Nombre',tips);
                     bValid = bValid && campoVacio(nombre_corto,'Nombre Corto',tips);
+                    $('#newcolors').append('.newcolor_'+id+'{background-color: '+$('#m_color').val()+';}');
                     if ( bValid ) {  
                         var datos = $( "#form_modifica_actividad" ).serialize()+'&id_act='+id;//obtener los datos del formulario y serializarlos
                         var urll="index.php/actividades/modificaActividad";
                         var respuesta = ajax_peticion(urll,datos);
                         if (respuesta=='ok'){
                             dt_actividades.fnDraw();//recargar los datos del datatable
-                            notificacion_tip("./images/msg/ok.png","Modificar Actividad","El actividad con el nombre: '"+id+"' se modific&oacute; satisfactoriamente.");
-                            o_color_mod.css('background-color',$('#m_color').val());
-                        
+                            notificacion_tip("./images/msg/ok.png","Modificar Actividad","El actividad con el nombre: '"+id+"' se modific&oacute; satisfactoriamente.");                        
                         }else{
                             mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la p&aacute;gina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.');
                         }                   
@@ -445,8 +447,14 @@ echo '</style>';
             $( "#nombrecorto_act_asign" ).text(respuesta.nc);
             if(respuesta.ta=='0'){
                 $( "#tipo_act_asign" ).text('Experiencia Educativa');
+                $( "#bloque_act" ).val('0');
+                $( "#seccion_act" ).val('0');
+                $( "#bloque_seccion" ).show();
             }else{
                 if(respuesta.ta=='1'){
+                    $( "#bloque_act" ).val('0');
+                    $( "#seccion_act" ).val('0');
+                    $( "#bloque_seccion" ).hide();
                     $( "#tipo_act_asign" ).text('Curso');
                 }else{
                     $( "#tipo_act_asign" ).html('Reservaci&oacute;n de Sala');
@@ -471,8 +479,8 @@ echo '</style>';
                     var bValid = true;
                     allFields.removeClass( "ui-state-error" );
                     bValid = bValid && verificaSelectUI(catedratico,catedratico_incbx,'Debe seleccionar un catedratico.',tips);
-                    bValid = bValid && campoVacio(bloque,'Bloque',tips);
-                    bValid = bValid && campoVacio(seccion,'Sección',tips);
+                    //bValid = bValid && campoVacio(bloque,'Bloque',tips);
+                    //bValid = bValid && campoVacio(seccion,'Sección',tips);
                     if ( bValid ) {  
                         var datos = $( "#form_asigna_actividad" ).serialize()+'&id_act='+id;//obtener los datos del formulario y serializarlos
                         var urll="index.php/actividades/asignaActividad";
@@ -609,6 +617,13 @@ echo '</style>';
             return a;
         }
         
+        $( "#ayuda_catedratico" ).button().click(function(){
+            mensaje($( "#mensaje" ),'No encuentro al catedr&aacute;tico ! ','./images/msg/help.png',
+            'Si no se encuentra al catedr&aacute;tico puede:<br><br>',
+            '1.Verificar que el catedr&aacute;tico se encuentra en la base de datos.<a href="<?php echo $this->config->item('base_url'); ?>index.php/usuarios" target="_blank">Agregar un catedr&aacute;tico aquí</a>'+
+            '<br>2.Verificar el tipo de usuario, asegurarse que sea <b>catedr&aacute;tico</b>.');
+            return false;
+        });
         /* selecciona una fila del datatable no aplica para server_aside proccessing*/
         $('#dtactividades tbody tr').live('click', function (e) {
             if ( $(this).hasClass('row_selected') ) {
@@ -753,6 +768,15 @@ echo '</style>';
                     if( $("#cr")[0].checked){
                         bValid = bValid && validaCampoExpReg(fecha1,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);            
                         bValid = bValid && validaCampoExpReg(fecha2,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips); 
+                        var arrayf1=fecha1.val().split('/');
+                        var arrayf2=fecha2.val().split('/');
+                        var fechavalida=validaRangoFecha(arrayf1[2]+'-'+arrayf1[1]+'-'+arrayf1[0],arrayf2[2]+'-'+arrayf2[1]+'-'+arrayf2[0]);
+                        if(fechavalida){
+                            bValid = bValid && true;
+                        }else{
+                            bValid = bValid && false;
+                            fecha1.addClass( "ui-state-error" );tips.html('La fecha final no puede ser menor a la fecha inicial.');
+                        }
                     }
                     if ( bValid ) {
                         var datos = $( "#form_agrega_actividad" ).serialize();
@@ -848,6 +872,8 @@ echo '</style>';
         
     } );
 </script>
+
+<style type="text/css" id="newcolors"></style> 
 <style type="text/css">    
     .color_actividad {
         width: 50px !important;
@@ -875,6 +901,7 @@ echo '</style>';
     #f_asignar_actividad .ui-autocomplete-input{
         width: 80%;
     }
+    #ayuda_catedratico{margin-bottom: 10px;margin-top: 10px;}
 </style>
 <?php echo '<style type="text/css">' . $permisos . '</style>'; ?>
 

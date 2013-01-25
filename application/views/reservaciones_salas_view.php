@@ -1,35 +1,3 @@
-<script>
-    $(function() {
-        var dates = $( "#fecha_inicio, #fecha_fin" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 3,
-            onSelect: function( selectedDate ) {
-                var option = this.id == "fecha_inicio" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
-            }
-        });
-        var dates2 = $( "#m_fecha_inicio, #m_fecha_fin" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 3,
-            onSelect: function( selectedDate ) {
-                var option = this.id == "m_fecha_inicio" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates2.not( this ).datepicker( "option", option, date );
-            }
-        });
-    });
-</script>
 <div id="dialog-elimina" title="Cancelar reservaci&oacute;n de Sala" class="hide">
     <p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>
         &nbsp;&nbsp;Se cancelar&aacute; la reservaci&oacute;n Seleccionada. ¿Deseas Continuar?</p>
@@ -64,11 +32,11 @@
                         <input type="text" name="hora_fin" id="hora_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
                 </tr>
                 <tr>
-                    <td><label for="fecha_inicio">Fecha de Inicio*:</label>
+                    <td><label for="fecha_inicio">Fecha*:</label>
                         <input type="text" name="fecha_inicio" id="fecha_inicio" maxlength="25" class="text ui-widget-content ui-corner-all" /></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
-                    <td><label for="fecha_fin">Fecha de Fin*:</label>
-                        <input type="text" name="fecha_fin" id="fecha_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
+                    <!--td><label for="fecha_fin">Fecha de Fin*:</label>
+                        <input type="text" name="fecha_fin" id="fecha_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td-->
                 </tr>
             </table>	
         </fieldset>
@@ -102,11 +70,11 @@
                         <input type="text" placeholder="Ejemplo: 09:00:00" name="m_hora_fin" id="m_hora_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
                 </tr>
                 <tr>
-                    <td><label for="m_fecha_inicio">Fecha de Inicio*:</label>
+                    <td><label for="m_fecha_inicio">Fecha*:</label>
                         <input type="text" name="m_fecha_inicio" id="m_fecha_inicio" maxlength="25" class="text ui-widget-content ui-corner-all" /></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
-                    <td><label for="m_fecha_fin">Fecha de Fin*:</label>
-                        <input type="text" name="m_fecha_fin" id="m_fecha_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td>
+                    <!--td><label for="m_fecha_fin">Fecha de Fin*:</label>
+                        <input type="text" name="m_fecha_fin" id="m_fecha_fin" maxlength="10" class="text ui-widget-content ui-corner-all" /></td-->
                 </tr>
             </table>	
         </fieldset>
@@ -121,8 +89,7 @@
                 <input type="checkbox" onclick="verOcultarColDT(1,dt_reservsalas);" checked="checked" name="vo_sala" id="vo_sala" ><label for="vo_sala">Sala</label>
                 <input type="checkbox" onclick="verOcultarColDT(2,dt_reservsalas);" checked="checked" name="vo_actividad" id="vo_actividad" ><label for="vo_actividad">Nombre de la Actividad</label>
                 <input type="checkbox" onclick="verOcultarColDT(3,dt_reservsalas);" checked="checked" name="vo_encargado" id="vo_encargado" ><label for="vo_encargado">Encargado</label>
-                <input type="checkbox" onclick="verOcultarColDT(4,dt_reservsalas);" checked="checked" name="vo_fecha_inicio" id="vo_fecha_inicio" ><label for="vo_fecha_inicio">Fecha de Inicio</label>
-                <input type="checkbox" onclick="verOcultarColDT(5,dt_reservsalas);" checked="checked" name="vo_fecha_fin" id="vo_fecha_fin" ><label for="vo_fecha_fin">Fecha Fin</label>
+                <input type="checkbox" onclick="verOcultarColDT(4,dt_reservsalas);" checked="checked" name="vo_fecha_inicio" id="vo_fecha_inicio" ><label for="vo_fecha_inicio">Fecha</label>
                 <input type="checkbox" onclick="verOcultarColDT(6,dt_reservsalas);" checked="checked" name="vo_hora_inicio" id="vo_hora_inicio" ><label for="vo_hora_inicio">Hora Inicio</label>
                 <input type="checkbox" onclick="verOcultarColDT(7,dt_reservsalas);" checked="checked" name="vo_hora_fin" id="vo_hora_fin" ><label for="vo_hora_fin">Hora Fin</label>
                 <input type="checkbox" onclick="verOcultarColDT(8,dt_reservsalas);" checked="checked" name="vo_edo" id="vo_edo" ><label for="vo_edo">Estado</label>
@@ -187,7 +154,16 @@
                     <button style="height: 28px !important; width: 200px;" id="mas_opc_busq"class="opc ui-icon-search">Ver busqueda avanzada</button>
                     <button style="height: 28px !important; width: 200px;" id="b_ver_campos"class="opc">Ver opciones de campos</button>
                 </div>
-            </div><br>
+            </div>
+            <div style=" margin-top: 10px; margin-bottom: 10px;" class="ui-corner_all boxshadowround">
+                <table width="100%" border="0">
+                    <tbody><tr><td width="130">&nbsp;</td>
+                            <td id="ayuda_st_rs" class="manita" width="200"><img src="./images/ayuda.png">&nbsp;Estado de la reservación de sala:</td>
+                            <td><img src="./images/status_actualizado.png">&nbsp;Vigente o Realizada</td>
+                            <td><img src="./images/status_no_actualizado.png">&nbsp;Cancelada</td>
+                        </tr>
+                    </tbody></table>
+            </div>
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="dtreservsalas">
                 <thead>
                     <tr>
@@ -196,8 +172,7 @@
                         <th>Sala</th>
                         <th>Actividad</th>
                         <th>Encargado/Maestro</th>                
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
+                        <th>Fecha</th>
                         <th>Hora Inicio</th>
                         <th>Hora Fin</th>
                         <th>Estado</th>
@@ -216,8 +191,7 @@
                         <th>Sala</th>
                         <th>Actividad</th>
                         <th>Encargado/Maestro</th>                
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
+                        <th>Fecha</th>
                         <th>Hora Inicio</th>
                         <th>Hora Fin</th>
                         <th>Estado</th>
@@ -232,21 +206,6 @@
 <script type="text/javascript" charset="utf-8">
     var dt_reservsalas;
     var row_select=0;
-    
-    function validaRangoFecha(strdate1,strdate2){
-        if(strdate1==strdate2){
-            return true;
-        }else{
-            var f1=new Date(strdate1);
-            var f2=new Date(strdate2); 
-            if(f1<f2){
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }
-    
     var horas_src = [ "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00" ];
     
     function cambia_estado(o,id){
@@ -259,11 +218,11 @@
             if(est=='A'){
                 o.attr('src','./images/status_actualizado.png');
                 o.attr('cambia_edo','I');
-                actua='Activa';
+                actua='Vigente';
             }else{
                 o.attr('src','./images/status_no_actualizado.png');
                 o.attr('cambia_edo','A');
-                actua='Inactiva';
+                actua='Cancelada';
             }
             notificacion_tip("./images/msg/ok.png","Actualizar Estado de reservaci&oacute;n","La reservaci&oacute;n se encuentra <b> '"+actua+"'</b>.");   
         }else{
@@ -359,7 +318,6 @@
                 $( "#m_hora_inicio" ).val(data.hi);
                 $( "#m_hora_fin" ).val(data.hf);
                 $( "#m_fecha_inicio" ).val(data.fi);
-                $( "#m_fecha_fin" ).val(data.ff);
                 $('#m_encargado').combobox();
                 $( "#m_sala" ).selectmenu("value", data.sa);
                 
@@ -370,17 +328,17 @@
     function modifica_reservacion(id){ 
         carga_mencargados();
         carga_msalas();
+        $( "#f_modificar_reservsala input.ui-autocomplete-input" ).val('');
         var nombre_act = $( "#m_nombre_act" ),
         sala = $( "#m_sala" ),
         hora_inicio = $( "#m_hora_inicio" ),
         hora_fin = $( "#m_hora_fin" ),
         encargado = $( "#m_encargado" ),
         fecha_inicio = $( "#m_fecha_inicio" ),
-        fecha_fin = $( "#m_fecha_fin" ),
         sala_ui=$( "#m_sala-button" ),
         ac_encargado=$('#form_modifica_reservsala .ui-autocomplete-input'),
         allFields = $( [] ).add( nombre_act ).add( sala).add(hora_inicio)
-        .add(hora_fin).add(encargado).add(fecha_inicio).add(fecha_fin).add(sala_ui).add(ac_encargado),
+        .add(hora_fin).add(encargado).add(fecha_inicio).add(sala_ui).add(ac_encargado),
         tips = $( ".m_form_tips" );
         muestraDatosReservForm(id);
         $( "#dialog:ui-dialog" ).dialog( "destroy" );
@@ -393,6 +351,7 @@
                     var bValid = true;
                     allFields.removeClass( "ui-state-error" );
                     $('#sala-button,#form_modifica_reservsala .ui-autocomplete-input').removeClass('ui-state-error');
+                    var band=false;
                   
                     bValid = bValid && verificaSelectUI(sala,$( "#m_sala-button" ),"Debe selecionar una sala",tips);
                     bValid = bValid && campoVacio(nombre_act,'Nombre de Actividad',tips);
@@ -400,22 +359,55 @@
                     bValid = bValid && campoVacio($('#form_modifica_reservsala .ui-autocomplete-input'),'Nombre del Encargado',tips);
                     bValid = bValid && campoVacio(hora_inicio,'Hora de Inicio',tips);
                     bValid = bValid && validaCampoExpReg( hora_inicio,/^\[d{2}\:00]|[d{1}\:00]$/, "El formato de la hora de inicio debe ser: hh:00. Ejemplo: '01:00'",tips);         
-                    bValid = bValid && campoVacio(hora_fin,'Hora de Fin',tips);
                     bValid = bValid && validaCampoExpReg( hora_fin,/^\[d{2}\:00]|[d{1}\:00]$/, "El formato de la hora de inicio debe ser: hh:00. Ejemplo: '01:00'",tips);         
-                    bValid = bValid && campoVacio(fecha_inicio,'Fecha de Inicio',tips);
+                    bValid = bValid && campoVacio(fecha_inicio,'Fecha',tips);
                     bValid = bValid && validaCampoExpReg( fecha_inicio,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
-                    bValid = bValid && campoVacio(fecha_fin,'Fecha de Fin',tips);
-                    bValid = bValid && validaCampoExpReg( fecha_fin,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);          
-                    var arrayf1=fecha_inicio.val().split('/');
-                    var arrayf2=fecha_fin.val().split('/');
-                    var fechavalida=validaRangoFecha(arrayf1[2]+'-'+arrayf1[1]+'-'+arrayf1[0],arrayf2[2]+'-'+arrayf2[1]+'-'+arrayf2[0]);
-                    if(fechavalida){
-                        bValid = bValid && true;
+                    var hayclase = ajax_peticion_json('index.php/reservaciones_salas/validaReservSala','horai='+hora_inicio.val()+'&horaf='+hora_fin.val()+'&sala='+sala.val()+'&fecha='+fecha_inicio.val());
+                    if(hayclase==false) {
+                        band=true;
                     }else{
-                        bValid = bValid && false;
-                        fecha_fin.addClass( "ui-state-error" );tips.html('La fecha final no puede ser menor a la fecha inicial.');
+                        band=false;
+                        var html='<br><table align="center" width="100%"><tr><th class="ui-widget-header">Actividad</th><th class="ui-widget-header">D&iacute;a</th><th class="ui-widget-header">Hora Inicio</th><th class="ui-widget-header">Hora Fin</th></tr>';
+                        $.each( hayclase, function(k, v){
+                            html+='<tr><td class="ui-widget-content">'+v.ac+'</td><td class="ui-widget-content">'+v.di+'</td><td class="ui-widget-content">'+v.hi+'</td><td class="ui-widget-content">'+v.hf+'</td></tr>';
+                        });
+                        html+='</table><hr class="boxshadowround"><font>.</font>';
+                        var om=$( "#mensaje" );
+                        //,html,550,true);
+                        var titulo= 'Se ha encontrado una colisi&oacute;n',
+                        text1='Se ha encontrado un choque entre las reservaci&oacute;n actual y alguna(s) actividad(es).<br>'+
+                            'A continuaci&oacute;n se presenta(n) la(s) actividad(es) que se traslapan con la reservaci&oacute;n.<hr class="boxshadowround">';
+                        $( "#dialog:ui-dialog" ).dialog( "destroy" );
+                        om.attr('title','');
+                        om.html('<p><span style="float:left; margin:0 7px 0px 0;"><img src="./images/msg/warning.png"/></span>'
+                            +text1+'</p><p style="font-size: 13px;">'+html+'</p>');
+                        om.attr('title',titulo);
+                        $("#ui-dialog-title-mensaje").html(titulo);
+                        om.dialog({
+                            modal: true,
+                            width:550,
+                            buttons: {
+                                /*'Entiendo aún asi quiero reservar': function() {
+                                    om.attr('title','');
+                                    om.html('');
+                                    band=true;
+                                    $( this ).dialog( "close" );
+                                },*/
+                                'Corregir datos': function() {
+                                    band=false;
+                                    om.attr('title','');
+                                    om.html('');
+                                    $( this ).dialog( "close" );
+                                }
+                            },
+                            close: function() {
+                                om.attr('title','');
+                                om.html('');
+                            }
+                        }).dialog("open");
                     }
-                    if ( bValid ) {  
+                 
+                    if ( bValid &&band) {  
                         var datos = $( "#form_modifica_reservsala" ).serialize()+'&id='+id;
                         var urll="index.php/reservaciones_salas/modificaReservacion";
                         var respuesta = ajax_peticion(urll,datos);
@@ -440,7 +432,7 @@
     }
     
     $(document).ready(function() {
-        $( "#fecha_inicio, #fecha_fin,#m_fecha_inicio, #m_fecha_fin" ).datepicker();       
+        $( "#fecha_inicio,,#m_fecha_inicio" ).datepicker();       
         $('#hora_inicio,#hora_fin,#m_hora_inicio,#m_hora_fin').autocomplete({source: horas_src});
                 
         /* selecciona una fila del datatable no aplica para server_aside proccessing*/
@@ -457,6 +449,14 @@
             }
         }); 
         
+        $('#ayuda_st_rs').click(function(){
+            mensaje($( "#mensaje" ),'Ayuda (Estado de reservaciones de sala)','./images/msg/ayuda.png'
+            ,'Puede cambiar el estado de la reservaci&oacute;n dando click sobre el boton de estatus.'
+            ,'<br>*Si la reservaci&oacute;n esta <img src="./images/status_actualizado.png"/> &nbsp;Vigente<br>'+
+                'se cambiar&aacute; a <img src="./images/status_no_actualizado.png"/>&nbsp;Cancelada',400,false);
+        });
+
+
         /*Aplicar filtro al datatables (busqueda avanzada)*/
         $("#global_filter").typeWatch( { callback:function(){ fnFilterGlobal()},wait:750,highlight:true,captureLength:0} );    
         $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); }, wait:750, highlight:true,captureLength:0} ); 
@@ -541,11 +541,10 @@
         hora_fin = $( "#hora_fin" ),
         encargado = $( "#encargado" ),
         fecha_inicio = $( "#fecha_inicio" ),
-        fecha_fin = $( "#fecha_fin" ),
         sala_ui=$( "#sala-button" ),
         ac_encargado=$('#form_agrega_reservsala .ui-autocomplete-input'),
         allFields = $( [] ).add( nombre_act ).add( sala).add(hora_inicio)
-        .add(hora_fin).add(encargado).add(fecha_inicio).add(fecha_fin).add(sala_ui).add(ac_encargado),
+        .add(hora_fin).add(encargado).add(fecha_inicio).add(sala_ui).add(ac_encargado),
         tips = $( ".form_tips" );
         
         $( "#f_agregar_reserva_sala" ).dialog({
@@ -555,6 +554,7 @@
             buttons: {
                 "Agregar Reservación de Sala": function() {                    
                     var bValid = true;
+                    var band=false;
                     allFields.removeClass( "ui-state-error" );
                     $('#sala-button,#form_agrega_reservsala .ui-autocomplete-input').removeClass('ui-state-error');
                     bValid = bValid && verificaSelectUI(sala,$( "#sala-button" ),"Debe selecionar una sala",tips);
@@ -567,25 +567,21 @@
                     bValid = bValid && validaCampoExpReg( hora_fin,/^\[d{2}\:00]|[d{1}\:00]$/, "El formato de la hora de inicio debe ser: hh:00. Ejemplo: '01:00'",tips);         
                     bValid = bValid && campoVacio(fecha_inicio,'Fecha de Inicio',tips);
                     bValid = bValid && validaCampoExpReg( fecha_inicio,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
-                    bValid = bValid && campoVacio(fecha_fin,'Fecha de Fin',tips);
-                    bValid = bValid && validaCampoExpReg(fecha_fin,/^\d{2}\/\d{2}\/\d{4}$/, "El formato de la fecha debe ser: dd/mm/aaaa. Ejemplo: '05/06/2012'",tips);         
-                    var arrayf1=fecha_inicio.val().split('/');
-                    var arrayf2=fecha_fin.val().split('/');
-                    var fechavalida=validaRangoFecha(arrayf1[2]+'-'+arrayf1[1]+'-'+arrayf1[0],arrayf2[2]+'-'+arrayf2[1]+'-'+arrayf2[0]);
-                    var hayclase = ajax_peticion_json('index.php/reservaciones_salas/validaReservSala','horai='+hora_inicio.val()+'&horaf='+hora_fin.val()+'&sala='+sala.val());
+                   
+                    var hayclase = ajax_peticion_json('index.php/reservaciones_salas/validaReservSala','horai='+hora_inicio.val()+'&horaf='+hora_fin.val()+'&sala='+sala.val()+'&fecha='+fecha_inicio.val());
                     if(hayclase==false) {
-                        sihayquiero=true;
+                        band=true;
                     }else{//si no hay clase entre las horas especificadas 
                         var html='<br><table align="center" width="100%"><tr><th class="ui-widget-header">Actividad</th><th class="ui-widget-header">D&iacute;a</th><th class="ui-widget-header">Hora Inicio</th><th class="ui-widget-header">Hora Fin</th></tr>';
                         $.each( hayclase, function(k, v){
                             html+='<tr><td class="ui-widget-content">'+v.ac+'</td><td class="ui-widget-content">'+v.di+'</td><td class="ui-widget-content">'+v.hi+'</td><td class="ui-widget-content">'+v.hf+'</td></tr>';
                         });
-                        html+='</table><hr class="boxshadowround"><font>Si el equipo no es utilizado en la reservaci&oacute;n fija puede crear una nueva reservación.</font>';
+                        html+='</table><hr class="boxshadowround"><font>.</font>';
                         var om=$( "#mensaje" );
                         //,html,550,true);
                         var titulo= 'Se ha encontrado una colisi&oacute;n',
                         text1='Se ha encontrado un choque entre las reservaci&oacute;n actual y alguna(s) actividad(es).<br>'+
-                            'A continuaci&oacute;n se presenta(n) la(s) actividad(es) que se traslapan con la reservaci&oacute;n, para que corrija la hora de fin.<hr class="boxshadowround">';
+                            'A continuaci&oacute;n se presenta(n) la(s) actividad(es) que se traslapan con la reservaci&oacute;n.<hr class="boxshadowround">';
                         $( "#dialog:ui-dialog" ).dialog( "destroy" );
                         om.attr('title','');
                         om.html('<p><span style="float:left; margin:0 7px 0px 0;"><img src="./images/msg/warning.png"/></span>'
@@ -596,14 +592,14 @@
                             modal: true,
                             width:550,
                             buttons: {
-                                'Entiendo aún asi quiero reservar': function() {
+                                /*'Entiendo aún asi quiero reservar': function() {
                                     om.attr('title','');
                                     om.html('');
-                                    sihayquiero=true;
+                                    band=true;
                                     $( this ).dialog( "close" );
-                                },
+                                },*/
                                 'Corregir datos': function() {
-                                    sihayquiero=false;
+                                    band=false;
                                     om.attr('title','');
                                     om.html('');
                                     $( this ).dialog( "close" );
@@ -615,13 +611,8 @@
                             }
                         }).dialog("open");
                     }
-                    if(fechavalida){
-                        bValid = bValid && true;
-                    }else{
-                        bValid = bValid && false;
-                        fecha_fin.addClass( "ui-state-error" );tips.html('La fecha final no puede ser menor a la fecha inicial.');
-                    }
-                    /* if ( bValid ) {  
+                   
+                    if ( bValid &&band) {  
                         var datos = $( "#form_agrega_reservsala" ).serialize();
                         var urll="index.php/reservaciones_salas/agregaReservacion";
                         var respuesta = ajax_peticion(urll,datos);
@@ -632,7 +623,7 @@
                             mensaje($( "#mensaje" ),'Error ! ','./images/msg/error.png',respuesta,'<span class="ui-icon ui-icon-lightbulb"></span>Actualiza la p&aacute;gina e intenta de nuevo. Si el <b>Error</b> persiste consulta al administrador.',400,true);
                         }                 
                         $( this ).dialog( "close" );
-                    }*/
+                    }
                 },
                 Cancelar : function() {
                     $( this ).dialog( "close" );
@@ -647,6 +638,7 @@
         $( "#btn_agregar" ).button().click(function() {
             carga_encargados();
             carga_salas();
+            $( "#f_agregar_reserva_sala input.ui-autocomplete-input" ).val('');
             $( "#f_agregar_reserva_sala" ).dialog( "open" );
         });
        
@@ -698,3 +690,24 @@ if ($permisos == '') {
     echo '<style type="text/css">' . $permisos . '</style>';
 }
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

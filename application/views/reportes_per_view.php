@@ -19,11 +19,11 @@
                                 <tr>
                                     <td width="35%">
                                         <label for="fecha_inicio_r1">Fecha Inicio:</label><br>
-                                        <input type="text" id="fecha_inicio_r1" name="fecha_inicio_r1" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
+                                        <input type="text" id="fecha_inicio_r1" placeholder="Formato: dd/mm/aaaa" name="fecha_inicio_r1" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
                                     </td>
                                     <td width="35%">
                                         <label for="fecha_fin_r1">Fecha Fin:</label><br>
-                                        <input type="text" id="fecha_fin_r1" name="fecha_fin_r1" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
+                                        <input type="text" id="fecha_fin_r1" name="fecha_fin_r1" placeholder="Formato: dd/mm/aaaa" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
                                     </td>
                                     <td width="29%">
                                         <label for="sala">Sala:</label><br>
@@ -43,19 +43,27 @@
                                         <select class="selectmenu-ui" width="90%" name="tipo_act" id="tipo_act">
                                             <option selected value="t">Todas</option>
                                             <option value="0">Reservaci&oacute;n por clase</option>
-                                            <option value="-1">Reservaci&oacute;n Momentanea</option>
+                                            <option value="-1">Reservaci&oacute;n Temporal</option>
                                             <option value="2">Apartado de Sala</option>
                                             <option value="1">Curso</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <label for="detalle_act">Detalle de la Actividad:</label><br>
-                                        <input type="text" name="detalle_act" id="detalle_act" class="text">
+                                        <label for="detalle_act">Nombre de la Actividad:</label><br>
+                                        <input type="text" name="detalle_act" placeholder="Ejemplo: Algoritmos" id="detalle_act" class="text">
                                     </td>
                                     <td>
-                                        <label for="log_usu">Login del Usuario:</label><br>
-                                        <input type="text" name="log_usu" id="log_usu" class="text">
+                                        <label for="log_usu">Login/Nombre del Usuario:</label><br>
+                                        <input type="text" name="log_usu" id="log_usu" placeholder="Ejemplo: Jose Adrian" class="text autocomp">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="quien_reserv">Nombre/login del usuario del sistema quien reserva(s&oacute;lo para reservaciones temporales):</label><br>
+                                        <input type="text" name="quien_reserv" placeholder="Ejemplo: Martha" id="quien_reserv" class="text autocomp">
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                             </table>
                         </fieldset>
@@ -69,8 +77,10 @@
                 </div>
                 <div class="ui-widget">
                     <div class="ui-state-highlight ui-corner-all" style="margin-top: 5px; padding: 0 .7em;"> 
-                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                            <strong>Atenci&oacute;n !</strong> Si no se proporcionan datos el reporte generado ser&aacute; de todos los registros.</p>
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                            <strong>Atenci&oacute;n !</strong> Si no se proporcionan datos el reporte generado ser&aacute; de todos los registros.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -128,13 +138,13 @@
                                 <tr>
                                     <td width="33%">
                                         <label for="mark">Marca:</label><br>
-                                        <input type="text" name="mark" class="text" id="mark">
+                                        <input type="text" name="mark" class="text autocomp" id="mark">
                                     </td>
                                     <td width="33%"><label for="mod">Modelo:</label><br>
-                                        <input type="text" name="mod" id="mod" class="text"></td>
+                                        <input type="text" name="mod" id="mod" class="text autocomp"></td>
                                     <td width="33%">
                                         <label for="proc">Procesador:</label><br>
-                                        <input type="text" name="proc" id="proc" class="text">
+                                        <input type="text" name="proc" id="proc" class="text autocomp">
                                     </td>
                                 </tr>
                                 <tr>
@@ -191,7 +201,7 @@
                             </table>
                         </fieldset>
                     </form>
-                   <div class=" button_bar" >
+                    <div class=" button_bar" >
                         <div align="center" class="button_bar_content">
                             <button style="" id="btn_savepdf_equ" class="prm_r"><img src="./images/save_pdf.ico"/>&nbsp;Generar Reporte PDF</button>
                             <button style="" id="btn_savexls_equ" class="prm_r"><img src="./images/save_xls.png"/>&nbsp;Generar Reporte XLS</button>
@@ -231,7 +241,7 @@
                                             </select>
                                         </td>
                                         <td width="35%">
-                                            <label for="sala">Sala:</label><br>
+                                            <label for="tipoucc">Tipo de usuario:</label><br>
                                             <select class="selectmenu-ui" id="tipoucc" name="tipoucc">
                                                 <option selected value="t">Cualquier tipo de usuario</option>
                                                 <?php
@@ -251,7 +261,7 @@
                             </fieldset>
                         </form>
                         <div class=" button_bar" >
-                        <div align="center" class="button_bar_content">
+                            <div align="center" class="button_bar_content">
                                 <button style="" id="btn_savepdf_usucc" class="prm_r"><img src="./images/save_pdf.ico"/>&nbsp;Generar Reporte PDF</button>
                                 <button style="" id="btn_savexls_usucc" class="prm_r"><img src="./images/save_xls.png"/>&nbsp;Generar Reporte XLS</button>
                             </div>
@@ -307,7 +317,7 @@
                             </table>
                         </fieldset>
                     </form>
-                   <div class=" button_bar" >
+                    <div class=" button_bar" >
                         <div align="center" class="button_bar_content">
                             <button style="" id="btn_savepdf_sw" class="prm_r"><img src="./images/save_pdf.ico"/>&nbsp;Generar Reporte PDF</button>
                             <button style="" id="btn_savexls_sw" class="prm_r"><img src="./images/save_xls.png"/>&nbsp;Generar Reporte XLS</button>
@@ -338,7 +348,7 @@
                                     </td>
                                     <td width="33%"><label for="encargado_rsf">Encargado:</label>
                                         <br>
-                                        <input type="text" name="encargado_rsf" id="encargado_rsf" class="text"></td>
+                                        <input type="text" name="encargado_rsf" id="encargado_rsf" class="text autocomp"></td>
                                     <td width="33%">
                                         <label for="tipoact_rsf">Tipo de actividad:</label><br>
                                         <select class="selectmenu-ui" width="90%" name="tipoact_rsf" id="tipoact_rsf">
@@ -427,15 +437,15 @@
                                         <br>
                                         <input type="text" name="act_rss" class="text" id="act_rss">
                                     </td>
-                                    <td width="33%"><label for="encargado_rss">Encargado:</label>
+                                    <td width="33%"><label for="encargado_rss">Encargado/academico/docente:</label>
                                         <br>
-                                        <input type="text" name="encargado_rss" id="encargado_rss" class="text"></td>
+                                        <input type="text" name="encargado_rss" id="encargado_rss" class="text autocomp"></td>
                                     <td width="33%">
                                         <label for="edo_rss">Estado:</label><br>
                                         <select class="selectmenu-ui" width="90%" name="edo_rss" id="edo_rss">
                                             <option selected value="t">Todos</option>
-                                            <option value="A">Activo</option>
-                                            <option value="I">Inactivo</option>
+                                            <option value="A">Vigente o Realizada</option>
+                                            <option value="I">Cancelada</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -463,9 +473,9 @@
                                             <option value='22:00' >22:00</option> 
                                         </select>
                                     </td>
-                                    <td><label for="fechai_rss">Fecha Inicio:</label>
+                                    <td><label for="fechai_rss">Fecha:</label>
                                         <br>
-                                        <input type="text" name="fechai_rss" class="text" id="fechai_rss">
+                                        <input type="text" name="fechai_rss" placeholder="Formato: dd/mm/aaaa" class="text" id="fechai_rss">
                                     </td>
                                     <td><label style="width:100% !important;" for="sala_rss">Sala:</label>
                                         <select id="sala_rss" class="selectmenu-ui" name="sala_rss">
@@ -498,7 +508,7 @@
                     </div>
                 </div>
             </div>
-            <h3><a href="#">Reporte de Software por equipo</a></h3>
+            <h3><a href="#">Reporte de Software por sala</a></h3>
             <div class="ui-state-focus">
                 <div class=" ui-widget-content" id="f_reporte_rss" style=" padding: 20px !important;">
                     <p class="tips_reporte_uso ui-corner-all">El nombre del reporte aparecer&aacute; en el reporte, por lo tanto se sugiere elegir un nombre de acuerdo a los parametros elegidos.
@@ -510,14 +520,13 @@
                                 <tr>
                                     <td colspan="3">
                                         <label for="nom_rep_swe">Titulo del reporte:</label><br>
-                                        <input type="text" name="nom_rep_swe"  value="Reporte de Software por Equipo" class="text" id="nom_rep_swe">
+                                        <input type="text" name="nom_rep_swe"  value="Reporte de Software por Sala" class="text" id="nom_rep_swe">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="33%">
-                                        <label for="num_serie">N&uacute;mero de Serie del equipo:</label>
-                                        <br>
-                                        <input type="text" name="num_serie" class="text" id="num_serie">
+                                        <input type="checkbox" value="si" name="con_almacen" id="con_almacen" class="checkbox-ui" checked>
+                                        <label for="con_almacen">Incluir equipos en almac&eacute;n.</label></td>
                                     </td>
                                     <td width="33%">&nbsp;</td>
                                     <td width="33%">
@@ -558,15 +567,15 @@
                                 <tr>
                                     <td width="35%">
                                         <label for="fecha_inicio_pc">Fecha Inicio:</label><br>
-                                        <input type="text" id="fecha_inicio_pc" name="fecha_inicio_pc" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
+                                        <input type="text" id="fecha_inicio_pc" name="fecha_inicio_pc" placeholder="Formato: dd/mm/aaaa" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
                                     </td>
                                     <td width="35%">
                                         <label for="fecha_fin_pc">Fecha Fin:</label><br>
-                                        <input type="text" id="fecha_fin_pc" name="fecha_fin_pc" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
+                                        <input type="text" id="fecha_fin_pc" placeholder="Formato: dd/mm/aaaa" name="fecha_fin_pc" class="datepicker-ui ui-corner-all height_widget ui-widget-content"/>
                                     </td>
                                     <td width="29%">
                                         <label for="encargado_rpc">Nombre del Encargado:</label><br>
-                                        <input type="text" id="encargado_rpc" name="encargado_rpc" class="text"/>
+                                        <input type="text" id="encargado_rpc" name="encargado_rpc" class="text autocomp"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -590,7 +599,7 @@
                             </table>
                         </fieldset>
                     </form>
-                   <div class=" button_bar" >
+                    <div class=" button_bar" >
                         <div align="center" class="button_bar_content">
                             <button style="" id="btn_savepdf_rpc" class="prm_r"><img src="./images/save_pdf.ico"/>&nbsp;Generar Reporte PDF</button>
                             <button style="" id="btn_savexls_rpc" class="prm_r"><img src="./images/save_xls.png"/>&nbsp;Generar Reporte XLS</button>
@@ -609,82 +618,239 @@
     </div>
 </div><br>
 <script>
-    function carga_grupos(){   
+    function carga_grupos() {
         var so = $('#so').val();
-        var c = get_value('equipo_software/grupos_so/',{ so: so});
+        var c = get_value('equipo_software/grupos_so/', {so: so});
         $('[name="grupo"] option').remove();
-        var todos="<option value='t'>Todos</option>";
+        var todos = "<option value='t'>Todos</option>";
         $('[name="grupo"]').append(todos);
         $('[name="grupo"]').append(c);
-        $('#grupo').selectmenu({style:'popup'});
+        $('#grupo').selectmenu({style: 'popup'});
     }
 
     $(function() {
-        $('#so').change( function(){ carga_grupos();} );
+        $('#so').change(function() {
+            carga_grupos();
+        });
         carga_grupos();
         var icons = {
             header: "ui-icon-circle-arrow-e",
             headerSelected: "ui-icon-circle-arrow-s"
         };
-        $( "#accordion_tiporep" ).accordion({
+        $("#accordion_tiporep").accordion({
             icons: icons,
             autoHeight: false,
             navigation: true
         });
-        $( "#ram_op,#dd_op" ).selectmenu({style:'popup'});
+        $("#ram_op,#dd_op").selectmenu({style: 'popup'});
         $('#fechai_rss').datepicker();
-        var dates = $( "#fecha_inicio_r1, #fecha_fin_r1" ).datepicker({
+        var dates = $("#fecha_inicio_r1, #fecha_fin_r1").datepicker({
             defaultDate: "+1w",
             changeMonth: true,
-            onSelect: function( selectedDate ) {
+            onSelect: function(selectedDate) {
                 var option = this.id == "fecha_inicio_r1" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
+                        instance = $(this).data("datepicker"),
+                        date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
             }
         });
-        
-        var dates2 = $( "#fecha_inicio_pc, #fecha_fin_pc" ).datepicker({
+
+        var dates2 = $("#fecha_inicio_pc, #fecha_fin_pc").datepicker({
             defaultDate: "+1w",
             changeMonth: true,
-            onSelect: function( selectedDate ) {
+            onSelect: function(selectedDate) {
                 var option = this.id == "fecha_inicio_pc" ? "minDate" : "maxDate",
-                instance = $( this ).data( "datepicker" ),
-                date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
-                    $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
+                        instance = $(this).data("datepicker"),
+                        date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
             }
         });
-        
-        /******************************** generar pdf s *********************************************/
-        $('#btn_savepdf').click(function(){ $('#form_reporte_uso').submit();});
-        $('#btn_savepdf_act').click(function(){ $('#form_reporte_act').submit(); });
-        $('#btn_savepdf_equ').click(function(){ $('#form_reporte_equ').submit();  });
-        $('#btn_savepdf_usucc').click(function(){$('#form_reporte_usucc').submit();});
-        $('#btn_savepdf_sw').click(function(){ $('#form_reporte_sw').submit(); });
-        $('#btn_savepdf_rsf').click(function(){ $('#form_reporte_rsf').submit(); });
-        $('#btn_savepdf_rss').click(function(){ $('#form_reporte_rss').submit(); });
-        $('#btn_savepdf_swe').click(function(){ $('#form_reporte_swe').submit(); });
-        $('#btn_savepdf_rpc').click(function(){ $('#form_reporte_rpc').submit(); });
-        /******************************** generar xsl s *********************************************/
-        $('#btn_savexls').click(function(){var datos=$('#form_reporte_uso').serialize();open_in_new('reportes_per/reporte_usoxls?'+datos); });
-        $('#btn_savexls_act').click(function(){var datos=$('#form_reporte_act').serialize(); open_in_new('reportes_per/reporte_actividadesxls?'+datos); });
-        $('#btn_savexls_equ').click(function(){var datos=$('#form_reporte_equ').serialize(); open_in_new('reportes_per/reporte_equiposxls?'+datos);});
-        $('#btn_savexls_usucc').click(function(){var datos=$('#form_reporte_usucc').serialize(); open_in_new('reportes_per/reporte_usuariosCCxls?'+datos); });
-        $('#btn_savexls_sw').click(function(){var datos=$('#form_reporte_sw').serialize(); open_in_new('reportes_per/reporte_softwarexls?'+datos); });
-        $('#btn_savexls_rsf').click(function(){var datos=$('#form_reporte_rsf').serialize(); open_in_new('reportes_per/reporte_reservacionesfijasxls?'+datos); });
-        $('#btn_savexls_rss').click(function(){var datos=$('#form_reporte_rss').serialize(); open_in_new('reportes_per/reporte_reservacionessalasxsl?'+datos); });
-        $('#btn_savexls_swe').click(function(){var datos=$('#form_reporte_swe').serialize(); open_in_new('reportes_per/reporte_software_equipoxsl?'+datos); });
-        $('#btn_savexls_rpc').click(function(){var datos=$('#form_reporte_rpc').serialize(); open_in_new('reportes_per/reporte_prestamo_controles?'+datos); });
-         
 
-       
-        
+        /******************************** generar pdf s *********************************************/
+        $('#btn_savepdf').click(function() {
+            $('#form_reporte_uso').submit();
+        });
+        $('#btn_savepdf_act').click(function() {
+            $('#form_reporte_act').submit();
+        });
+        $('#btn_savepdf_equ').click(function() {
+            $('#form_reporte_equ').submit();
+        });
+        $('#btn_savepdf_usucc').click(function() {
+            $('#form_reporte_usucc').submit();
+        });
+        $('#btn_savepdf_sw').click(function() {
+            $('#form_reporte_sw').submit();
+        });
+        $('#btn_savepdf_rsf').click(function() {
+            $('#form_reporte_rsf').submit();
+        });
+        $('#btn_savepdf_rss').click(function() {
+            $('#form_reporte_rss').submit();
+        });
+        $('#btn_savepdf_swe').click(function() {
+            $('#form_reporte_swe').submit();
+        });
+        $('#btn_savepdf_rpc').click(function() {
+            $('#form_reporte_rpc').submit();
+        });
+        /******************************** generar xsl s *********************************************/
+        $('#btn_savexls').click(function() {
+            var datos = $('#form_reporte_uso').serialize();
+            open_in_new('reportes_per/reporte_usoxls?' + datos);
+        });
+        $('#btn_savexls_act').click(function() {
+            var datos = $('#form_reporte_act').serialize();
+            open_in_new('reportes_per/reporte_actividadesxls?' + datos);
+        });
+        $('#btn_savexls_equ').click(function() {
+            var datos = $('#form_reporte_equ').serialize();
+            open_in_new('reportes_per/reporte_equiposxls?' + datos);
+        });
+        $('#btn_savexls_usucc').click(function() {
+            var datos = $('#form_reporte_usucc').serialize();
+            open_in_new('reportes_per/reporte_usuariosCCxls?' + datos);
+        });
+        $('#btn_savexls_sw').click(function() {
+            var datos = $('#form_reporte_sw').serialize();
+            open_in_new('reportes_per/reporte_softwarexls?' + datos);
+        });
+        $('#btn_savexls_rsf').click(function() {
+            var datos = $('#form_reporte_rsf').serialize();
+            open_in_new('reportes_per/reporte_reservacionesfijasxls?' + datos);
+        });
+        $('#btn_savexls_rss').click(function() {
+            var datos = $('#form_reporte_rss').serialize();
+            open_in_new('reportes_per/reporte_reservacionessalasxsl?' + datos);
+        });
+        $('#btn_savexls_swe').click(function() {
+            var datos = $('#form_reporte_swe').serialize();
+            open_in_new('reportes_per/reporte_software_equipoxsl?' + datos);
+        });
+        $('#btn_savexls_rpc').click(function() {
+            var datos = $('#form_reporte_rpc').serialize();
+            open_in_new('reportes_per/reporte_prestamo_controles?' + datos);
+        });
+        //autoacompletado de usuarios
+        var usuariosTags = [
+<?php
+$num_reg = count($usuarios);
+$c = 1;
+foreach ($usuarios as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['us'] . '"';
+    } else {
+        echo '"' . $v['us'] . '",';
+    }$c++;
+}
+?>];
+        $("#log_usu").autocomplete({source: usuariosTags});
+        //autoacompletado de marcas
+        var marcasTags = [
+<?php
+$num_reg = count($marcas);
+$c = 1;
+foreach ($marcas as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['Marca'] . '"';
+    } else {
+        echo '"' . $v['Marca'] . '",';
+    }$c++;
+}
+?>];
+        $("#mark").autocomplete({source: marcasTags});
+        //autoacompletado de modelos
+        var modelosTags = [
+<?php
+$num_reg = count($modelos);
+$c = 1;
+foreach ($modelos as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['Modelo'] . '"';
+    } else {
+        echo '"' . $v['Modelo'] . '",';
+    }$c++;
+}
+?>];
+        $("#mod").autocomplete({source: modelosTags});
+        //autoacompletado de academicos
+        var academicosRSSTags = [
+<?php
+$num_reg = count($academicos_rss);
+$c = 1;
+foreach ($academicos_rss as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['academico'] . '"';
+    } else {
+        echo '"' . $v['academico'] . '",';
+    }$c++;
+}
+?>];
+        $("#encargado_rss").autocomplete({source: academicosRSSTags});
+
+        //autoacompletado de academicos
+        var academicosRSFTags = [
+<?php
+$num_reg = count($academicos_rsf);
+$c = 1;
+foreach ($academicos_rsf as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['academico'] . '"';
+    } else {
+        echo '"' . $v['academico'] . '",';
+    }$c++;
+}
+?>];
+        $("#encargado_rsf").autocomplete({source: academicosRSFTags});
+        //autoacompletado de encargado de controles
+        var encargado_controlesTags = [
+<?php
+$num_reg = count($encargados_controles);
+$c = 1;
+foreach ($encargados_controles as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['encargado'] . '"';
+    } else {
+        echo '"' . $v['encargado'] . '",';
+    }$c++;
+}
+?>];
+        $("#encargado_rpc").autocomplete({source: encargado_controlesTags});
+        //autoacompletado de usuarios del sistema que reservan
+        var quien_reservaTags = [
+<?php
+$num_reg = count($quien_reserva);
+$c = 1;
+foreach ($quien_reserva as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['us'] . '"';
+    } else {
+        echo '"' . $v['us'] . '",';
+    }$c++;
+}
+?>];
+        $("#quien_reserv").autocomplete({source: quien_reservaTags});
+        //autoacompletado de procesadores
+        var procesadoresTags = [
+<?php
+$num_reg = count($procesadores);
+$c = 1;
+foreach ($procesadores as $v) {
+    if ($num_reg == $c) {
+        echo '"' . $v['proces'] . '"';
+    } else {
+        echo '"' . $v['proces'] . '",';
+    }$c++;
+}
+?>];
+        $("#proc").autocomplete({source: procesadoresTags});
+
     });
 </script>
 <script>
@@ -700,21 +866,24 @@ foreach ($datos_actividades->result() as $value) {
         echo '"' . $value->actividad . '",';
     }$c++;
 }
-?> ];
-       
-            
-            $( "#detalle_act" ).autocomplete({
-                source: actividadesTags
-            });
-            $( "#detalle_act" ).removeClass('ui-autocomplete-input');
-            $( "#ram_op,#dd_op" ).css('width','20%');
-            
+?>];
+
+
+        $("#detalle_act").autocomplete({
+            source: actividadesTags
         });
+        $("#detalle_act").removeClass('ui-autocomplete-input');
+        $("#ram_op,#dd_op").css('width', '20%');
+
+    });
 </script>
 <style>
+    .autocomp{padding: 0px !important;
+              padding-left: 5px !important;}
     #accordion_tiporep .ui-state-focus{
         background-image: none !important;
     }
+    
     .datepicker-ui{
         width: 96%  !important;
         padding-left: 8px;

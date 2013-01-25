@@ -18,7 +18,7 @@ $tmpl = array(
     'table_close' => '</table>'
 );
 $this->table->set_template($tmpl);
-$this->table->set_heading('Actividad', 'Hora <br>Inicio', 'Hora <br>Fin', 'Fecha<br> Inicio', 'Fecha<br> Fin','Estado','Encargado','N&uacute;mero<br> Personal','Sala');
+$this->table->set_heading('Actividad', 'Hora <br>Inicio', 'Hora <br>Fin', 'Fecha','Estado','Encargado','N&uacute;mero<br> Personal','Sala');
 echo $this->table->generate($datos_rss);
 if ($datos_rss->num_rows() == 0) {
     echo '<h3 class=" round_div"><img src="./images/warning.png" alt=" ">&nbsp;No se encontraron resultados</h3>';

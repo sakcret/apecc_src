@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 class Reportes_model extends CI_Model {
 
@@ -28,7 +50,7 @@ class Reportes_model extends CI_Model {
         return $this->db->query($sql);
     }
 
-    function datosUsoCC($fecha_inicio, $fecha_fin, $sala, $tipoact, $detalle_act,$login_usuario) {
+    function datosUsoCC($fecha_inicio, $fecha_fin, $sala, $tipoact, $detalle_act,$login_usuario,$quien_reserv) {
         $this->db->select('Fecha AS fecha,HoraInicio AS inicio,HoraFin AS fin, Horas AS horas', false);
         $this->db->select(',Importe AS importe', false);
         $this->db->select(', Sala AS sala,reservacionesmomentaneas.Login AS login, CONCAT(usuarios.nombre,\' \',usuarios.paterno,\' \',
@@ -55,7 +77,10 @@ class Reportes_model extends CI_Model {
         if ($login_usuario != '') {
             $this->db->where('reservacionesmomentaneas.Login', $login_usuario);
         }
-        $this->db->order_by('Fecha');
+        if ($quien_reserv != '') {
+            $this->db->where('reservacionesmomentaneas.quienReserva', $quien_reserv);
+        }
+        $this->db->order_by('Sala,Fecha,HoraInicio');
         return $this->db->get();
     }
     
@@ -77,7 +102,7 @@ class Reportes_model extends CI_Model {
         if ($login_usuario != '') {
             $this->db->where('login', $login_usuario);
         }
-        $this->db->order_by('fecha');
+         $this->db->order_by('sala,fecha,horainicio');
         return $this->db->get('historial_reservaciones_borrados');
     }
 
@@ -92,6 +117,7 @@ class Reportes_model extends CI_Model {
         if ($tipoAct != 't' && $tipoAct != '') {
             $this->db->where('TipoActividad', $tipoAct);
         }
+        $this->db->order_by('tipoactividad, actividad');
         $result = $this->db->get();
         return $result;
     }
@@ -121,7 +147,7 @@ class Reportes_model extends CI_Model {
             $this->db->where("DiscoDuro $disco_op", $disco);
         }
         if (($ram != '') && ($ram != 't') && ($ram_op != '')) {
-            $this->db->where("DiscoDuro $ram_op", $ram);
+            $this->db->where("RAM $ram_op", $ram);
         }
         if (($sala != '') && ($sala != 't')) {
             $this->db->where('equipos_salas.idSala', $sala);
@@ -199,7 +225,8 @@ class Reportes_model extends CI_Model {
         if (($gruposw != '') && ($gruposw != 't')) {
             $this->db->where('grupo_software.idGrupo', $gruposw);
         }
-        return $this->db->get();
+         $this->db->order_by('sistemasoperativos.sistemaOperativo, software.software');
+         return $this->db->get();
     }
     
     function getSWequipo($equipo){
@@ -227,6 +254,56 @@ class Reportes_model extends CI_Model {
             LEFT JOIN software ON equipos_software.idSoftware=software.idSoftware
             LEFT JOIN sistemasoperativos ON software.idSistemaOperativo=sistemasoperativos.idSistemaOperativo
             GROUP BY equipos_software.numeroserie";
+        return $this->db->query($sql);
+    }
+    function getdatarepsoftwaregral($conalmacen) {
+        /*consulta sin posicion de equipos:  SELECT Sala, sistemasoperativos.sistemaOperativo,software,group_concat(equipos_software.numeroserie) AS numeroSerie,count(equipos_software.numeroserie) AS cuantos
+            FROM equipos_software             
+            LEFT JOIN software ON equipos_software.idSoftware=software.idSoftware
+            LEFT JOIN sistemasoperativos ON software.idSistemaOperativo=sistemasoperativos.idSistemaOperativo
+            LEFT JOIN equipos_salas ON equipos_salas.NumeroSerie=equipos_software.numeroserie
+            LEFT JOIN salas ON salas.idSala= equipos_salas.idSala
+            GROUP BY Sala,sistemasoperativos.sistemaOperativo,software*/
+        $wherealmacen='';
+        if(isset($conalmacen)){
+        (!$conalmacen)? $wherealmacen='WHERE Sala IS NOT null':$wherealmacen='';
+        
+        }
+        $sql=" 
+          SELECT Sala, sistemasoperativos.sistemaOperativo,IF(version IS NULL,software, IF(version='',software, concat(software,' v',version))) AS software,
+            IF(sala IS NULL,group_concat(equipos_software.numeroserie),
+            group_concat(concat(equipos_software.numeroserie,' (Ubicación->',
+            CASE Columna
+            WHEN '1' THEN 'A'
+            WHEN '2' THEN 'B'
+            WHEN '3' THEN 'C'
+            WHEN '4' THEN 'D'
+            WHEN '5' THEN 'E'
+            WHEN '6' THEN 'F'
+            WHEN '7' THEN 'G'
+            WHEN '8' THEN 'H'
+            WHEN '9' THEN 'I'
+            WHEN '10' THEN 'J'
+            WHEN '11' THEN 'K'
+            WHEN '12' THEN 'L'
+             END
+            , ((salas.`Indice`-Fila)+1)
+            ,') '))) AS numeroSerie,count(equipos_software.numeroserie) AS cuantos
+            FROM equipos_software             
+            LEFT JOIN software ON equipos_software.idSoftware=software.idSoftware
+            LEFT JOIN sistemasoperativos ON software.idSistemaOperativo=sistemasoperativos.idSistemaOperativo
+            LEFT JOIN equipos_salas ON equipos_salas.NumeroSerie=equipos_software.numeroserie
+            LEFT JOIN salas ON salas.idSala= equipos_salas.idSala
+            $wherealmacen
+            GROUP BY Sala,sistemasoperativos.sistemaOperativo,software
+          ";
+        return $this->db->query($sql);
+    }
+    function getnumeroeqxsala() {
+        $sql=" SELECT sala,count(equipos.NumeroSerie) cuantos  FROM equipos
+        JOIN equipos_salas ON equipos_salas.NumeroSerie=equipos.NumeroSerie
+         JOIN salas ON salas.idSala=equipos_salas.idSala
+         GROUP BY sala";
         return $this->db->query($sql);
     }
 
@@ -309,16 +386,17 @@ CASE actividades.TipoActividad
             $this->db->where('hora', $hora);
         }
         if (($encargado != '') && ($encargado != 't')) {
-            $this->db->where('academicos.Login', $encargado);
+            $this->db->like("CONCAT(academicos.Nombre,' ', academicos.ApellidoPaterno,' ',academicos.ApellidoMaterno)", $encargado);
         }
         if (($tipoact != '') && ($tipoact != 't')) {
             $this->db->where('actividades.TipoActividad', $tipoact);
         }
+        $this->db->order_by("salas.Sala,actividades.TipoActividad,actividades.Actividad,horainicio");
         return $this->db->get();
     }
 
     function getReservacionesSalasRep($act, $sala, $horai, $fechai, $encargado, $edo) {
-        $this->db->select("NombreActividad,HoraInicio,HoraFin,FechaInicio,FechaFin,
+        $this->db->select("NombreActividad,HoraInicio,HoraFin,FechaInicio,
             CASE Estado 
                     WHEN 'I' THEN 'Inactivo' 
                     WHEN 'A' THEN 'Activo'
@@ -341,11 +419,12 @@ CASE actividades.TipoActividad
             $this->db->where('FechaInicio', $fechai);
         }
         if (($encargado != '') && ($encargado != 't')) {
-            $this->db->where('reservacionessalas.NumeroPersonal', $encargado);
+            $this->db->like("CONCAT(academicos.Nombre,' ', academicos.ApellidoPaterno,' ',academicos.ApellidoMaterno)", $encargado);
         }
         if (($edo != '') && ($edo != 't')) {
             $this->db->where('Estado', $edo);
         }
+        $this->db->order_by("Sala,FechaInicio,HoraInicio");
         return $this->db->get();
     }
 
@@ -360,7 +439,7 @@ CASE actividades.TipoActividad
             $this->db->like('actividad', $act);
         }
         if ($encargado != '') {
-            $this->db->like('encargadoNombreAux', $encargado);
+            $this->db->like('usuarioNombreAux', $encargado);
         }
         if (($edo != '') && ($edo != 't')) {
             $this->db->where('entregado', $edo);
@@ -371,6 +450,48 @@ CASE actividades.TipoActividad
         $this->db->order_by('fecha');
         return $this->db->get('reservaciones_proyectores');
     }
+    
+    function get_usuarios(){
+        $sql="SELECT DISTINCT reservacionesmomentaneas.Login ,concat(usuarios.Login,'-',nombre,' ',paterno,' ',materno) AS us 
+        FROM reservacionesmomentaneas
+        LEFT JOIN usuarios ON reservacionesmomentaneas.Login=usuarios.Login";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_marcas(){
+        $sql="SELECT DISTINCT Marca FROM equipos WHERE Marca IS NOT NULL AND Marca <> ''";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_modelos(){
+        $sql="SELECT DISTINCT Modelo FROM equipos WHERE Modelo IS NOT NULL AND Modelo <> ''";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_academicos_rss(){
+        $sql="SELECT DISTINCT reservacionessalas.NumeroPersonal AS np,concat(academicos.Nombre,' ',academicos.ApellidoPaterno,' ',academicos.ApellidoMaterno) as academico FROM reservacionessalas
+        JOIN academicos ON academicos.NumeroPersonal=reservacionessalas.NumeroPersonal";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_academicos_rsf(){
+        $sql="SELECT DISTINCT actividad_academico.NumeroPersonal AS np,concat(academicos.Nombre,' ',academicos.ApellidoPaterno,' ',academicos.ApellidoMaterno) AS academico FROM reservacionesfijas
+        JOIN actividad_academico ON actividad_academico.IdActividadAcademico=reservacionesfijas.IdActividadAcademico 
+        JOIN academicos ON academicos.NumeroPersonal=actividad_academico.NumeroPersonal";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_encargador_controles(){
+        $sql="SELECT DISTINCT usuarioNombreAux AS encargado FROM reservaciones_proyectores";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_procesadores(){
+        $sql="SELECT DISTINCT Procesador as proces FROM equipos WHERE Procesador IS NOT NULL AND Procesador <> ''";
+        return $this->db->query($sql)->result_array();
+    }
+    function get_quienreserva(){
+        $sql="SELECT  distinct usuariossistema.login,concat(usuariossistema.Login,'-',usuariossistema.nombre) AS us 
+        FROM reservacionesmomentaneas
+        LEFT JOIN usuariossistema ON reservacionesmomentaneas.quienReserva=usuariossistema.login
+        WHERE usuariossistema.Login IS NOT null";
+        return $this->db->query($sql)->result_array();
+    }
+
 }
 
 ?>

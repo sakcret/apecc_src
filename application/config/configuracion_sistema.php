@@ -4,7 +4,7 @@
 | CONFIGURACIONES DEL SISTEMA
 | -------------------------------------------------------------------
 | Este archivo contiene las configuraciones básicas del sistema.
-|
+|importante no modificar podria causar conflicto con las configuraciones via interfaz gráfica
 | .
 |
 | -------------------------------------------------------------------
@@ -50,11 +50,12 @@ $config['ver_menu_lt']=FALSE;
 |   ACERCA DEL SISTEMA
 |   -------------------------------------------------------------------
  */
-$config['sis_encargados_cc']	=  array("Jefe del Centro de Computo: LI Martha Elizabet Domínguez Bárcenas","MCC Fredy Castañeda Sánchez"); 
+$config['sis_encargados_cc']="Jefe del Centro de Computo: LI Martha Elizabet Domínguez Bárcenas
+MCC Fredy Castañeda Sánchez"; 
 $config['sis_desarralladores']	=   array("Desarrollador: José Adrian Ruiz Carmona","Idea original: Issac Salazar Herrera"); 
 $config['sis_mantenimiento']	=   array("",""); 
 $config['sis_contacto']	=   array("Correo1: sakcret_arte8@hotmail.com "); 
-$config['sis_version']	=   "1.3"; 
+$config['sis_version']	=   "1.5"; 
 /*
 | -------------------------------------------------------------------
 | PERMISOS DEL SISTEMA
@@ -107,8 +108,6 @@ $config['roles']=array(
     'C'=>array('rol'=>'Auxiliar Técnico','clave'=>'C','permisos'=>'usu>t|ust>t|act>t|eqs>t|equ>t|eqb>t|rsf>t|rss>t|rst>t|swr>t|uqs>t|prc>t'),
     'S'=>array('rol'=>'Servicio Social','clave'=>'S','permisos'=>'rst>t|eqb>t|swr>t|usu>a'),
     'T'=>array('rol'=>'Técnico Académico','clave'=>'T','permisos'=>'usu>c')
-   // 'M'=>array('rol'=>'Academico','clave'=>'M','permisos'=>'usu>v|act>v|eqs>t|equ>v|eqb>t|rpg>t|rpp>t|rep>t|rsf>t|rss>t|rst>t|swr>t|uqs>t')
-    //'I'=>array('rol'=>'Invitado','clave'=>'I','permisos'=>'usu>v|act>v|eqs>v|equ>v|eqb>v|rpg>v|rpp>v|rep>v|rsf>v|rss>v|rsv>v|swr>v|uqs>v')
     );
 
 $config['ruta_script']='/var/www/credencial/usuarios/';

@@ -52,11 +52,7 @@ if ($datos_salas->num_rows() > 0) {
                         <td><b>Encargados del Centro de Computo:&nbsp;</b> </td>
                         <td><?php
                 $encargados = $this->config->item('sis_encargados_cc');
-                if (count($encargados) > 0) {
-                    foreach ($encargados as $e) {
-                        echo $e . '<br>';
-                    }
-                }
+                echo $encargados;
                 ?> </td>
                     </tr>
                 </table>

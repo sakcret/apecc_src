@@ -4,7 +4,7 @@
 
     <div id="tabs2" style="height: 100%;">
         <ul>
-            <li><a href="#tabs-1">Sistemas Operativos</a></li>
+            <li><a id="pes_1sw" href="#tabs-1">Sistemas Operativos</a></li>
             <li><a href="#tabs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Software&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         </ul>
         <div id="tabs-1">
@@ -21,7 +21,8 @@
                 <hr class="boxshadowround">
                 <div id="sw_equipo"></div>
             </form>
-            <div><hr class="boxshadowround">
+            <div>
+                <hr class="boxshadowround">
                 <button id="btn_asignar_sw"><img src="./images/agregar.png"/>&nbsp;Asignar Software al Equipo</button>
             </div>
         </div>
@@ -37,8 +38,8 @@
                     <td width="14%"><img src="./images/pc_edos/pc_O_min.png"/>&nbsp;Ocupado</td>
                     <td width="14%"><img src="./images/pc_edos/pc_L_min.png"/>&nbsp;Libre</td>
                     <td width="14%"><img src="./images/pc_edos/pc_C_min.png"/>&nbsp;En Clase o Curso</td>
-                    <td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;Descompuesto</td>
-                    <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;Mantenimiento</td>
+                    <!--td width="14%"><img src="./images/pc_edos/pc_D_min.png"/>&nbsp;Descompuesto</td>
+                    <td width="14%"><img src="./images/pc_edos/pc_M_min.png"/>&nbsp;Mantenimiento</td-->
                     <td width="14%"><img src="./images/pc_edos/pc__min.png"/>&nbsp;Sin estado</td>
                 </tr>
             </table>
@@ -93,7 +94,7 @@
         $porcentaje = (100 / $numreg) - 0.5;
         echo ' <div id="tabs">' . PHP_EOL . '<ul>' . PHP_EOL;
         for ($is = 0; $is < $numreg; $is++) {
-           echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%"  id="tabf_' . $s[$is]["idSala"] . '" onclick="sala_actual(' . $s[$is]["idSala"] . ')" href="#tabs-' . $s[$is]["idSala"] . '">Sala ' . $s[$is]["Sala"] . '</a></li>' . PHP_EOL;
+           echo '<li style="width:' . $porcentaje . '%"><a style=" width: 90%"  id="tabf_' . $s[$is]["idSala"] . '" href="#tabs-' . $s[$is]["idSala"] . '">Sala ' . $s[$is]["Sala"] . '</a></li>' . PHP_EOL;
         }
         echo '</ul>' . PHP_EOL;
         for ($i = 0; $i < $numreg; $i++) {
@@ -191,6 +192,7 @@
     function asigna_sw(ns,edo){
         $('#dialog_asigna_sw').addClass('prm_w');
         // if(edo=='L'){ por propuesta del clinte se evita esta validacion para asignar software independientemente del estado del
+       $('#pes_1sw').click();
         $('#num_serie').val(ns);
         try{
             sistemas_operativos(ns);

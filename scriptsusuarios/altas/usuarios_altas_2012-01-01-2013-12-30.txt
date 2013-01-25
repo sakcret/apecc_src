@@ -1,0 +1,2 @@
+./agrega_usuario.sh aad2739 dfc6b7d8 "dsddds" "adasdas" "asdsadasd" 11
+./agrega_usuario.sh lmj2740 d2d7a026 "Jose arturo" "Lopez" "Martinez" 5

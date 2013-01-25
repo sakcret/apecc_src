@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadística e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/ 
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -79,7 +101,9 @@ class Actualiza_db extends CI_Controller {
                                 $clave_reservacion = $numserie . substr($usuario, 0, 5) . date("ymdHis");
                                 $alrato = $ahorita->add(new DateInterval('PT' . $horas . 'H')); // a la hora actual le sumo las horas que se especificaron en la reservacion
                                 $horafin = $alrato->format("H") . ':00:00';
-                                $this->actualiza_estado_db_model->resevacion($clave_reservacion, $hoy_str, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $salaaux, $tipo_act, $nombre_act);
+                                if (($des['edo'] != 'D') && ($des['edo'] != 'M')) {
+                                    $this->actualiza_estado_db_model->resevacion($clave_reservacion, $hoy_str, $horainicio, $horafin, $usuario, $numserie, $importe, $edo, $horas, $edo_equipo, $diasemana, $salaaux, $tipo_act, $nombre_act);
+                                }
                             }
                         }
                     }
@@ -191,8 +215,6 @@ class Actualiza_db extends CI_Controller {
             }
         }
     }
-    
-    
 
     private function liberaReservaciones($hora) {
         $this->load->model("actualiza_estado_db_model");

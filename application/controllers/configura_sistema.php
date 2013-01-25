@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -51,6 +73,7 @@ class Configura_sistema extends CI_Controller {
         $this->load->library('utl_apecc');
         $costo = $this->input->post('costo_reservaciones');
         $vermenu = $this->input->post('ver_menult');
+        $newsencargados = $this->input->post('encargadoscc');
         $tipocosto = gettype($costo + 1);
         $new_ver_menu_lt = '';
         if (isset($vermenu) && $vermenu == 'true') {
@@ -66,6 +89,7 @@ class Configura_sistema extends CI_Controller {
         fclose($fichero_texto);
         $ver_menu = $this->config->item('ver_menu_lt');
         $costoreserv = $this->config->item('costoxhora');
+        $encargados = $this->config->item('sis_encargados_cc');
         if ($ver_menu) {
             $ver_menu_item = 'TRUE';
         } else {
@@ -73,8 +97,9 @@ class Configura_sistema extends CI_Controller {
         }
 
         //obtener arreglos para buscar y rempazar variables
-        $buscar_replace = array("['costoxhora']=$costoreserv;", "['ver_menu_lt']=$ver_menu_item;");
-        $replace = array("['costoxhora']=$costo;", "['ver_menu_lt']=$new_ver_menu_lt;");
+        $buscar_replace = array("['costoxhora']=$costoreserv;", "['ver_menu_lt']=$ver_menu_item;","['sis_encargados_cc']=\"$encargados\"");
+        $replace = array("['costoxhora']=$costo;", "['ver_menu_lt']=$new_ver_menu_lt;","['sis_encargados_cc']=\"$newsencargados\"");
+        //$replace_encargado = array("['sis_encargados_cc']=\"$encargados\"", "['sis_encargados_cc']=\"$newsencargados\"");
         //remplazar contenido
         $fp = fopen($nombre_fichero, "a");
         $nuevo_contenido = str_replace($buscar_replace, $replace, $contenido_config);

@@ -1,1 +1,6 @@
 smbpasswd -d rmr1838
+smbpasswd -d rcl2735
+smbpasswd -d maesa766
+smbpasswd -d abcam725
+smbpasswd -d aba2602
+smbpasswd -d aap1754

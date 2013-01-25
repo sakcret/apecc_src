@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 class Actividades_model extends CI_Model {
 
@@ -8,7 +30,7 @@ class Actividades_model extends CI_Model {
     }
 
     function actividades_color() {
-        $this->db->select('idActividad as idactividad,Color as color');
+        $this->db->select('idActividad as id,Color as color');
         $result = $this->db->get('actividades');
         return $result->result_array();
     }
@@ -151,7 +173,7 @@ class Actividades_model extends CI_Model {
 
     function getcatedraticosactividad($id) {
         $this->db->select("IdActividadAcademico as id,Bloque,Seccion,actividad_academico.NumeroPersonal as NumeroPersonal,
-            CONCAT(ApellidoPaterno,' ',ApellidoPaterno,' ',Nombre) as Nombre, 
+            CONCAT(ApellidoPaterno,' ',ApellidoMaterno,' ',Nombre) as Nombre, 
             Login", FALSE);
         $this->db->from('actividad_academico');
         $this->db->join('academicos', 'academicos.NumeroPersonal=actividad_academico.NumeroPersonal');

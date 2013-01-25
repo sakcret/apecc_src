@@ -12,7 +12,7 @@
                         </td>
                         <td>&nbsp;&nbsp;</td>
                         <td>
-                            <label for="version_sw">Versi&oacute;n*:</label>
+                            <label for="version_sw">Versi&oacute;n:</label>
                             <input type="text" name="version_sw" id="version_sw" maxlength="45" class="text" />
                         </td>
                     </tr>
@@ -55,7 +55,7 @@
                         </td>
                         <td>&nbsp;&nbsp;</td>
                         <td>
-                            <label for="m_version_sw">Versi&oacute;n*:</label>
+                            <label for="m_version_sw">Versi&oacute;n:</label>
                             <input type="text" name="m_version_sw" id="m_version_sw" maxlength="45" class="text" />
                         </td>
                     </tr>
@@ -326,6 +326,27 @@
                                 <th>.</th>
                             </tr>
                         </tfoot>
+                    </table> <br>
+                    <div class="ui-widget-header ui-corner-all" style="height: 20px; margin-bottom: 10px;">
+                        <center><div style=" float: left; margin-left: 30px;">Software en el grupo: </div><div style=" margin-left: 10px; float: left;" id="gru_select_n">No se ha seleccionado un grupo de software</div></center>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" border="1" class="display" id="dtswgrupos" >
+                        <thead>
+                            <tr>
+                                <th>Software</th>
+                                <th>Versi&oacute;n</th>
+                                <th>Descripci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Software</th>
+                                <th>Versi&oacute;n</th>
+                                <th>Descripci&oacute;n</th>
+                            </tr>
+                        </tfoot>
                     </table> 
                 </div>
                 <div id="tabs-3">
@@ -576,7 +597,7 @@
             width: 550,
             modal: true,
             buttons: {
-                'Agregar Software': function() {
+                'Modificar Grupo de Software': function() {
                     allFields.removeClass( "ui-state-error" );
                     var bValid = true;
                     bValid = bValid && campoVacio(nombre,'Nombre del Grupo',tips);
@@ -621,7 +642,7 @@
             modal: true,
             width:350,
             buttons: {
-                "Eliminar": function() {
+                "Eliminar Grupo de Software": function() {
                     var respuesta = ajax_peticion("index.php/software/eliminaGrupo","id="+id);
                     if (respuesta=='ok'){
                         dt_grupossoftware.fnDraw();  
@@ -942,6 +963,7 @@
         $("#dtgrupossoftware tbody tr").live('click', function( e1 ) {
             if ( $(this).hasClass('row_selected') ) {
                 $(this).removeClass('row_selected');
+                dt_sw_grupos.fnClearTable();
                 gsw_select=0;
             }
             else {
@@ -950,6 +972,24 @@
                 var anSelected = fnGetSelected(dt_grupossoftware);
                 var datos=dt_grupossoftware.fnGetData(anSelected[0]);
                 gsw_select=datos[0];
+                dt_sw_grupos.fnClearTable();
+                $("#gru_select_n").text(datos[1]);
+                
+                $.ajax({
+                    url:"index.php/software/software_grupo/"+datos[0],
+                    type:"POST",
+                    data: '',
+                    dataType: "json",
+                    success:
+                        function(respuesta){
+                        if(respuesta!=false){
+                            var a=[];
+                            $.each(respuesta, function(k,v){
+                                a[k]=[v.sw,v.ver,v.des];});
+                            dt_sw_grupos.fnAddData(a);
+               
+                        }}
+                });
                 
             }
         });
@@ -971,7 +1011,7 @@
                 width: 550,
                 modal: true,
                 buttons: {
-                    'Agregar Software': function() {
+                    'Agregar Grupo de Software': function() {
                         allFields.removeClass( "ui-state-error" );
                         var bValid = true;
                         bValid = bValid && campoVacio(nombre,'Nombre del Grupo',tips);
@@ -1346,6 +1386,27 @@
                 var datos=dt_software.fnGetData(anSelected[0]);
                 grupo_sw_selec=datos[0];
                 datos_grupo_sw_selec=datos;
+            }
+        } );
+        
+        dt_sw_grupos=$('#dtswgrupos').dataTable({
+            "bJQueryUI": true,
+            "sDom": '<"H">t<"F">',             
+            "oLanguage":{
+                "sLengthMenu":   "Catedraticos",
+                "sZeroRecords":  "!!! No se encontraron resultados.",
+                "sInfo":         "Mostrando de _START_ a _END_ de _TOTAL_ consultas",
+                "sInfoEmpty":    "Mostrando de 0 a 0 de 0 consultas",
+                "sInfoFiltered": "(filtrado de _MAX_ registros)",
+                "sInfoPostFix":  "",
+                "sSearch":       "",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sPrevious": "Anterior",
+                    "sNext":     "Siguiente",
+                    "sLast":     "&Uacute;ltimo"
+                }
             }
         } );
         

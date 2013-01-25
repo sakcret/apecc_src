@@ -6,7 +6,8 @@
         <link rel="shortcut icon" href="./images/favicon.ico">
         <title>APECC</title>
         <meta name="author" content="CGT">
-        <meta http-equiv="content-type" CONTENT="text/html; charset=utf-8">
+        <meta http-equiv="content-type" CONTENT="text/html; charset=utf-8">       
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>-->         
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
         <!--CSS Grid 1440-->
         <script type="text/javascript" language="javascript" src="./js/cssgrid1140/css3-mediaqueries.js"></script>
@@ -47,7 +48,6 @@
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.menubar.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.tooltip.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.checkbox.js"></script>
-        <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.radiobutton.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.popup.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.spinner.js"></script>
         <script type="text/javascript" language="javascript" src="./js/jquery-ui/jquery.ui.tooltip.js"></script>
@@ -106,7 +106,7 @@
                 <img align="right"  src="./images/BANNER_APECC.png">
             </div> 
             <ul id="ulMenu" class="ui-state-default ui-corner-all boxshadow">
-                <button><img onclick="redirect_to('inicio')" title="Ir a Inicio/Home" class="tooltip img_home" src="./images/menu_lt/home.png"></button>
+                <button onclick="redirect_to('inicio')"><img title="Ir a Inicio/Home" class="tooltip img_home" src="./images/menu_lt/home.png"></button>
                 <?php
                 $hidem = '';
                 $permisos = $this->session->userdata('puedo');
@@ -115,7 +115,7 @@
                     ?>
                     <li class="itemli"><a>Reservaciones</a>
                         <ul><?php if (stripos($permisos, 'rst') !== false) { ?>
-                                <li><a id="nav_rt" class="manita">Moment&aacute;neas</a></li>
+                                <li><a id="nav_rt" class="manita">Temporales</a></li>
                             <?php } if (stripos($permisos, 'rsf') !== false) { ?>
                                 <li><a id="nav_rf" class="manita">Fijas</a></li>
                             <?php }if (stripos($permisos, 'rss') !== false) { ?>
@@ -213,7 +213,7 @@
 <?php }if (stripos($permisos, 'sic') !== false) { ?>
                             <li><a class="manita" id="nav_sc">Configuraciones</a></li>
 <?php } ?>
-                        <li><a class="manita" id="nav_ay">Ayuda</a></li>
+                        <li><a class="manita" id="nav_ay" target="_blank" href="<?php echo $this->config->item('base_url')?>manual/Manual_de_usuario_APECC.pdf">Ayuda</a></li>
                         <li><a class="manita" id="nav_ad">Acerca de APECC</a></li>
                     </ul>
                 </li>
@@ -264,9 +264,9 @@ if (isset($contenido) && ($contenido != '')) {
             <div id="footer" class="twelvecol last ui-widget-header ui-corner-bottom boxshadow" style="height:70px">
                 <div align="center" id="foot_lb">
                     Automatizaci&oacute;n de Procesos en el Centro de Computo (APECC&nbsp; <?php echo $this->config->item("sis_version"); ?>)<br>
-                    Proyecto realizado para la facultad de Estad&iacute;stica e Inform&aacute;tica de la UNIVERSIDAD VERACRUZANA<br>
-                    Jos&eacute; Adrian Ruiz Carmona
-                    &reg; <?php
+                    Proyecto realizado para la Facultad de Estad&iacute;stica e Inform&aacute;tica de la UNIVERSIDAD VERACRUZANA<br>
+                    Jos&eacute; Adrian Ruiz Carmona Copyright &copy;
+                     <?php
                     setlocale(LC_TIME, 'Spanish');
                     echo date("F") . " " . date("Y");
 ?>
@@ -274,12 +274,12 @@ if (isset($contenido) && ($contenido != '')) {
             </div>
 <?php if ($this->config->item('ver_menu_lt')) { ?>
                 <ul id="acess_menu">
-                    <li><a class="boxshadowround" id="ml_hm" href="#">Home</a></li>
+                    <li><a class="boxshadowround" id="ml_hm" onclick="redirect_to('inicio')">Home</a></li>
                     <li><a class="boxshadowround" onclick="window.location.reload()" >Actualizar</a></li>
-                    <li id="us_d"><a class="boxshadowround" id="ml_us" href="#">Usuarios</a></li>
-                    <li id="rs_d"><a class="boxshadowround" id="ml_rm" href="#">Reservaciones</a></li>
-                    <li><a class="boxshadowround" id="ml_ex" href="#">Salir</a></li>
-                    <li><a class="boxshadowround" id="ml_hp" href="#">Ayuda</a></li>
+                    <li id="us_d"><a class="boxshadowround" id="ml_us" onclick="redirect_to('usuarios')">Usuarios</a></li>
+                    <li id="rs_d"><a class="boxshadowround" id="ml_rm" onclick="redirect_to('reservaciones_temporales')">Reservaciones</a></li>
+                    <li><a class="boxshadowround" id="ml_ex" onclick="cerrar_sesion()">Salir</a></li>
+                    <li><a class="boxshadowround" id="ml_hp" target="_blank" href="<?php echo $this->config->item('base_url')?>manual/Manual_de_usuario_APECC.pdf">Ayuda</a></li>
                 </ul>
                 <script type="text/javascript">
                     $(document).ready(function(){ <?php echo $hidem ?>  });

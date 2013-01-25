@@ -408,7 +408,6 @@ $(document).ready(function() {
     $( ".text").addClass("ui-corner-all paddleft5 height_widget ui-widget-content");
     $( "textarea").addClass("ui-corner-all paddleft5 ui-widget-content"); 
     $( ".checkbox-ui" ).checkbox();
-    $( ".radio-ui" ).radiobutton();
     $( ".selectmenu-ui" ).selectmenu({
         style:'popup'
     });

@@ -1,7 +1,7 @@
 <tooltips class="tooltip">
     <div id="dialog-elimina" title="Eliminar Prestamo de Control" style="display: none">
         <p><span  style="float:left; margin:0 7px 20px 0;"><img src="./images/msg/warning.png"/></span>
-            &nbsp;&nbsp;Se eliminar&aacute;n permanentemente el prestamo del control del equipo de proyección. <hr class="boxshadowround"><b>¿Deseas Continuar?</b></p>
+            &nbsp;&nbsp;Se eliminar&aacute;n permanentemente el pr&eacute;stamo del control del equipo de proyección. <hr class="boxshadowround"><b>¿Deseas Continuar?</b></p>
     </div>
     <div id="f_agregar_presta_control" title="Nuevo prestamo de control(Equipos de proyecci&oacute;n)" style="display: none">
         <p class="form_tips">Los campos marcados con * son obligatorios.<br><b>!importante:&nbsp;&nbsp;</b>Una vez registrando el pr&eacute;stamo no se podr&aacute;n cambiar los datos.</p>
@@ -18,7 +18,7 @@
                         <input type="text" name="tipo_u" class="text"  val="4" id="tipo_u"></select></td>
                 </tr>
                 <tr>
-                    <td colspan="3" id="encargado_id"><label class="space_form" for="usuarios">Maestro/catedr&aacute;tico*:</label><br>
+                    <td colspan="3" id="encargado_id"><label class="space_form" for="usuarios">Maestro/catedr&aacute;tico(solo actualizados)*:</label><br>
                         <select name="usuario" id="usuario"></select></td>
                 </tr>
                 <tr>
@@ -32,7 +32,7 @@
                     <td>La hora de fin ser&aacute; definida por la hora de entrega del equipo de proyecci&oacute;n.</td>
                 </tr>
                 <tr>
-                    <td><label for="salon">Sal&oacute;n(Recomendado):</label>
+                    <td><label for="salon">Sal&oacute;n*:</label>
                         <input type="text" name="salon" id="salon" class="text"></td>
                     </select></td>
                     <td>&nbsp;</td>
@@ -51,13 +51,16 @@
         <form method="POST" action="" id="form_entregar_control">
             <table width="100%" border="0">
                 <tr>
-                    <td colspan="3">
-                        <label for="m_fecha">Fecha(Solo Lectura):</label>
+                    <td>
+                        <label for="m_fecha">Fecha Inicio(Solo Lectura):</label>
                         <input type="text" name="m_fecha" id="m_fecha" class="text readonly"  readonly>
                     </td>
+                    <td>&nbsp;</td>
+                    <td><label for="m_fechaentrega">Fecha Entrega(Solo Lectura):</label>
+                        <input type="text" name="m_fechaentrega" id="m_fechaentrega" class="text readonly"  readonly></td>
                 </tr>
                 <tr>
-                    <td colspan="3" id="enc"><label class="space_form" for="m_usuarios">Usuario Encargado(Solo Lectura):</label><br>
+                    <td colspan="3" id="enc"><label class="space_form" for="m_usuarios">Maestro/catedr&aacute;tico(Solo Lectura):</label><br>
                         <input type="text" name="m_usuario" class="text readonly" id="m_usuario" readonly></td>
                 </tr>
                 <tr>
@@ -163,14 +166,14 @@
     </div><br>
     <div class="row">
         <div class="twelvecol last">
-               <div class=" button_bar" >
+            <div class=" button_bar" >
                 <div class="button_bar_content">
-                        <button id="btn_actualiza"><img src="./images/actualizar.png"/>&nbsp;Actualizar</button>
-                        <button id="btn_agregar" class="prm_a" title="Agregar un nuevo pr&eacute;stamo de control"><img src="./images/agregar.png"/>&nbsp;Agregar Pr&eacute;stamo</button>
-                        <button id="btn_entregar" class="prm_c" title="Entregar control y terminar el pr&eacute;stamo"><img src="./images/entregar.gif"/>&nbsp;Termina Pr&eacute;stamo</button>
-                        <button id="btn_eliminar" class="prm_b" title="Eliminar pr&eacute;stamo de control"><img src="./images/eliminar.png"/>&nbsp;Eliminar Pr&eacute;stamo</button>
-                        <button style="height: 28px !important; width: 250px;" id="mas_opc_busq"class="opc ui-icon-search">Ver busqueda avanzada</button>
-                        <button style="height: 28px !important; width: 250px;" id="b_ver_campos"class="opc">Ver opciones de campos</button>         
+                    <button id="btn_actualiza"><img src="./images/actualizar.png"/>&nbsp;Actualizar</button>
+                    <button id="btn_agregar" class="prm_a" title="Agregar un nuevo pr&eacute;stamo de control"><img src="./images/agregar.png"/>&nbsp;Agregar Pr&eacute;stamo</button>
+                    <button id="btn_entregar" class="prm_c" title="Entregar control y terminar el pr&eacute;stamo"><img src="./images/entregar.gif"/>&nbsp;Termina Pr&eacute;stamo</button>
+                    <button id="btn_eliminar" class="prm_b" title="Eliminar pr&eacute;stamo de control"><img src="./images/eliminar.png"/>&nbsp;Eliminar Pr&eacute;stamo</button>
+                    <button style="height: 28px !important; width: 250px;" id="mas_opc_busq"class="opc ui-icon-search">Ver busqueda avanzada</button>
+                    <button style="height: 28px !important; width: 250px;" id="b_ver_campos"class="opc">Ver opciones de campos</button>         
                 </div>
             </div>
             <div style=" margin-top: 10px; margin-bottom: 10px;" class="ui-corner_all boxshadowround">
@@ -232,7 +235,7 @@
     var dt_presta_controls;
     var row_select=0,
     estado='';
-     /*Funcion para aplicar filtro global en el datatable*/
+    /*Funcion para aplicar filtro global en el datatable*/
     function fnFilterGlobal (){
         $('#dtpresta_controls').dataTable().fnFilter( $("#global_filter").val(), null, false, true);
     }
@@ -304,6 +307,11 @@
     function entrega_control(id){ 
         muestraDatospresta_controlForm(id);
         $( "#dialog:ui-dialog" ).dialog( "destroy" );
+         var  hoy = new Date(),
+        dia = fillZeroDateElement(hoy.getDate()),
+        mes = fillZeroDateElement(hoy.getMonth()+1),
+        anio=hoy.getFullYear();
+         $( "#m_fechaentrega").val(anio+'-'+mes+'-'+dia);
         $( "#f_entregar_control").dialog({
             autoOpen: false,
             width: 430,
@@ -349,7 +357,7 @@
             }
         } ); 
         
-         /*Aplicar filtro al datatables (busqueda avanzada)*/
+        /*Aplicar filtro al datatables (busqueda avanzada)*/
         $("#global_filter").typeWatch( {callback:function(){fnFilterGlobal();  },wait:750,highlight:true,captureLength:0} ); 
         
         $("#col2_filter").typeWatch( {callback:function(){ fnFilterColumn( 1, $("#col2_filter") ); },wait:750,highlight:true,captureLength:0} ); 
@@ -411,7 +419,7 @@
             },
             "aoColumns": [ 
                 /*0-. */{"bVisible":    false },
-                /*1 */null,
+                /*1 */null,               
                 /*2 */null,                
                 /*3*/null,
                 /*5 */null,
@@ -463,9 +471,12 @@
                         bValid = bValid && false;
                         nou=true;
                         usuario.addClass( "ui-state-error" );
-                        var msg=mensaje_tips("./images/msg/warning.png","Debe seleccionar un usuario.");
+                        var msg=mensaje_tips("./images/msg/warning.png","Debe seleccionar un Encargado/Maestro.");
                         updateTips(msg,tips );
                     }
+                    bValid = bValid && campoVacio(actividad,'Actividad',tips);
+                    bValid = bValid && campoVacio(salon,'Sal&oacute;n',tips);
+
                     if ( bValid ) {  
                         var encargado_input=$('#encargado_id .ui-autocomplete-input').val();
                         var datos = $( "#form_agrega_presta_control" ).serialize()+'&encargado_nombre='+encargado_input;

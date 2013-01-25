@@ -1,4 +1,26 @@
 <?php
+/*  
+ *  APECC(Automatización de procesos en el Centro de Cómputo)
+ *  Proyecto desarrollado para UNIVERSIDAD VERACRUZANA en la Facultad de Estadítica e Informática con la finalidad de
+ *  Automatizar los procesos del centro de cómputo.
+ *   Autor: José Adrian Ruiz Carmona
+ *   Contacto:
+ *      Correo1 sakcret@gmail.com
+ *      Correo2 sakcret_arte8@hotmail.com
+ * 
+ *  Copyright (C) 2013 José Adrian Ruiz Carmona
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or 
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see http://www.gnu.org/licenses/.
+ **/
 
 class Software_model extends CI_Model {
 
@@ -56,7 +78,7 @@ class Software_model extends CI_Model {
 
     function elimina_so($id) {
         $this->db->trans_begin();
-        /* obtener grupos de software y borrar las asignaciones de software para ese grupo*/
+        /* obtener grupos de software y borrar las asignaciones de software para ese grupo */
         $this->db->where('idSistemaOperativo', $id);
         $grupos = $this->db->get('grupo_software');
         if ($grupos->num_rows() > 0) {
@@ -68,7 +90,7 @@ class Software_model extends CI_Model {
         /* Eliminar grupos de software */
         $this->db->where('idSistemaOperativo', $id);
         $this->db->delete('grupo_software');
-        
+
         $this->db->where('idSistemaOperativo', $id);
         $software = $this->db->get('software');
         if ($software->num_rows() > 0) {
@@ -80,7 +102,7 @@ class Software_model extends CI_Model {
         /* Eliminar software asociado al sistema */
         $this->db->where('idSistemaOperativo', $id);
         $this->db->delete('software');
-        
+
         /* Eliminar sistema de equipos */
         $this->db->where('idSistemaOperativo', $id);
         $this->db->delete('equipos_sistemasoperativos');
@@ -214,8 +236,9 @@ class Software_model extends CI_Model {
         //$this->db->cache_off();
         return $result;
     }
+
     function getequipossoftware($idsw) {
-       $sql="SELECT equipos_software.NumeroSerie as ns,Sala as sa,
+        $sql = "SELECT equipos_software.NumeroSerie as ns,Sala as sa,
                 Fila as fi,Columna as co
                 FROM  software
                 JOIN equipos_software ON software.idSoftware=equipos_software.idSoftware
@@ -226,8 +249,9 @@ class Software_model extends CI_Model {
         $result = $this->db->query($sql);
         return $result;
     }
+
     function getequiposso($idso) {
-       $sql="SELECT equipos_sistemasoperativos.NumeroSerie AS ns,Sala AS sa,
+        $sql = "SELECT equipos_sistemasoperativos.NumeroSerie AS ns,Sala AS sa,
                 Fila AS fi,Columna AS co
                 FROM  sistemasoperativos
                 JOIN equipos_sistemasoperativos ON sistemasoperativos.`idSistemaOperativo`=equipos_sistemasoperativos.`idSistemaOperativo`
@@ -235,6 +259,14 @@ class Software_model extends CI_Model {
                 JOIN salas ON equipos_salas.idSala=salas.idSala
                 WHERE sistemasoperativos.idSistemaOperativo='$idso'
                 ORDER BY 2,3,4";
+        $result = $this->db->query($sql);
+        return $result;
+    }
+
+    function getsoftware_grupo($idgru) {
+        $sql = "SELECT software AS sw,`descripcion` AS des,`version` AS ver FROM software_grupos
+            LEFT JOIN software ON software.`idSoftware`=software_grupos.`idSoftware`
+            WHERE software_grupos.`idGrupo`=$idgru";
         $result = $this->db->query($sql);
         return $result;
     }
